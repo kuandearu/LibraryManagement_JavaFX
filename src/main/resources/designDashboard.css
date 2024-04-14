@@ -1,0 +1,63 @@
+.top-form{
+    -fx-background-color:#fff;
+    -fx-border-color:#000;
+    -fx-border-width: 0.2px 0.2px 0.5px 0.2px;
+}
+.close-btn{
+    -fx-background-color: transparent;
+    -fx-cursor:hand;
+
+}
+
+.close-btn:hover{
+    -fx-background-color: #f13f57;
+}
+
+.minimize-btn{
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.minimize-btn:hover {
+    -fx-background-color:#dddddd;
+}
+
+.bars{
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-cursor:hand;
+}
+
+.bars:hover {
+    -fx-background-color: #d6d6d6;
+}
+
+.nav-form{
+    -fx-background-color: linear-gradient(to bottom right, #252d50, #324f6b);
+}
+
+.edit-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.nav-btn {
+    -fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);
+    -fx-background-radius: 10px;
+    -fx-font-size: 15px;
+    -fx-text-fill: #fff;
+    -fx-font-family: "Microsoft Sans Serif";
+    -fx-cursor: hand;
+}
+
+.nav-btn: hover {
+    -fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.logout-btn {
+    -fx-background-color: #366d9d;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
