@@ -10,20 +10,29 @@ public class Database {
     public static Connection connectDB() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306"; // Include the database name
+            String username = "root";
+            String password = "";
 
-            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarydb", "root", "");
+            Connection connect = DriverManager.getConnection(url, username, password);
 
             // Create the database if it doesn't exist
-            Statement statement = connect.createStatement();
-            statement.executeUpdate("CREATE DATABASE IF NOT EXISTS librarydb");
-            connect.setCatalog("librarydb");
+            String createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS librarydb";
+            PreparedStatement createDatabaseStatement = connect.prepareStatement(createDatabaseQuery);
+            createDatabaseStatement.executeUpdate();
+
+            url += "/librarydb";
+            connect = DriverManager.getConnection(url,username,password);
 
             // Create the table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS student ("
+            String createStudentTableQuery = "CREATE TABLE IF NOT EXISTS student ("
                     + "studentNumber VARCHAR(100), "
                     + "studentName NVARCHAR(100),"
                     + "password VARCHAR(100), "
-                    + "image VARCHAR(500))");
+                    + "image VARCHAR(500))";
+            PreparedStatement createStudentTableStatement = connect.prepareStatement(createStudentTableQuery);
+            createStudentTableStatement.executeUpdate();
+
 
             return connect;
         } catch (Exception e) {
