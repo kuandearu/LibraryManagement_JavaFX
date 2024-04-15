@@ -3,19 +3,23 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="986.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="986.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.DashboardController">
    <children>
       <BorderPane layoutY="1.0" prefHeight="600.0" prefWidth="986.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
          <top>
-            <AnchorPane prefHeight="99.0" prefWidth="986.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="99.0" prefWidth="986.0" styleClass="semi-top" stylesheets="@../designDashboard.css" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane prefHeight="40.0" prefWidth="986.0" styleClass="top-form" stylesheets="@../designDashboard.css" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane layoutY="-4.0" prefHeight="40.0" prefWidth="986.0" styleClass="top-form" stylesheets="@../designDashboard.css" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-4.0">
                      <children>
                         <Button layoutX="935.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="51.0" styleClass="close-btn" stylesheets="@../designDashboard.css">
                            <graphic>
@@ -52,7 +56,7 @@
                <children>
                   <AnchorPane prefHeight="486.0" prefWidth="263.0" styleClass="nav-form" stylesheets="@../designDashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Circle fill="#2e3b46" layoutX="130.0" layoutY="87.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle_image" fill="#2e3b46" layoutX="130.0" layoutY="87.0" radius="73.0" stroke="BLACK" strokeType="INSIDE" />
                         <Label layoutX="92.0" layoutY="168.0" text="Welcome" textFill="WHITE">
                            <font>
                               <Font name="Microsoft Sans Serif" size="18.0" />
@@ -63,38 +67,38 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="80.0" layoutY="199.0" text="0969571699" textFill="WHITE">
+                        <Label fx:id="studentNumber_btn" layoutX="80.0" layoutY="199.0" text="0969571699" textFill="WHITE">
                            <font>
                               <Font name="Microsoft Sans Serif" size="18.0" />
                            </font>
                         </Label>
-                        <Button layoutX="32.0" layoutY="269.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Available Books">
+                        <Button fx:id="availableBooks_btn" layoutX="32.0" layoutY="269.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Available Books">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="30.0" layoutY="313.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Issue Books">
+                        <Button fx:id="issueBooks_btn" layoutX="30.0" layoutY="313.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Issue Books">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="30.0" layoutY="360.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Return Books">
+                        <Button fx:id="returnBooks_btn" layoutX="30.0" layoutY="360.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Return Books">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="30.0" layoutY="406.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Saved Books">
+                        <Button fx:id="savedBooks_btn" layoutX="30.0" layoutY="406.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Saved Books">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="68.0" layoutY="31.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="127.0" styleClass="edit-btn" stylesheets="@../designDashboard.css">
+                        <Button fx:id="edit_btn" layoutX="68.0" layoutY="31.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="127.0" styleClass="edit-btn" stylesheets="@../designDashboard.css">
                            <graphic>
                               <FontAwesomeIcon fill="#f2f2f2" glyphName="EDIT" size="2em" />
                            </graphic>
                         </Button>
                         <Line endX="100.0" layoutX="132.0" layoutY="235.0" startX="-100.0" stroke="#ddd9d9" />
-                        <Button layoutX="18.0" layoutY="454.0" mnemonicParsing="false" styleClass="logout-btn" stylesheets="@../designDashboard.css">
+                        <Button fx:id="logout_btn" layoutX="18.0" layoutY="454.0" mnemonicParsing="false" onAction="#logout" styleClass="logout-btn" stylesheets="@../designDashboard.css">
                            <graphic>
                               <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="2em" />
                            </graphic>
@@ -109,6 +113,50 @@
                </children>
             </AnchorPane>
          </left>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane fx:id="availableBooks_form" layoutX="362.0" layoutY="97.0" prefHeight="500.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane layoutX="249.0" layoutY="14.0" prefHeight="472.0" prefWidth="460.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                           <children>
+                              <TableView fx:id="availableBooks_table_btn" layoutX="15.0" layoutY="15.0" prefHeight="442.0" prefWidth="431.0">
+                                <columns>
+                                  <TableColumn fx:id="col_ab_booksTitle" prefWidth="137.0" text="Book Title" />
+                                  <TableColumn fx:id="col_ab_author" prefWidth="100.0" text="Author" />
+                                    <TableColumn fx:id="col_ab_bookType" prefWidth="73.0" text="Book Type" />
+                                    <TableColumn fx:id="col_ab_publishedDate" prefWidth="120.0" text="Published Date" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="472.0" prefWidth="222.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                           <children>
+                              <AnchorPane layoutX="46.0" layoutY="14.0" prefHeight="169.0" prefWidth="131.0" styleClass="image-card" stylesheets="@../designDashboard.css">
+                                 <children>
+                                    <ImageView fx:id="availableBooks_image_btn" fitHeight="174.0" fitWidth="131.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </AnchorPane>
+                              <Button fx:id="save_btn" layoutX="20.0" layoutY="270.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Save" />
+                              <Button fx:id="take_btn" layoutX="128.0" layoutY="270.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Take" />
+                              <Label fx:id="availableBooks_title_btn" layoutX="14.0" layoutY="208.0" prefHeight="20.0" prefWidth="191.0" text="Programming Language">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="95.0" layoutY="236.0" prefHeight="21.0" prefWidth="30.0" text="Title">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <Separator layoutX="237.0" layoutY="57.0" orientation="VERTICAL" prefHeight="417.0" prefWidth="2.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>
