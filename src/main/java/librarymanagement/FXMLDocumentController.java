@@ -7,7 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -38,6 +40,9 @@ public class FXMLDocumentController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+
+    private double x = 0;
+    private double y = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -85,6 +90,20 @@ public class FXMLDocumentController implements Initializable {
                     Stage stage = new Stage();
 
                     Scene scene = new Scene(root);
+
+                    root.setOnMousePressed((MouseEvent e) -> {
+
+                        x = e.getSceneX();
+                        y = e.getSceneY();
+
+                    });
+
+                    root.setOnMouseDragged((MouseEvent e) -> {
+                        stage.setX(e.getScreenX() - x);
+                        stage.setY(e.getScreenY() - y);
+                    });
+
+                    stage.initStyle(StageStyle.TRANSPARENT);
 
                     stage.setScene(scene);
                     stage.show();
