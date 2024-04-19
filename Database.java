@@ -1,98 +1,98 @@
-package Database;
+package librarymanagement;
 
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.SQLException;
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+import java.sql.*;
 
 public class Database {
-	private static final String url = "jdbc:mysql://localhost:3306/";
-	private static final String database_name = "library";
-	private static final String username = "root";
-	private static final String password = "";
-	
-	private static Connection conn = null;
-	private static Statement st = null;
-	
-	public Database() {
-		
-	}
-	
-	public void createDatabase() {
-		try {
-			conn = DriverManager.getConnection(url, username, password);
-			st = conn.createStatement();
-			
-			String sql = "CREATE DATABASE IF NOT EXISTS " + database_name;
-			st.executeUpdate(sql);
-			System.out.println("Create database successfully!");
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(st != null)
-				st.close();
-				if(conn != null)
-				conn.close();
-			}  catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public void createTable() {
-		try {
-			String urlWithDatabase = url + database_name;
-			conn = DriverManager.getConnection(urlWithDatabase, username, password);
-			st = conn.createStatement();
-			
-			String createBooks = "CREATE TABLE IF NOT EXISTS books ("
-	                + "ID INT AUTO_INCREMENT PRIMARY KEY,"
-	                + "Title VARCHAR(50) NOT NULL,"
-	                + "Author VARCHAR(50) NOT NULL,"
-	                + "Genre VARCHAR(50) NOT NULL,"
-	                + "Date VARCHAR(10) NOT NULL,"
-	                + "Publisher VARCHAR(20) NOT NULL)";
 
-	        String createMagazines = "CREATE TABLE IF NOT EXISTS magazines ("
-	                + "ID INT AUTO_INCREMENT PRIMARY KEY,"
-	                + "Title VARCHAR(50) NOT NULL,"
-	                + "Genre VARCHAR(50) NOT NULL,"
-	                + "Date VARCHAR(10) NOT NULL,"
-	                + "Publisher VARCHAR(20) NOT NULL)";
+    public static Connection connectDB() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String url = "jdbc:mysql://localhost:3306"; // Include the database name
+            String username = "root";
+            String password = "";
 
-	        String createComics = "CREATE TABLE IF NOT EXISTS comics ("
-	                + "ID INT AUTO_INCREMENT PRIMARY KEY,"
-	                + "Title VARCHAR(50) NOT NULL,"
-	                + "Author VARCHAR(50) NOT NULL,"
-	                + "Genre VARCHAR(50) NOT NULL,"
-	                + "Date VARCHAR(10) NOT NULL,"
-	                + "Publisher VARCHAR(20) NOT NULL)";
+            Connection connect = DriverManager.getConnection(url, username, password);
 
-	        String createThesises = "CREATE TABLE IF NOT EXISTS theses ("
-	                + "ID INT AUTO_INCREMENT PRIMARY KEY,"
-	                + "Title VARCHAR(50) NOT NULL,"
-	                + "Author VARCHAR(50) NOT NULL,"
-	                + "Genre VARCHAR(50) NOT NULL,"
-	                + "Date VARCHAR(10) NOT NULL,"
-	                + "Publisher VARCHAR(20) NOT NULL)";
+            // Create the database if it doesn't exist
+            String createDatabaseQuery = "CREATE DATABASE IF NOT EXISTS librarydb";
+            PreparedStatement createDatabaseStatement = connect.prepareStatement(createDatabaseQuery);
+            createDatabaseStatement.executeUpdate();
 
-	        st.executeUpdate(createBooks);
-	        st.executeUpdate(createMagazines);
-	        st.executeUpdate(createComics);
-	        st.executeUpdate(createThesises);
-	        System.out.println("Create Tables successfully!");
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if(st != null)
-				st.close();
-				if(conn != null)
-				conn.close();
-			}  catch(SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+            url += "/librarydb";
+            connect = DriverManager.getConnection(url,username,password);
+
+            // Create the table if it doesn't exist
+            String createStudentTableQuery = "CREATE TABLE IF NOT EXISTS student ("
+                    + "studentNumber VARCHAR(100), "
+                    + "studentName NVARCHAR(100),"
+                    + "password VARCHAR(100), "
+                    + "image VARCHAR(500))";
+            PreparedStatement createStudentTableStatement = connect.prepareStatement(createStudentTableQuery);
+            createStudentTableStatement.executeUpdate();
+
+
+            return connect;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void insertStudents(Connection connection) {
+        String sql = "INSERT INTO student (studentNumber, studentName, password, image) VALUES (?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            // Insert values for each student only if they don't already exist
+            if (!studentExists(connection, "0969571699")) {
+                preparedStatement.setString(1, "0969571699");
+                preparedStatement.setString(2, "Giang Khánh Quân");
+                preparedStatement.setString(3, "123456");
+                preparedStatement.setString(4, "default_image_path");
+                preparedStatement.addBatch();
+            }
+
+            if (!studentExists(connection, "123")) {
+                preparedStatement.setString(1, "123");
+                preparedStatement.setString(2, "Nguyễn Phúc Toàn");
+                preparedStatement.setString(3, "123456");
+                preparedStatement.setString(4, "default_image_path");
+                preparedStatement.addBatch();
+            }
+
+            if (!studentExists(connection, "456")) {
+                preparedStatement.setString(1, "456");
+                preparedStatement.setString(2, "Nguyễn Anh Đức");
+                preparedStatement.setString(3, "123456");
+                preparedStatement.setString(4, "default_image_path");
+                preparedStatement.addBatch();
+            }
+
+            if (!studentExists(connection, "789")) {
+                preparedStatement.setString(1, "789");
+                preparedStatement.setString(2, "Nguyễn Hoàng Long");
+                preparedStatement.setString(3, "123456");
+                preparedStatement.setString(4, "default_image_path");
+                preparedStatement.addBatch();
+            }
+
+
+            // Execute the batch insert
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean studentExists(Connection connection, String studentNumber) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM student WHERE studentNumber = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, studentNumber);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1) > 0;
+    }
 }
