@@ -1,6 +1,9 @@
 package librarymanagement;
 
 import javafx.animation.TranslateTransition;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +25,10 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -31,28 +40,28 @@ public class DashboardController implements Initializable {
     private AnchorPane availableBooks_form;
 
     @FXML
-    private ImageView availableBooks_image_btn;
+    private ImageView availableBooks_imageView;
 
     @FXML
-    private TableView<?> availableBooks_table_btn;
+    private TableView<availableBooks> availableBooks_tableView;
 
     @FXML
-    private Label availableBooks_title_btn;
+    private Label availableBooks_title;
 
     @FXML
     private Circle circle_image;
 
     @FXML
-    private TableColumn<?, ?> col_ab_author;
+    private TableColumn<availableBooks, String> col_ab_author;
 
     @FXML
-    private TableColumn<?, ?> col_ab_bookType;
+    private TableColumn<availableBooks, String> col_ab_bookType;
 
     @FXML
-    private TableColumn<?, ?> col_ab_booksTitle;
+    private TableColumn<availableBooks, String> col_ab_bookTitle;
 
     @FXML
-    private TableColumn<?, ?> col_ab_publishedDate;
+    private TableColumn<availableBooks, String> col_ab_publishedDate;
 
     @FXML
     private Button edit_btn;
@@ -73,7 +82,7 @@ public class DashboardController implements Initializable {
     private Button logout_btn;
 
     @FXML
-    private Label studentNumber_btn;
+    private Label studentNumber_label;
 
     @FXML
     private Button take_btn;
@@ -116,7 +125,264 @@ public class DashboardController implements Initializable {
     @FXML
     private Circle smallCircle_image;
 
+    @FXML
+    private AnchorPane issue_form;
 
+    @FXML
+    private AnchorPane returnBook_form;
+
+    @FXML
+    private AnchorPane savedBook_form;
+
+    @FXML
+    private Label currentForm_label;
+
+    Image image;
+
+    private Connection connect;
+    private PreparedStatement prepare;
+    private Statement statement;
+    private ResultSet result;
+
+    public ObservableList<availableBooks> dataList(){
+
+        ObservableList<availableBooks> listBooks = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM book";
+
+        connect = Database.connectDB();
+
+        try {
+            availableBooks aBooks;
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()){
+                aBooks = new availableBooks(
+                        result.getString("bookTitle"),
+                        result.getString("author"),
+                        result.getString("bookType"),
+                        result.getString("image"),
+                        result.getDate("date"));
+
+                listBooks.add(aBooks);
+            }
+
+        }catch (Exception e){e.printStackTrace();}
+        return listBooks;
+    }
+
+    //SHOWING BOOKS DATA
+    private ObservableList<availableBooks> listBook;
+    public void showAvailableBooks(){
+
+        listBook = dataList();
+
+        col_ab_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        col_ab_author.setCellValueFactory(new PropertyValueFactory<>("author"));
+        col_ab_bookType.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        col_ab_publishedDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        availableBooks_tableView.setItems(listBook);
+    }
+
+    public void selectAvailableBooks(){
+
+        availableBooks bookData = availableBooks_tableView.getSelectionModel().getSelectedItem();
+
+        int num = availableBooks_tableView.getSelectionModel().getFocusedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        availableBooks_title.setText(bookData.getTitle());
+
+//        THIS IS REQUIRED TO DISPLAY THE IMAGE
+//        NOTE! DON'T FORGET THE "file:"
+        String uri = "file:" + bookData.getImage();
+
+        image = new Image(uri, 134, 171, false, true);
+        availableBooks_imageView.setImage(image);
+    }
+
+    public void abTakeButton(ActionEvent event){
+
+        if (event.getSource()== take_btn){
+            issue_form.setVisible(true);
+            availableBooks_form.setVisible(false);
+            savedBook_form.setVisible(false);
+            returnBook_form.setVisible(false);
+        }
+
+    }
+
+    public void studentNumber(){
+//        WE CAN DISPLAY THE STUDENT NUMBER THAT STUDENT USED
+        studentNumber_label.setText(getData.studentNumber);
+    }
+
+    public void sideNavButtonDesign(ActionEvent event){
+        if (event.getSource() == halfNav_availableBtn){
+
+            issue_form.setVisible(false);
+            availableBooks_form.setVisible(true);
+            savedBook_form.setVisible(false);
+            returnBook_form.setVisible(false);
+
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Available Books");
+        }else if (event.getSource() == halfNav_takeBtn){
+
+            issue_form.setVisible(true);
+            availableBooks_form.setVisible(false);
+            savedBook_form.setVisible(false);
+            returnBook_form.setVisible(false);
+
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Issue Books");
+
+        }else if (event.getSource() == halfNav_returnBtn){
+
+            issue_form.setVisible(false);
+            availableBooks_form.setVisible(false);
+            savedBook_form.setVisible(false);
+            returnBook_form.setVisible(true);
+
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Return Books");
+
+        }else if (event.getSource() == halfNav_saveBtn){
+
+            issue_form.setVisible(false);
+            availableBooks_form.setVisible(false);
+            savedBook_form.setVisible(true);
+            returnBook_form.setVisible(false);
+
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Saved Books");
+
+        }
+    }
+
+    public void navButtonDesign(ActionEvent event){
+
+        if (event.getSource() == availableBooks_btn){
+
+            issue_form.setVisible(false);
+            availableBooks_form.setVisible(true);
+            savedBook_form.setVisible(false);
+            returnBook_form.setVisible(false);
+
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Available Books");
+
+        }else if (event.getSource() == issueBooks_btn){
+
+            issue_form.setVisible(true);
+            availableBooks_form.setVisible(false);
+            savedBook_form.setVisible(false);
+            returnBook_form.setVisible(false);
+
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Issue Books");
+
+        }else if (event.getSource() == returnBooks_btn){
+
+            issue_form.setVisible(false);
+            availableBooks_form.setVisible(false);
+            savedBook_form.setVisible(false);
+            returnBook_form.setVisible(true);
+
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Return Books");
+
+
+        }else if (event.getSource() == savedBooks_btn){
+
+            issue_form.setVisible(false);
+            availableBooks_form.setVisible(false);
+            savedBook_form.setVisible(true);
+            returnBook_form.setVisible(false);
+
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Saved Books");
+
+        }
+    }
 
     private double x = 0;
     private double y = 0;
@@ -228,5 +494,8 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //TO SHOW THE AVAILABLE BOOKS
+        showAvailableBooks();
+        studentNumber();
     }
 }
