@@ -75,6 +75,8 @@ public class FXMLDocumentController implements Initializable {
 
                 if(result.next()){
 
+                    getData.studentNumber = studentNumber.getText();
+
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Admin Message");
                     alert.setHeaderText(null);
