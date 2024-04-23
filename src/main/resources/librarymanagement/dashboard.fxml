@@ -174,7 +174,7 @@
                               </TableView>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="472.0" prefWidth="222.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="472.0" prefWidth="222.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
                            <children>
                               <AnchorPane layoutX="46.0" layoutY="14.0" prefHeight="169.0" prefWidth="131.0" styleClass="image-card" stylesheets="@../designDashboard.css">
                                  <children>
@@ -250,7 +250,7 @@
                               <Label layoutX="202.0" layoutY="344.0" prefHeight="30.0" prefWidth="222.0" styleClass="label_take" stylesheets="@../designDashboard.css" text="Label" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="14.0" layoutY="13.0" prefHeight="470.0" prefWidth="217.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
+                        <AnchorPane layoutX="14.0" layoutY="13.0" prefHeight="470.0" prefWidth="217.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
                               <AnchorPane layoutX="43.0" layoutY="14.0" prefHeight="174.0" prefWidth="131.0" styleClass="image-card" stylesheets="@../designDashboard.css" AnchorPane.leftAnchor="14.0">
                                  <children>
