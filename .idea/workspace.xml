@@ -7,14 +7,7 @@
     <list default="true" id="5b9946f7-c6a5-4455-9e03-bb6937a7e672" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/FXMLDocumentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/FXMLDocumentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/designDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/designDashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/librarymanagement/DashboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/librarymanagement/DashboardController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/librarymanagement/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/librarymanagement/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/librarymanagement/FXMLDocumentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/librarymanagement/FXMLDocumentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/librarymanagement/LibraryManagement.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/librarymanagement/LibraryManagement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/out/production/LibraryManagement_JavaFX/module-info.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +23,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/Anh_Duc" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -54,23 +60,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.LibraryManagement.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Project kì 2/LibraryManagement_JavaFX/src/main/java/image&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "Application.LibraryManagement.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Anh__Duc",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/LibraryManagement_JavaFX/LibraryManagement_JavaFX/src/main/resources/lib/mysql-connector-j-8.3.0.jar",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.JavaFX"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\JavaFX\LibraryManagementFX\src\main\resources\lib" />

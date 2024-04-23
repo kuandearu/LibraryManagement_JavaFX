@@ -111,7 +111,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="studentNumber_btn" layoutX="80.0" layoutY="199.0" text="0969571699" textFill="WHITE">
+                        <Label fx:id="studentNumber_label" layoutX="80.0" layoutY="199.0" text="0969571699" textFill="WHITE">
                            <font>
                               <Font name="Microsoft Sans Serif" size="18.0" />
                            </font>
@@ -164,9 +164,9 @@
                      <children>
                         <AnchorPane layoutX="249.0" layoutY="14.0" prefHeight="472.0" prefWidth="460.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
-                              <TableView fx:id="availableBooks_tableView" layoutX="15.0" layoutY="15.0" prefHeight="442.0" prefWidth="431.0">
+                              <TableView fx:id="availableBooks_tableView" layoutX="15.0" layoutY="15.0" onMouseClicked="#selectAvailableBooks" prefHeight="442.0" prefWidth="431.0">
                                  <columns>
-                                    <TableColumn fx:id="col_ab_booksTitle" prefWidth="137.0" text="Book Title" />
+                                    <TableColumn fx:id="col_ab_bookTitle" prefWidth="137.0" text="Book Title" />
                                     <TableColumn fx:id="col_ab_author" prefWidth="100.0" text="Author" />
                                     <TableColumn fx:id="col_ab_bookType" prefWidth="73.0" text="Book Type" />
                                     <TableColumn fx:id="col_ab_publishedDate" prefWidth="120.0" text="Published Date" />
@@ -178,12 +178,12 @@
                            <children>
                               <AnchorPane layoutX="46.0" layoutY="14.0" prefHeight="169.0" prefWidth="131.0" styleClass="image-card" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <ImageView fx:id="availableBooks_image_btn" fitHeight="174.0" fitWidth="131.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="availableBooks_imageView" fitHeight="174.0" fitWidth="131.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" />
                                  </children>
                               </AnchorPane>
                               <Button fx:id="save_btn" layoutX="20.0" layoutY="270.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Save" />
                               <Button fx:id="take_btn" layoutX="128.0" layoutY="270.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="67.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Take" />
-                              <Label fx:id="availableBooks_title_btn" layoutX="14.0" layoutY="208.0" prefHeight="20.0" prefWidth="191.0" text="Programming Language">
+                              <Label fx:id="availableBooks_title" layoutX="14.0" layoutY="208.0" prefHeight="20.0" prefWidth="191.0">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="16.0" />
                                  </font>
@@ -198,7 +198,7 @@
                         <Separator layoutX="237.0" layoutY="57.0" orientation="VERTICAL" prefHeight="417.0" prefWidth="2.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="26.0" layoutY="26.0" prefHeight="500.0" prefWidth="723.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane layoutX="26.0" layoutY="26.0" prefHeight="500.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="249.0" layoutY="13.0" prefHeight="470.0" prefWidth="460.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
@@ -250,7 +250,7 @@
                               <Label layoutX="202.0" layoutY="344.0" prefHeight="30.0" prefWidth="222.0" styleClass="label_take" stylesheets="@../designDashboard.css" text="Label" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="14.0" layoutY="13.0" prefHeight="470.0" prefWidth="217.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                        <AnchorPane layoutX="14.0" layoutY="13.0" prefHeight="470.0" prefWidth="217.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
                            <children>
                               <AnchorPane layoutX="43.0" layoutY="14.0" prefHeight="174.0" prefWidth="131.0" styleClass="image-card" stylesheets="@../designDashboard.css" AnchorPane.leftAnchor="14.0">
                                  <children>

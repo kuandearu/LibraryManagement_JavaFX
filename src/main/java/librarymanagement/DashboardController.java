@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -88,7 +85,6 @@ public class DashboardController implements Initializable {
     private Button take_btn;
 
 
-
     @FXML
     private Button close;
 
@@ -136,6 +132,45 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Label currentForm_label;
+
+    @FXML
+    private TextField take_BookTitle;
+
+    @FXML
+    private TextField take_FirstName;
+
+    @FXML
+    private ComboBox<?> take_Gender;
+
+    @FXML
+    private Label take_IssuedDate;
+
+    @FXML
+    private TextField take_LastName;
+
+    @FXML
+    private Label take_StudentNumber;
+
+    @FXML
+    private Label take_authorLabel;
+
+    @FXML
+    private Button take_clearBtn;
+
+    @FXML
+    private Label take_dateLabel;
+
+    @FXML
+    private Label take_genreLabel;
+
+    @FXML
+    private ImageView take_imageView;
+
+    @FXML
+    private Button take_takeBtn;
+
+    @FXML
+    private Label take_titleLabel;
 
     Image image;
 
