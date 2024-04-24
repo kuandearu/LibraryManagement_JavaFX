@@ -195,6 +195,22 @@ public class DashboardController implements Initializable {
         take_Gender.setItems(list);
     }
 
+    public void findBook(ActionEvent event){
+
+        String sql = "SELECT * FROM book WHERE bookTitle = '" + take_BookTitle.getText() + "'";
+
+        connect = Database.connectDB();
+
+        try{
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            Alert alert;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public ObservableList<availableBooks> dataList(){
 
         ObservableList<availableBooks> listBooks = FXCollections.observableArrayList();
