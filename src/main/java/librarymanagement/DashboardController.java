@@ -27,7 +27,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -196,6 +198,60 @@ public class DashboardController implements Initializable {
         take_Gender.setItems(list);
     }
 
+    public void takeBook(){
+
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+        String sql = "INSERT INTO take VALUES(?,?,?,?,?,?,?,?)";
+
+        connect = Database.connectDB();
+
+        try{
+
+            Alert alert;
+
+            if(take_FirstName.getText().isEmpty()
+            || take_LastName.getText().isEmpty()
+            || take_Gender.getSelectionModel().isEmpty()){
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Admin Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please insert completely all Student's Information!");
+                alert.showAndWait();
+            }else if(take_titleLabel.getText().isEmpty()){
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Admin Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please indicate the book you want to take");
+                alert.showAndWait();
+            }else{
+
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(1, take_StudentNumber.getText());
+                prepare.setString(2, take_FirstName.getText());
+                prepare.setString(3, take_LastName.getText());
+                prepare.setString(4, (String)take_Gender.getSelectionModel().getSelectedItem());
+                prepare.setString(5, take_titleLabel.getText());
+                prepare.setString(6, getData.path);
+                prepare.setDate(7, sqlDate);
+
+                String check = "Not Return";
+
+                prepare.setString(8, check);
+                prepare.executeUpdate();
+
+                alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Admin Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Successfully take the book");
+                alert.showAndWait();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void findBook(ActionEvent event){
 
         clearFindData();
@@ -262,6 +318,12 @@ public class DashboardController implements Initializable {
         take_genreLabel.setText("");
         take_dateLabel.setText("");
         take_imageView.setImage(null);
+    }
+
+    public void displayDate(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String date = format.format(new Date());
+        take_IssuedDate.setText(date);
     }
 
     public ObservableList<availableBooks> dataList(){
@@ -619,5 +681,6 @@ public class DashboardController implements Initializable {
         studentNumber();
         gender();
         studentNumberLabel();
+        displayDate();
     }
 }

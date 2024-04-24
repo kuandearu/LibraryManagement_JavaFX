@@ -230,7 +230,7 @@
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="take_Gender" layoutX="202.0" layoutY="181.0" onAction="#gender" prefWidth="150.0" styleClass="label_take" stylesheets="@../designDashboard.css" />
+                              <ComboBox fx:id="take_Gender" layoutX="202.0" layoutY="181.0" onAction="#gender" prefWidth="150.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
                               <Label layoutX="24.0" layoutY="255.0" prefHeight="29.0" prefWidth="165.0" text="Book Details:" AnchorPane.leftAnchor="24.0">
                                  <font>
                                     <Font name="Berlin Sans FB" size="25.0" />
@@ -270,7 +270,7 @@
                                  </children>
                               </AnchorPane>
                               <Button fx:id="take_clearBtn" layoutX="15.0" layoutY="391.0" mnemonicParsing="false" onAction="#clearTakeData" prefHeight="38.0" prefWidth="79.0" text="Clear" />
-                              <Button layoutX="124.0" layoutY="391.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="79.0" text="Take" />
+                              <Button fx:id="take_takeBtn" layoutX="124.0" layoutY="391.0" mnemonicParsing="false" onAction="#takeBook" prefHeight="38.0" prefWidth="79.0" text="Take" />
                            </children>
                         </AnchorPane>
                         <Separator layoutX="237.0" layoutY="26.0" orientation="VERTICAL" prefHeight="449.0" prefWidth="0.0" />
