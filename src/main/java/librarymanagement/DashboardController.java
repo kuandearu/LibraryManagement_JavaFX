@@ -20,6 +20,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javafx.scene.control.Alert.AlertType;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -197,6 +198,8 @@ public class DashboardController implements Initializable {
 
     public void findBook(ActionEvent event){
 
+        clearFindData();
+
         String sql = "SELECT * FROM book WHERE bookTitle = '" + take_BookTitle.getText() + "'";
 
         connect = Database.connectDB();
@@ -204,11 +207,61 @@ public class DashboardController implements Initializable {
         try{
             prepare = connect.prepareStatement(sql);
             result = prepare.executeQuery();
+            boolean check = false;
 
             Alert alert;
+
+            if(take_BookTitle.getText().isEmpty()){
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Admin Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select the book!");
+                alert.showAndWait();
+            }else{
+                while (result.next()){
+                    take_titleLabel.setText(result.getString("bookTitle"));
+                    take_authorLabel.setText(result.getString("author"));
+                    take_genreLabel.setText(result.getString("bookType"));
+                    take_dateLabel.setText(result.getString("date"));
+
+                    getData.path = result.getString("image");
+
+                    String uri = "file:" + getData.path;
+
+                    image = new Image(uri, 127,162, false, true);
+                    take_imageView.setImage(image);
+
+                    check = true;
+                }
+
+                if(!check){
+                    take_titleLabel.setText("Book is not available!");
+                }
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void studentNumberLabel(){
+        take_StudentNumber.setText(getData.studentNumber);
+    }
+
+    public void clearTakeData(){
+        take_BookTitle.setText("");
+        take_titleLabel.setText("");
+        take_authorLabel.setText("");
+        take_genreLabel.setText("");
+        take_dateLabel.setText("");
+        take_imageView.setImage(null);
+    }
+
+    public void clearFindData(){
+        take_titleLabel.setText("");
+        take_authorLabel.setText("");
+        take_genreLabel.setText("");
+        take_dateLabel.setText("");
+        take_imageView.setImage(null);
     }
 
     public ObservableList<availableBooks> dataList(){
@@ -565,5 +618,6 @@ public class DashboardController implements Initializable {
         showAvailableBooks();
         studentNumber();
         gender();
+        studentNumberLabel();
     }
 }
