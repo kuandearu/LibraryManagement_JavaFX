@@ -246,6 +246,9 @@ public class DashboardController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Successfully take the book");
                 alert.showAndWait();
+
+                clearTakeData();
+
             }
         }catch (Exception e){
             e.printStackTrace();
