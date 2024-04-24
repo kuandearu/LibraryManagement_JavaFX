@@ -26,6 +26,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -178,6 +180,20 @@ public class DashboardController implements Initializable {
     private PreparedStatement prepare;
     private Statement statement;
     private ResultSet result;
+
+    private String comboBox[] = {"Male", "Female", "Others"};
+
+    public void gender(){
+        List<String> combo = new ArrayList<>();
+
+        for(String data: comboBox){
+            combo.add(data);
+        }
+
+        ObservableList list = FXCollections.observableList(combo);
+
+        take_Gender.setItems(list);
+    }
 
     public ObservableList<availableBooks> dataList(){
 
@@ -532,5 +548,6 @@ public class DashboardController implements Initializable {
         //TO SHOW THE AVAILABLE BOOKS
         showAvailableBooks();
         studentNumber();
+        gender();
     }
 }
