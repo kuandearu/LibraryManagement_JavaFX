@@ -222,7 +222,14 @@ public class DashboardController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Please indicate the book you want to take");
                 alert.showAndWait();
-            }else{
+            }else if(take_titleLabel.getText().equals("Book is not available!")) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Admin Message");
+                alert.setHeaderText(null);
+                alert.setContentText("The selected book is not available. Please select another book.");
+                alert.showAndWait();
+            }
+            else{
 
                 prepare = connect.prepareStatement(sql);
                 prepare.setString(1, take_StudentNumber.getText());
