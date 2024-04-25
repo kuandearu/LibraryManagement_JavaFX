@@ -8,8 +8,8 @@ import java.sql.*;
 public class Database {
 
     public static Connection connectDB() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+        try {   
+            //Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306"; // Include the database name
             String username = "root";
             String password = "";
