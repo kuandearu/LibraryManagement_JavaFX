@@ -98,8 +98,6 @@ public class Database {
                 preparedStatement.setString(4, "default_image_path");
                 preparedStatement.addBatch();
             }
-
-
             // Execute the batch insert
             preparedStatement.executeBatch();
         } catch (SQLException e) {
