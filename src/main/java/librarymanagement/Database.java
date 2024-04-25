@@ -116,7 +116,7 @@ public class Database {
                 prepare.setString(1, "Java Tutorial");
                 prepare.setString(2, "March");
                 prepare.setString(3, "Thesis, Education, IT");
-                prepare.setString(4, "D:\\DestokDev\\LibraryManagement_JavaFX\\src\\main\\java\\image\\java tutorial.jpg");
+                prepare.setString(4, "src/main/java/image/java tutorial.jpg");
                 prepare.setString(5, "2020-09-24");
                 prepare.addBatch();
             }
@@ -125,7 +125,7 @@ public class Database {
                 prepare.setString(1, "JavaFX Tutorial");
                 prepare.setString(2, "Steven");
                 prepare.setString(3, "Journal, Education, IT");
-                prepare.setString(4, "D:\\DestokDev\\LibraryManagement_JavaFX\\src\\main\\java\\image\\javafx tutorial book.jpg");
+                prepare.setString(4, "src/main/java/image/javafx tutorial book.jpg");
                 prepare.setString(5, "2023-06-27");
                 prepare.addBatch();
             }
@@ -134,7 +134,7 @@ public class Database {
                 prepare.setString(1, "Programming Language");
                 prepare.setString(2, "Ammy Adam");
                 prepare.setString(3, "Note, Education, Tutorial, IT");
-                prepare.setString(4, "D:\\DestokDev\\LibraryManagement_JavaFX\\src\\main\\java\\image\\programming language book.jpg");
+                prepare.setString(4, "src/main/java/image/programming language book.jpg");
                 prepare.setString(5, "2024-05-30");
                 prepare.addBatch();
             }
@@ -143,7 +143,7 @@ public class Database {
                 prepare.setString(1, "Python");
                 prepare.setString(2, "Army");
                 prepare.setString(3, "Magazine, Education, Introduction, Tutorial");
-                prepare.setString(4, "D:\\DestokDev\\LibraryManagement_JavaFX\\src\\main\\java\\image\\python tutorial.jpg");
+                prepare.setString(4, "src/main/java/image/python tutorial.jpg");
                 prepare.setString(5, "2022-09-12");
                 prepare.addBatch();
             }
