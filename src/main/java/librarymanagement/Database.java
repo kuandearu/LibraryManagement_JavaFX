@@ -33,6 +33,26 @@ public class Database {
             PreparedStatement createStudentTableStatement = connect.prepareStatement(createStudentTableQuery);
             createStudentTableStatement.executeUpdate();
 
+            String createBookTableQuery = "CREATE TABLE IF NOT EXISTS book ("
+                    + "bookTitle VARCHAR(100), "
+                    + "author VARCHAR(100), "
+                    + "bookType VARCHAR(100), "
+                    + "image VARCHAR(500), "
+                    + "date DATE NULL)";
+            PreparedStatement createBookTableStatement = connect.prepareStatement(createBookTableQuery);
+            createBookTableStatement.executeUpdate();
+
+            String createTakeBookTableQuery = "CREATE TABLE IF NOT EXISTS take ("
+                    + "studentNumber VARCHAR(100), "
+                    + "firstname VARCHAR(100), "
+                    + "lastname VARCHAR(100), "
+                    + "gender VARCHAR(100), "
+                    + "bookTitle VARCHAR(100), "
+                    + "image VARCHAR(500), "
+                    + "date DATE NULL, "
+                    + "checkReturn VARCHAR(100))";
+            PreparedStatement createTakeBookTableStatement = connect.prepareStatement(createTakeBookTableQuery);
+            createTakeBookTableStatement.executeUpdate();
 
             return connect;
         } catch (Exception e) {
