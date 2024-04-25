@@ -38,7 +38,6 @@ public class FXMLDocumentController implements Initializable {
     //DATABASE TOOLS
     private Connection connect;
     private PreparedStatement prepare;
-    private Statement statement;
     private ResultSet result;
 
     private double x = 0;
@@ -51,8 +50,6 @@ public class FXMLDocumentController implements Initializable {
     }
     public void login(){
         String sql = "SELECT * FROM student WHERE studentNumber = ? AND password = ?";
-        connect = Database.connectDB();
-
 
         try{
 
@@ -74,6 +71,8 @@ public class FXMLDocumentController implements Initializable {
             }else{
 
                 if(result.next()){
+
+                    getData.studentNumber = studentNumber.getText();
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Admin Message");

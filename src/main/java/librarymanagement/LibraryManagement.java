@@ -10,18 +10,22 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
-public class LibraryManagement extends Application {
+public class LibraryManagement extends Application  {
 
     private double x = 0;
     private double y = 0;
+    private Connection connect;
+
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException {
         // Connect to the database
-        Connection connection = Database.connectDB();
+        connect = Database.connectDB();
 
         // Insert students into the database
-        Database.insertStudents(connection);
+        Database.insertStudents();
+        Database.insertBooks();
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Scene scene = new Scene(root);
         root.setOnMousePressed((MouseEvent event) -> {

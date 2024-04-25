@@ -57,7 +57,7 @@
 
 .nav-btn: hover {
     -fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);
-    -fx-background-radius: 5px;
+    -fx-background-radius: 10px;
     -fx-cursor: hand;
 }
 
@@ -124,4 +124,16 @@
     -fx-border-radius: 5px;
     -fx-border-width: 0.4px;
     -fx-background-radius: 5px;
+}
+
+.clear-btn{
+    -fx-background-color:#376282;
+    -fx-background-radius: 15px;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.clear-btn:hover{
+    -fx-background-color:#4386b5;
 }
