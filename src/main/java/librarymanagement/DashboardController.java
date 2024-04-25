@@ -179,7 +179,6 @@ public class DashboardController implements Initializable {
 
     private Connection connect;
     private PreparedStatement prepare;
-    private Statement statement;
     private ResultSet result;
 
     private String comboBox[] = {"Male", "Female", "Others"};

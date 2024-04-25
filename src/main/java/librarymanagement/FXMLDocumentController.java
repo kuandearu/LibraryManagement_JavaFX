@@ -38,7 +38,6 @@ public class FXMLDocumentController implements Initializable {
     //DATABASE TOOLS
     private Connection connect;
     private PreparedStatement prepare;
-    private Statement statement;
     private ResultSet result;
 
     private double x = 0;

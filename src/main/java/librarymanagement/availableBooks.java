@@ -37,7 +37,4 @@ public class availableBooks {
         return date;
     }
 
-
-
-
 }

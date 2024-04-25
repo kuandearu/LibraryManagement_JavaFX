@@ -17,6 +17,7 @@ public class LibraryManagement extends Application  {
     private double x = 0;
     private double y = 0;
     private Connection connect;
+
     @Override
     public void start(Stage stage) throws IOException, SQLException {
         // Connect to the database
