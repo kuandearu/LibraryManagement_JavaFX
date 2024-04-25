@@ -361,7 +361,6 @@ public class DashboardController implements Initializable {
                         result.getString("bookType"),
                         result.getString("image"),
                         result.getDate("date"));
-
                 listBooks.add(aBooks);
             }
 
