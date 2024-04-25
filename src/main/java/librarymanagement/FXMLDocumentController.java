@@ -51,8 +51,6 @@ public class FXMLDocumentController implements Initializable {
     }
     public void login(){
         String sql = "SELECT * FROM student WHERE studentNumber = ? AND password = ?";
-        connect = Database.connectDB();
-
 
         try{
 

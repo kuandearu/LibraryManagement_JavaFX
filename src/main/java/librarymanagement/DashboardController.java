@@ -22,11 +22,9 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.scene.control.Alert.AlertType;
 
+
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -198,7 +196,7 @@ public class DashboardController implements Initializable {
         take_Gender.setItems(list);
     }
 
-    public void takeBook(){
+    public void takeBook() throws SQLException {
 
         Date date = new Date();
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
@@ -250,12 +248,19 @@ public class DashboardController implements Initializable {
                 clearTakeData();
 
             }
-        }catch (Exception e){
+        }catch(Exception e){
             e.printStackTrace();
+        } finally {
+            if(result != null)
+                result.close();
+            if(prepare != null)
+                prepare.close();
+            if(connect != null)
+                connect.close();
         }
     }
 
-    public void findBook(ActionEvent event){
+    public void findBook(ActionEvent event) throws SQLException {
 
         clearFindData();
 
@@ -299,6 +304,13 @@ public class DashboardController implements Initializable {
             }
         }catch (Exception e){
             e.printStackTrace();
+        } finally {
+            if(result != null)
+                result.close();
+            if(prepare != null)
+                prepare.close();
+            if(connect != null)
+                connect.close();
         }
     }
 
