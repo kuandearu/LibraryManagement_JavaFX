@@ -182,10 +182,10 @@ public class DashboardController implements Initializable {
     private TableColumn<returnBook, String> returnBook_date;
 
     @FXML
-    private ImageView returnBook_imageView;
+    private ImageView return_imageView;
 
     @FXML
-    private TableView<returnBook> returnBook_tableView;
+    private TableView<returnBook> return_tableView;
 
     @FXML
     private TableColumn<returnBook, String> returnBook_title;
@@ -201,7 +201,7 @@ public class DashboardController implements Initializable {
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
-
+    private Statement statement;
     private String comboBox[] = {"Male", "Female", "Others"};
 
     public void gender(){
@@ -373,7 +373,7 @@ public class DashboardController implements Initializable {
     public ObservableList<returnBook> returnBookData(){
         ObservableList<returnBook> listReturnBook = FXCollections.observableArrayList();
         String checkReturn = "Not Return";
-        String sql = "select * from take where checkReturn = '"+ checkReturn +"' and studentNumber = '"+ getData.studentNumber +"' ";
+        String sql = "SELECT * FROM take WHERE checkReturn = '"+ checkReturn +"' AND studentNumber = '"+ getData.studentNumber +"' ";
         Alert alert;
         connect = Database.connectDB();
         try{
@@ -381,8 +381,14 @@ public class DashboardController implements Initializable {
             prepare = connect.prepareStatement(sql);
             result = prepare.executeQuery();
             while (result.next()){
-                rBooks = new returnBook(result.getString("bookTitle"),result.getString("author"),
-                        result.getString("bookType"), result.getDate("date"),result.getString("image") );
+                rBooks = new returnBook(
+                        result.getString("bookTitle"),
+                        result.getString("author"),
+                        result.getString("bookType"),
+                        result.getDate("date"),
+                        result.getString("image")
+
+                );
 
                 listReturnBook.add(rBooks);
             }
@@ -391,6 +397,57 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
         return listReturnBook;
+    }
+
+    public void returnBook(){
+        String sql = "UPDATE take SET checkReturn = 'Returned' WHERE bookTitle = '"+ getData.takeBookTitle +"' ";
+        connect = Database.connectDB();
+
+        try{
+
+            if(return_imageView.getImage() == null){
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select the book you want to return!");
+                alert.showAndWait();
+            }else{
+                statement = connect.createStatement();
+                statement.executeUpdate(sql);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Return successfully!");
+                alert.showAndWait();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void selectReturnBook(){
+        returnBook rBooks = return_tableView.getSelectionModel().getSelectedItem();
+        int num = return_tableView.getSelectionModel().getFocusedIndex();
+
+        if ((num - 1) < -1) {
+//            Alert alert = new Alert(AlertType.INFORMATION);
+//            alert.setTitle("Program message");
+//            alert.setHeaderText(null);
+//            alert.setContentText(""+ num +"");
+//            alert.showAndWait();
+            return;
+        }
+
+        getData.takeBookTitle = rBooks.getTitle();
+
+        getData.path = rBooks.getImage();
+
+        String uri = "file:" + getData.path;
+
+        image = new Image(uri, 134,171, false, true);
+        return_imageView.setImage(image);
+
     }
 
     private ObservableList<returnBook> returnData;
@@ -402,7 +459,7 @@ public class DashboardController implements Initializable {
         returnBook_type.setCellValueFactory(new PropertyValueFactory<>("type"));
         returnBook_date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
-        returnBook_tableView.setItems(returnData);
+        return_tableView.setItems(returnData);
     }
 
     public ObservableList<availableBooks> dataList(){
@@ -447,18 +504,6 @@ public class DashboardController implements Initializable {
         availableBooks_tableView.setItems(listBook);
     }
 
-    public void selectReturnBook(){
-        returnBook getBook = returnBook_tableView.getSelectionModel().getSelectedItem();
-        int index = returnBook_tableView.getSelectionModel().getFocusedIndex();
-        if((index-1) <1){
-            return;
-        }
-        String uri ="file:" + getBook.getImage();
-        image = new Image(uri, 131,175,false,true);
-        returnBook_imageView.setImage(image);
-
-
-    }
 
     public void selectAvailableBooks(){
 
@@ -552,6 +597,7 @@ public class DashboardController implements Initializable {
             halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             currentForm_label.setText("Return Books");
+            showReturnBooks();
 
         }else if (event.getSource() == halfNav_saveBtn){
 

@@ -296,7 +296,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TableView fx:id="returnBook_tableView" layoutX="9.0" layoutY="48.0" prefHeight="418.0" prefWidth="386.0">
+                              <TableView fx:id="return_tableView" layoutX="9.0" layoutY="48.0" onMouseClicked="#selectReturnBook" prefHeight="418.0" prefWidth="386.0">
                                 <columns>
                                   <TableColumn fx:id="returnBook_title" prefWidth="106.39996337890625" text="Book Title" />
                                     <TableColumn fx:id="returnBook_author" minWidth="0.0" prefWidth="76.0" text="Author" />
@@ -310,9 +310,9 @@
                            <children>
                               <AnchorPane layoutX="73.0" layoutY="30.0" prefHeight="176.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <ImageView fx:id="returnBook_imageView" fitHeight="175.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="return_imageView" fitHeight="175.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true" />
                                  </children></AnchorPane>
-                              <Button fx:id="return_button" layoutX="93.0" layoutY="240.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" styleClass="return-btn" stylesheets="@../designDashboard.css" text="Return">
+                              <Button fx:id="return_button" layoutX="93.0" layoutY="240.0" mnemonicParsing="false" onAction="#returnBook" prefHeight="42.0" prefWidth="91.0" styleClass="return-btn" stylesheets="@../designDashboard.css" text="Return">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="12.0" />
                                  </font>
