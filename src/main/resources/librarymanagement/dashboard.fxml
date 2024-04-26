@@ -287,7 +287,7 @@
                         <Separator layoutX="237.0" layoutY="26.0" orientation="VERTICAL" prefHeight="449.0" prefWidth="0.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="returnBook_form" layoutX="217.0" layoutY="116.0" prefHeight="500.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="returnBook_form" layoutX="217.0" layoutY="116.0" prefHeight="500.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="292.0" layoutY="11.0" prefHeight="487.0" prefWidth="404.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
@@ -322,6 +322,26 @@
                         <Separator layoutX="280.0" layoutY="42.0" orientation="VERTICAL" prefHeight="444.0" prefWidth="12.0" />
                      </children></AnchorPane>
                   <AnchorPane fx:id="savedBook_form" layoutX="248.0" layoutY="116.0" prefHeight="500.0" prefWidth="723.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <AnchorPane layoutX="17.0" layoutY="14.0" prefHeight="228.0" prefWidth="675.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                     <children>
+                        <TableView layoutX="205.0" layoutY="14.0" prefHeight="200.0" prefWidth="456.0">
+                          <columns>
+                            <TableColumn prefWidth="116.00001525878906" text="Book Title" />
+                            <TableColumn prefWidth="74.4000244140625" text="Author" />
+                              <TableColumn prefWidth="152.7999267578125" text="Book Type" />
+                              <TableColumn maxWidth="4000.0" prefWidth="112.7999267578125" text="Published date" />
+                          </columns>
+                        </TableView>
+                        <AnchorPane layoutX="48.0" layoutY="14.0" prefHeight="146.0" prefWidth="106.0" styleClass="image-card">
+                           <children>
+                              <ImageView fitHeight="147.0" fitWidth="108.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="unsave_btn" layoutX="52.0" layoutY="175.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" styleClass="unsave_btn" text="Unsave" textFill="#101010" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="17.0" layoutY="271.0" prefHeight="214.0" prefWidth="675.0" styleClass="card-form" stylesheets="@../designDashboard.css" />
+                  <Separator layoutX="127.0" layoutY="257.0" prefHeight="3.0" prefWidth="455.0" />
                </children>
             </AnchorPane>
          </right>

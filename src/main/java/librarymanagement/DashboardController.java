@@ -419,6 +419,8 @@ public class DashboardController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Return successfully!");
                 alert.showAndWait();
+
+                showReturnBooks();
             }
 
         }catch (Exception e){
