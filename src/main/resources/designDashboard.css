@@ -137,3 +137,15 @@
 .clear-btn:hover{
     -fx-background-color:#4386b5;
 }
+
+.return-btn{
+    -fx-background-color: #31647f;
+    -fx-background-radius: 15px;
+    -fx-cursor:hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 15px;
+}
+
+.return-btn:hover{
+    -fx-background-color: #3686ae;
+}
