@@ -29,7 +29,7 @@ public class Database {
                     + "studentNumber VARCHAR(100), "
                     + "studentName NVARCHAR(100),"
                     + "password VARCHAR(100), "
-                    + "image VARCHAR(500))";
+                    + "image VARCHAR(500) NOT NULL DEFAULT 'src/main/java/image/logo.png' )";
             prepare = connect.prepareStatement(createStudentTableQuery);
             prepare.executeUpdate();
 
@@ -42,16 +42,30 @@ public class Database {
             prepare = connect.prepareStatement(createBookTableQuery);
             prepare.executeUpdate();
 
-            String createTakeBookTableQuery = "CREATE TABLE IF NOT EXISTS take ("
-                    + "studentNumber VARCHAR(100), "
-                    + "firstname VARCHAR(100), "
-                    + "lastname VARCHAR(100), "
-                    + "gender VARCHAR(100), "
-                    + "bookTitle VARCHAR(100), "
-                    + "image VARCHAR(500), "
-                    + "date DATE NULL, "
-                    + "checkReturn VARCHAR(100))";
+            String createTakeBookTableQuery = "CREATE TABLE IF NOT EXISTS take (" +
+                    "  studentNumber varchar(100)," +
+                    "  firstname varchar(100)," +
+                    "  lastname varchar(100)," +
+                    "  gender varchar(100)," +
+                    "  bookTitle varchar(100)," +
+                    "  author varchar(100)," +
+                    "  bookType varchar(100)," +
+                    "  image varchar(500)," +
+                    "  date date," +
+                    "  checkReturn varchar(100)" +
+                    ")";
             prepare = connect.prepareStatement(createTakeBookTableQuery);
+            prepare.executeUpdate();
+
+            String createSaveBookTableQuery = "CREATE TABLE IF NOT EXISTS save (" +
+                    "  studentNumber varchar(100)," +
+                    "  bookTitle varchar(100)," +
+                    "  author varchar(100)," +
+                    "  bookType varchar(100)," +
+                    "  image varchar(500)," +
+                    "  date date" +
+                    ")" ;
+            prepare = connect.prepareStatement(createSaveBookTableQuery);
             prepare.executeUpdate();
 
         } catch (SQLException e) {
