@@ -497,7 +497,7 @@ public class DashboardController implements Initializable {
 
     public  ObservableList<saveBook> saveBookData(){
         ObservableList<saveBook> listSaveData = FXCollections.observableArrayList();
-        String sql = "Select * from save";
+        String sql = "Select * from save where studentNumber = '"+ getData.studentNumber +"' ";
         //int count =0;
         connect = Database.connectDB();
         try {
@@ -711,6 +711,8 @@ public class DashboardController implements Initializable {
         studentNumber_label.setText(getData.studentNumber);
     }
 
+    //change user logo
+
     public void insertImage(){
 
         FileChooser open = new FileChooser();
@@ -736,8 +738,9 @@ public class DashboardController implements Initializable {
     public void changeProfile(){
 
         String uri = getData.path;
-        uri.replace("\\","\\\\");
-        String sql = "Update student set image = '"+ uri +"' where studentNumber = '"+ getData.studentNumber +"' ";
+        //uri.replace("\\","\\\\");
+        String uri_convert = uri.replace("\\","/");
+        String sql = "Update student set image = '"+ uri_convert +"' where studentNumber = '"+ getData.studentNumber +"' ";
         connect = Database.connectDB();
         try {
 
