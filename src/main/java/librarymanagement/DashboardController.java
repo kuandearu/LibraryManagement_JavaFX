@@ -711,79 +711,18 @@ public class DashboardController implements Initializable {
         studentNumber_label.setText(getData.studentNumber);
     }
 
-    //change user logo
-
-    public void insertImage(){
-
-        FileChooser open = new FileChooser();
-        open.setTitle("Image file");
-        open.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image file", "*png", "*jpg"));
-        Stage stage = (Stage) nav_form.getScene().getWindow();
-
-        File file = open.showOpenDialog(stage);
-
-        if(file != null){
-
-            image = new Image(file.toURI().toString(),130,87,false,true);
-            circle_image.setFill(new ImagePattern(image));
-            smallCircle_image.setFill(new ImagePattern(image));
-
-            getData.path = file.getAbsolutePath();
-            System.out.println(getData.path);
-
-            changeProfile();
-        }
-    }
-
-    public void changeProfile(){
-
-        String uri = getData.path;
-        //uri.replace("\\","\\\\");
-        String uri_convert = uri.replace("\\","/");
-        String sql = "Update student set image = '"+ uri_convert +"' where studentNumber = '"+ getData.studentNumber +"' ";
-        connect = Database.connectDB();
-        try {
-
-            statement = connect.createStatement();
-            statement.executeUpdate(sql);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void showProfile(){
-        String uri = "file:" + getData.path;
-        image = new Image(uri, 130, 87, false, true);
-        circle_image.setFill(new ImagePattern(image));
-        smallCircle_image.setFill(new ImagePattern(image));
-    }
-
-    public void DesignInsertImage(){
-        circle_image.setOnMouseEntered((MouseEvent event)->{
-            edit_btn.setVisible(true);
-        });
-        circle_image.setOnMouseExited((MouseEvent event)->{
-            edit_btn.setVisible(false);
-        });
-
-        edit_btn.setOnMouseEntered((MouseEvent event)->{
-            edit_btn.setVisible(true);
-            edit_icon.setFill(Color.valueOf("#fff"));
-        });
-        edit_btn.setOnMousePressed((MouseEvent event)->{
-            edit_btn.setVisible(true);
-            edit_icon.setFill(Color.RED);
-        });
-        edit_btn.setOnMouseExited((MouseEvent event)->{
-            edit_btn.setVisible(false);
-        });
-
-
-    }
-
     public void hideInsertImage(){
         edit_btn.setVisible(false);
+    }
+
+    public void setUserImage() {
+        String rootPath = System.getProperty("user.dir");
+        String relativeImagePath = "/src/main/java/image/logo.png";
+        String absoluteImagePath = rootPath + relativeImagePath;
+
+        image = new Image("file:" + absoluteImagePath, 130, 87, false, true);
+        circle_image.setFill(new ImagePattern(image));
+        smallCircle_image.setFill(new ImagePattern(image));
     }
 
     public void sideNavButtonDesign(ActionEvent event){
@@ -1059,10 +998,10 @@ public class DashboardController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DesignInsertImage();
         //TO SHOW THE AVAILABLE BOOKS
         showAvailableBooks();
-        showProfile();
+        setUserImage();
+        hideInsertImage();
         studentNumber();
         gender();
         studentNumberLabel();
@@ -1079,4 +1018,72 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+//    public void insertImage(){
+//
+//        FileChooser open = new FileChooser();
+//        open.setTitle("Image file");
+//        open.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image file", "*png", "*jpg"));
+//        Stage stage = (Stage) nav_form.getScene().getWindow();
+//
+//        File file = open.showOpenDialog(stage);
+//
+//        if(file != null){
+//
+//            image = new Image(file.toURI().toString(),130,87,false,true);
+//            circle_image.setFill(new ImagePattern(image));
+//            smallCircle_image.setFill(new ImagePattern(image));
+//
+//            getData.path = file.getAbsolutePath();
+//            System.out.println(getData.path);
+//
+//            changeProfile();
+//        }
+//    }
+//
+//    public void changeProfile(){
+//
+//        String uri = getData.path;
+//        //uri.replace("\\","\\\\");
+//        String uri_convert = uri.replace("\\","/");
+//        String sql = "Update student set image = '"+ uri_convert +"' where studentNumber = '"+ getData.studentNumber +"' ";
+//        connect = Database.connectDB();
+//        try {
+//
+//            statement = connect.createStatement();
+//            statement.executeUpdate(sql);
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void showProfile(){
+//        String uri = "file:" + getData.path;
+//        image = new Image(uri, 130, 87, false, true);
+//        circle_image.setFill(new ImagePattern(image));
+//        smallCircle_image.setFill(new ImagePattern(image));
+//    }
+
+//    public void DesignInsertImage(){
+//        circle_image.setOnMouseEntered((MouseEvent event)->{
+//            edit_btn.setVisible(true);
+//        });
+//        circle_image.setOnMouseExited((MouseEvent event)->{
+//            edit_btn.setVisible(false);
+//        });
+//
+//        edit_btn.setOnMouseEntered((MouseEvent event)->{
+//            edit_btn.setVisible(true);
+//            edit_icon.setFill(Color.valueOf("#fff"));
+//        });
+//        edit_btn.setOnMousePressed((MouseEvent event)->{
+//            edit_btn.setVisible(true);
+//            edit_icon.setFill(Color.RED);
+//        });
+//        edit_btn.setOnMouseExited((MouseEvent event)->{
+//            edit_btn.setVisible(false);
+//        });
+//
+//
+//    }
 }

@@ -28,8 +28,7 @@ public class Database {
             String createStudentTableQuery = "CREATE TABLE IF NOT EXISTS student ("
                     + "studentNumber VARCHAR(100), "
                     + "studentName NVARCHAR(100),"
-                    + "password VARCHAR(100), "
-                    + "image VARCHAR(500) NOT NULL DEFAULT 'src/main/java/image/logo.png' )";
+                    + "password VARCHAR(100))";
             prepare = connect.prepareStatement(createStudentTableQuery);
             prepare.executeUpdate();
 
@@ -75,7 +74,7 @@ public class Database {
     }
 
     public static void insertStudents() {
-        String sql = "INSERT INTO student (studentNumber, studentName, password, image) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO student (studentNumber, studentName, password, image) VALUES (?, ?, ?)";
         try {
             prepare = connect.prepareStatement(sql);
 
@@ -84,7 +83,6 @@ public class Database {
                 prepare.setString(1, "0969571699");
                 prepare.setString(2, "Giang Khánh Quân");
                 prepare.setString(3, "123456");
-                prepare.setString(4, "default_image_path");
                 prepare.addBatch();
             }
 
@@ -92,7 +90,6 @@ public class Database {
                 prepare.setString(1, "123");
                 prepare.setString(2, "Nguyễn Phúc Toàn");
                 prepare.setString(3, "123456");
-                prepare.setString(4, "default_image_path");
                 prepare.addBatch();
             }
 
@@ -100,7 +97,6 @@ public class Database {
                 prepare.setString(1, "456");
                 prepare.setString(2, "Nguyễn Anh Đức");
                 prepare.setString(3, "123456");
-                prepare.setString(4, "default_image_path");
                 prepare.addBatch();
             }
 
@@ -108,7 +104,6 @@ public class Database {
                 prepare.setString(1, "789");
                 prepare.setString(2, "Nguyễn Hoàng Long");
                 prepare.setString(3, "123456");
-                prepare.setString(4, "default_image_path");
                 prepare.addBatch();
             }
             // Execute the batch insert

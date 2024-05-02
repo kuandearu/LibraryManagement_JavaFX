@@ -147,7 +147,7 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="edit_btn" layoutX="68.0" layoutY="31.0" mnemonicParsing="false" onAction="#insertImage" prefHeight="113.0" prefWidth="127.0" styleClass="edit-btn" stylesheets="@../designDashboard.css">
+                        <Button fx:id="edit_btn" layoutX="68.0" layoutY="31.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="127.0" styleClass="edit-btn" stylesheets="@../designDashboard.css">
                            <graphic>
                               <FontAwesomeIcon fx:id="edit_icon" fill="#f2f2f2" glyphName="EDIT" size="2em" />
                            </graphic>
