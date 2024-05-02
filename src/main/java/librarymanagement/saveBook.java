@@ -10,7 +10,7 @@ public class saveBook {
     private final Date date;
     private final String img;
 
-    public saveBook(String title, String author, String type, Date date, String img) {
+    public saveBook(String title, String author, String type, String img, Date date) {
         this.title = title;
         this.author = author;
         this.type = type;

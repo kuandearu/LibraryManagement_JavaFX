@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="add returbook list">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/FXMLDocumentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/FXMLDocumentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/getData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/getData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/designDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/designDashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/saveBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/saveBook.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,38 +115,5 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add returbook list" />
     <option name="LAST_COMMIT_MESSAGE" value="add returbook list" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java</url>
-          <line>494</line>
-          <properties class="librarymanagement.DashboardController" method="saveBookData">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java</url>
-          <line>742</line>
-          <properties class="librarymanagement.DashboardController" method="changeProfile">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java</url>
-          <line>720</line>
-          <properties class="librarymanagement.DashboardController" method="insertImage">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

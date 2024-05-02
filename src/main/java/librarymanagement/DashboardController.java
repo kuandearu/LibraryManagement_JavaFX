@@ -397,6 +397,8 @@ public class DashboardController implements Initializable {
         take_IssuedDate.setText(date);
     }
 
+    //Return book
+
     public ObservableList<returnBook> returnBookData(){
         ObservableList<returnBook> listReturnBook = FXCollections.observableArrayList();
         String checkReturn = "Not Return";
@@ -491,30 +493,29 @@ public class DashboardController implements Initializable {
         return_tableView.setItems(returnData);
 
     }
+    //Save book
 
-    public  ObservableList<saveBook> saveBookData(){ //error getting data
+    public  ObservableList<saveBook> saveBookData(){
         ObservableList<saveBook> listSaveData = FXCollections.observableArrayList();
-        String sql = "Select * from save where studentNumber = '" + getData.studentNumber + "' ";
+        String sql = "Select * from save";
+        //int count =0;
         connect = Database.connectDB();
-        int count =-1;
-        try{
-            saveBook sBook;
+        try {
+            saveBook sBooks;
             prepare = connect.prepareStatement(sql);
-            prepare.executeQuery();
+            result = prepare.executeQuery();
             while(result.next()){
-
-                sBook = new saveBook(result.getString("bookTitle"), result.getString("author"),
-                        result.getString("bookType"), result.getDate("date"),
-                        result.getString("image"));
-                listSaveData.add(sBook);
-                count ++;
+                sBooks = new saveBook(result.getString("bookTitle"),result.getString("author"),
+                        result.getString("bookType"),result.getString("image"),
+                        result.getDate("date"));
+                listSaveData.add(sBooks);
+                //count ++;
             }
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Program message");
-            alert.setHeaderText(null);
-            alert.setContentText(""+ count +"");
-            alert.showAndWait();
-
+//        Alert alert = new Alert(AlertType.INFORMATION);
+//        alert.setTitle("Program message");
+//        alert.setHeaderText(null);
+//        alert.setContentText(""+ count +"");
+//        alert.showAndWait();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -531,14 +532,6 @@ public class DashboardController implements Initializable {
         saveBook_date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         saveBook_tableView.setItems(sBookList);
-//        for(saveBook a : sBookList){
-//            count++;
-//        }
-//        Alert alert = new Alert(AlertType.INFORMATION);
-//        alert.setTitle("Program message");
-//            alert.setHeaderText(null);
-//            alert.setContentText(""+ count +"");
-//            alert.showAndWait();
     }
 
     public void saveBook(){
