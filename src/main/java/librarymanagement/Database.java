@@ -83,7 +83,7 @@ public class Database {
     }
 
     public static void insertStudents() {
-        String sql = "INSERT INTO student (studentNumber, studentName, password) VALUES (?, ?, ?ff)";
+        String sql = "INSERT INTO student (studentNumber, studentName, password) VALUES (?, ?, ?)";
         try {
             prepare = connect.prepareStatement(sql);
 
