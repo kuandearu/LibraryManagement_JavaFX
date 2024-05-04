@@ -46,22 +46,21 @@
                         <FontAwesomeIcon glyphName="CHEVRON_LEFT" selectionEnd="0" size="2em" />
                      </graphic>
                   </Button>
-                  <Label layoutX="68.0" layoutY="53.0" prefHeight="30.0" prefWidth="222.0" text="Library Management">
+                  <Label layoutX="51.0" layoutY="51.0" prefHeight="30.0" prefWidth="222.0" text="Library Management">
                      <font>
                         <Font name="Segoe UI Black Italic" size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="currentForm_label" layoutX="778.0" layoutY="44.0" text="Available Books">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="309.0" layoutY="47.0" text="Student Portal">
+                  <Label fx:id="currentForm_label" layoutX="698.0" layoutY="51.0" text="Available Books">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Line endX="100.0" layoutX="200.0" layoutY="84.0" startX="100.0" startY="-43.0" />
+                  <Label layoutX="328.0" layoutY="51.0" text="Student Portal">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </top>
@@ -147,11 +146,7 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="edit_btn" layoutX="68.0" layoutY="31.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="127.0" styleClass="edit-btn" stylesheets="@../designDashboard.css">
-                           <graphic>
-                              <FontAwesomeIcon fx:id="edit_icon" fill="#f2f2f2" glyphName="EDIT" size="2em" />
-                           </graphic>
-                        </Button>
+                        <Button fx:id="edit_btn" layoutX="68.0" layoutY="31.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="127.0" styleClass="edit-btn" stylesheets="@../designDashboard.css" />
                         <Line endX="100.0" layoutX="132.0" layoutY="235.0" startX="-100.0" stroke="#ddd9d9" />
                         <Button fx:id="logout_btn" layoutX="18.0" layoutY="454.0" mnemonicParsing="false" onAction="#logout" styleClass="logout-btn" stylesheets="@../designDashboard.css">
                            <graphic>
@@ -163,6 +158,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <FontAwesomeIcon fx:id="edit_icon" fill="#f2f2f2" glyphName="EDIT" layoutX="120.0" layoutY="95.0" size="2em" />
                      </children>
                   </AnchorPane>
                </children>
