@@ -25,45 +25,52 @@ public class Database {
             connect = DriverManager.getConnection(url, username, password);
 
             // Create the table if it doesn't exist
-            String createStudentTableQuery = "CREATE TABLE IF NOT EXISTS student ("
-                    + "studentNumber VARCHAR(100), "
-                    + "studentName NVARCHAR(100),"
-                    + "password VARCHAR(100))";
+            String createStudentTableQuery = "CREATE TABLE IF NOT EXISTS student (" +
+                    "`student_id` int(100) NOT NULL AUTO_INCREMENT," +
+                    "  `studentNumber` varchar(100) DEFAULT NULL," +
+                    "  `studentName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL," +
+                    "  `password` varchar(100) DEFAULT NULL," +
+                    "  `dateOfBirth` date DEFAULT NULL," +
+                    "  PRIMARY KEY (`student_id`))";
             prepare = connect.prepareStatement(createStudentTableQuery);
             prepare.executeUpdate();
 
-            String createBookTableQuery = "CREATE TABLE IF NOT EXISTS book ("
-                    + "bookTitle VARCHAR(100), "
-                    + "author VARCHAR(100), "
-                    + "bookType VARCHAR(100), "
-                    + "image VARCHAR(500), "
-                    + "date DATE NULL)";
+            String createBookTableQuery = "CREATE TABLE IF NOT EXISTS book (" +
+                    "`book_id` int(100) NOT NULL AUTO_INCREMENT," +
+                    "  `bookTitle` varchar(100) DEFAULT NULL," +
+                    "  `author` varchar(100) DEFAULT NULL," +
+                    "  `bookType` varchar(100) DEFAULT NULL," +
+                    "  `image` varchar(500) DEFAULT NULL," +
+                    "  `date` date DEFAULT NULL," +
+                    "  PRIMARY KEY (`book_id`))";
             prepare = connect.prepareStatement(createBookTableQuery);
             prepare.executeUpdate();
 
             String createTakeBookTableQuery = "CREATE TABLE IF NOT EXISTS take (" +
-                    "  studentNumber varchar(100)," +
-                    "  firstname varchar(100)," +
-                    "  lastname varchar(100)," +
-                    "  gender varchar(100)," +
-                    "  bookTitle varchar(100)," +
-                    "  author varchar(100)," +
-                    "  bookType varchar(100)," +
-                    "  image varchar(500)," +
-                    "  date date," +
-                    "  checkReturn varchar(100)" +
-                    ")";
+                    "`id` int(100) NOT NULL AUTO_INCREMENT," +
+                    "  `studentNumber` varchar(100) DEFAULT NULL," +
+                    "  `firstname` varchar(100) DEFAULT NULL," +
+                    "  `lastname` varchar(100) DEFAULT NULL," +
+                    "  `gender` varchar(100) DEFAULT NULL," +
+                    "  `bookTitle` varchar(100) DEFAULT NULL," +
+                    "  `author` varchar(100) NOT NULL," +
+                    "  `bookType` varchar(100) NOT NULL," +
+                    "  `image` varchar(500) DEFAULT NULL," +
+                    "  `date` date DEFAULT NULL," +
+                    "  `checkReturn` varchar(100) DEFAULT NULL," +
+                    "  PRIMARY KEY (`id`))";
             prepare = connect.prepareStatement(createTakeBookTableQuery);
             prepare.executeUpdate();
 
             String createSaveBookTableQuery = "CREATE TABLE IF NOT EXISTS save (" +
-                    "  studentNumber varchar(100)," +
-                    "  bookTitle varchar(100)," +
-                    "  author varchar(100)," +
-                    "  bookType varchar(100)," +
-                    "  image varchar(500)," +
-                    "  date date" +
-                    ")" ;
+                    "`id` int(100) NOT NULL AUTO_INCREMENT," +
+                    "  `studentNumber` varchar(100) DEFAULT NULL," +
+                    "  `bookTitle` varchar(100) DEFAULT NULL," +
+                    "  `author` varchar(100) DEFAULT NULL," +
+                    "  `bookType` varchar(100) DEFAULT NULL," +
+                    "  `image` varchar(500) DEFAULT NULL," +
+                    "  `date` date DEFAULT NULL," +
+                    "  PRIMARY KEY (`id`))" ;
             prepare = connect.prepareStatement(createSaveBookTableQuery);
             prepare.executeUpdate();
 
@@ -83,7 +90,7 @@ public class Database {
     }
 
     public static void insertStudents() {
-        String sql = "INSERT INTO student (studentNumber, studentName, password) VALUES (?, ?, ?ff)";
+        String sql = "INSERT INTO student (studentNumber, studentName, password, dateOfBirth) VALUES (?, ?, ?, ?)";
         try {
             prepare = connect.prepareStatement(sql);
 
@@ -92,6 +99,7 @@ public class Database {
                 prepare.setString(1, "0969571699");
                 prepare.setString(2, "Giang Khánh Quân");
                 prepare.setString(3, "123456");
+                prepare.setString(4, "1999-10-05");
                 prepare.addBatch();
             }
 
@@ -99,6 +107,7 @@ public class Database {
                 prepare.setString(1, "123");
                 prepare.setString(2, "Nguyễn Phúc Toàn");
                 prepare.setString(3, "123456");
+                prepare.setString(4, "2003-01-12");
                 prepare.addBatch();
             }
 
@@ -106,6 +115,7 @@ public class Database {
                 prepare.setString(1, "456");
                 prepare.setString(2, "Nguyễn Anh Đức");
                 prepare.setString(3, "123456");
+                prepare.setString(4, "2002-09-05");
                 prepare.addBatch();
             }
 
@@ -113,6 +123,7 @@ public class Database {
                 prepare.setString(1, "789");
                 prepare.setString(2, "Nguyễn Hoàng Long");
                 prepare.setString(3, "123456");
+                prepare.setString(4, "2000-03-20");
                 prepare.addBatch();
             }
             // Execute the batch insert
@@ -124,7 +135,7 @@ public class Database {
     }
 
     public static void insertNewStudents() {
-        String sql = "INSERT INTO student (id, studentName, studentNumber, password) VALUES (?, ?, ?,)";
+        String sql = "INSERT INTO student (id, studentName, studentNumber, password) VALUES (?, ?, ?,?)";
         try {
             prepare = connect.prepareStatement(sql);
 
@@ -150,7 +161,6 @@ public class Database {
         try{
             prepare= connect.prepareStatement(sql);
 
-            //INSERT BOOKS WHEN THEY ONLY DONT EXIST
             if (!bookExists(Database.connect, "Java Tutorial")) {
                 prepare.setString(1, "Java Tutorial");
                 prepare.setString(2, "March");
