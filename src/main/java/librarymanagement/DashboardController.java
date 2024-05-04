@@ -381,6 +381,7 @@ public class DashboardController implements Initializable {
     }
 
     public void clearTakeData(){
+        issueBook_title.setText("");
         take_BookTitle.setText("");
         take_titleLabel.setText("");
         take_authorLabel.setText("");

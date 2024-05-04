@@ -251,7 +251,7 @@
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="take_BookTitle" layoutX="202.0" layoutY="393.0" onAction="#findBook" prefHeight="25.0" prefWidth="222.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="take_BookTitle" layoutX="202.0" layoutY="393.0" onAction="#findBook" prefHeight="25.0" prefWidth="222.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" visible="false" />
                               <Label layoutX="43.0" layoutY="348.0" prefHeight="21.0" prefWidth="139.0" text="Issued Date:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
