@@ -67,6 +67,15 @@ public class Database {
             prepare = connect.prepareStatement(createSaveBookTableQuery);
             prepare.executeUpdate();
 
+            String createNewStudentTableQuery = "CREATE TABLE IF NOT EXISTS newStudent ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "studentNumber VARCHAR(100), "
+                    + "studentName NVARCHAR(100),"
+                    + "password VARCHAR(100))";
+            prepare = connect.prepareStatement(createNewStudentTableQuery);
+            prepare.executeUpdate();
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,7 +83,7 @@ public class Database {
     }
 
     public static void insertStudents() {
-        String sql = "INSERT INTO student (studentNumber, studentName, passwords) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO student (studentNumber, studentName, password, image) VALUES (?, ?, ?, ?)";
         try {
             prepare = connect.prepareStatement(sql);
 
@@ -106,6 +115,27 @@ public class Database {
                 prepare.setString(3, "123456");
                 prepare.addBatch();
             }
+            // Execute the batch insert
+            prepare.executeBatch();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertNewStudents() {
+        String sql = "INSERT INTO student (id, studentName, studentNumber, password) VALUES (?, ?, ?,)";
+        try {
+            prepare = connect.prepareStatement(sql);
+
+            // Insert values for each student only if they don't already exist
+            if (!studentExists(Database.connect, "0969571699")) {
+                prepare.setString(1, "0969571699");
+                prepare.setString(2, "Giang Khánh Quân");
+                prepare.setString(3, "123456");
+                prepare.addBatch();
+            }
+
             // Execute the batch insert
             prepare.executeBatch();
         }
