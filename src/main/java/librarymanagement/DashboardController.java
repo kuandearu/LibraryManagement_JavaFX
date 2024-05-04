@@ -3,6 +3,7 @@ package librarymanagement;
 import javafx.animation.TranslateTransition;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -258,27 +259,23 @@ public class DashboardController implements Initializable {
 
             if(take_FirstName.getText().isEmpty()
             || take_LastName.getText().isEmpty()
-            || take_Gender.getSelectionModel().isEmpty()){
+            || take_Gender.getSelectionModel().isEmpty()
+            ||take_titleLabel.getText().isEmpty()){
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
-                alert.setContentText("Please insert completely all Student's Information!");
+                alert.setContentText("Please insert completely all Information!");
                 alert.showAndWait();
-            }else if(take_titleLabel.getText().isEmpty()){
-                alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please indicate the book you want to take");
-                alert.showAndWait();
-            }else if(take_titleLabel.getText().equals("Book is not available!")) {
+            }
+            else if(take_titleLabel.getText().equals("Book is not available!")) {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("The selected book is not available. Please select another book.");
                 alert.showAndWait();
+
             }
             else{
-
                 prepare = connect.prepareStatement(sql);
                 prepare.setString(1, take_StudentNumber.getText());
                 prepare.setString(2, take_FirstName.getText());

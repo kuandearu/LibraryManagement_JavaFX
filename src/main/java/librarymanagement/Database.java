@@ -74,7 +74,7 @@ public class Database {
     }
 
     public static void insertStudents() {
-        String sql = "INSERT INTO student (studentNumber, studentName, password, image) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO student (studentNumber, studentName, passwords) VALUES (?, ?, ?)";
         try {
             prepare = connect.prepareStatement(sql);
 

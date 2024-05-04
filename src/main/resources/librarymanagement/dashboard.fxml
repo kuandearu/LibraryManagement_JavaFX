@@ -46,7 +46,7 @@
                         <FontAwesomeIcon glyphName="CHEVRON_LEFT" selectionEnd="0" size="2em" />
                      </graphic>
                   </Button>
-                  <Label layoutX="68.0" layoutY="53.0" prefHeight="30.0" prefWidth="222.0" text="Library Management">
+                  <Label layoutX="52.0" layoutY="51.0" prefHeight="30.0" prefWidth="222.0" text="Library Management">
                      <font>
                         <Font name="Segoe UI Black Italic" size="20.0" />
                      </font>
@@ -56,12 +56,11 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <Label layoutX="309.0" layoutY="47.0" text="Student Portal">
+                  <Label layoutX="318.0" layoutY="45.0" text="Student Portal">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="25.0" />
                      </font>
                   </Label>
-                  <Line endX="100.0" layoutX="200.0" layoutY="84.0" startX="100.0" startY="-43.0" />
                </children>
             </AnchorPane>
          </top>
@@ -171,7 +170,7 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="362.0" layoutY="97.0" prefHeight="500.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="362.0" layoutY="97.0" prefHeight="500.0" prefWidth="723.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="249.0" layoutY="14.0" prefHeight="472.0" prefWidth="460.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
@@ -209,7 +208,7 @@
                         <Separator layoutX="237.0" layoutY="57.0" orientation="VERTICAL" prefHeight="417.0" prefWidth="2.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="issue_form" layoutX="26.0" layoutY="26.0" prefHeight="500.0" prefWidth="723.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="issue_form" layoutX="26.0" layoutY="26.0" prefHeight="500.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="249.0" layoutY="13.0" prefHeight="470.0" prefWidth="460.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
