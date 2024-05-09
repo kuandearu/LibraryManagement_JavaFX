@@ -204,7 +204,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="addBook_form" layoutX="279.0" layoutY="17.0" prefHeight="467.0" prefWidth="777.0" stylesheets="@../designDashboard.css" visible="false">
                            <children>
-                              <AnchorPane layoutX="221.0" layoutY="5.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                              <AnchorPane layoutX="221.0" layoutY="5.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
                                  <children>
                                     <TextField fx:id="addBookTitle_label" layoutX="238.0" layoutY="89.0" prefHeight="8.0" prefWidth="232.0" />
                                     <Label alignment="CENTER" layoutX="64.0" layoutY="153.0" prefHeight="27.0" prefWidth="134.0" text="Author">
@@ -247,7 +247,7 @@
                                     </Button>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false">
                                  <children>
                                     <AnchorPane layoutY="4.0" prefHeight="454.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                        <children>
@@ -269,8 +269,7 @@
                               <Button fx:id="addBook_btn" layoutX="71.0" layoutY="83.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Add Book" textAlignment="CENTER" />
                               <Button fx:id="showBook_btn" layoutX="71.0" layoutY="151.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Show Books" />
                               <Button fx:id="updateBook_btn" layoutX="71.0" layoutY="225.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Update Book" />
-                              <Button fx:id="deleteBook_btn" layoutX="71.0" layoutY="293.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Delete Book" />
-                              <Button fx:id="importBook_btn" layoutX="71.0" layoutY="360.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Import" />
+                              <Button fx:id="importBook_btn" layoutX="71.0" layoutY="302.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Import" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="updateBook_form" layoutX="279.0" layoutY="14.0" prefHeight="468.0" prefWidth="777.0" visible="false">
@@ -278,8 +277,8 @@
                               <AnchorPane layoutY="7.0" prefHeight="454.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
                                     <ImageView fx:id="addBookImage_View2" fitHeight="174.0" fitWidth="131.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-                                    <AnchorPane layoutX="36.0" layoutY="21.0" prefHeight="179.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css" />
-                                    <Button fx:id="uploadImage_View1" layoutX="58.0" layoutY="223.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="85.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload">
+                                    <AnchorPane fx:id="updateImage_View" layoutX="36.0" layoutY="21.0" prefHeight="179.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css" />
+                                    <Button fx:id="uploadUpdateImage_View" layoutX="58.0" layoutY="223.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="85.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -288,19 +287,19 @@
                               </AnchorPane>
                               <AnchorPane layoutX="218.0" layoutY="6.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <TextField fx:id="addBookTitle_label1" layoutX="238.0" layoutY="67.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <TextField fx:id="updateBookNumber_label" layoutX="238.0" layoutY="67.0" prefHeight="8.0" prefWidth="232.0" />
                                     <Label alignment="CENTER" layoutX="64.0" layoutY="190.0" prefHeight="27.0" prefWidth="134.0" text="Author">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="addAuthor_label1" layoutX="238.0" layoutY="190.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <TextField fx:id="updateAuthor_label" layoutX="238.0" layoutY="190.0" prefHeight="8.0" prefWidth="232.0" />
                                     <Label alignment="CENTER" layoutX="70.0" layoutY="255.0" prefHeight="27.0" prefWidth="134.0" text="Genre of Book">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="addBookType_label1" layoutX="238.0" layoutY="255.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <TextField fx:id="updateBookType_label" layoutX="238.0" layoutY="255.0" prefHeight="8.0" prefWidth="232.0" />
                                     <Label alignment="CENTER" layoutX="20.0" layoutY="7.0" prefHeight="53.0" prefWidth="235.0" text="Update Book">
                                        <font>
                                           <Font size="36.0" />
@@ -311,18 +310,18 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" layoutX="64.0" layoutY="66.0" prefHeight="27.0" prefWidth="134.0" text="Book ID">
+                                    <Label alignment="CENTER" layoutX="64.0" layoutY="66.0" prefHeight="27.0" prefWidth="134.0" text="Book Number">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="addDate_label1" layoutX="238.0" layoutY="322.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Button fx:id="addBook_btn1" layoutX="385.0" layoutY="386.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="85.0" styleClass="return-btn" stylesheets="@../designDashboard.css" text="Update">
+                                    <TextField fx:id="updateDate_label" layoutX="238.0" layoutY="322.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <Button fx:id="updateBook_btn" layoutX="385.0" layoutY="386.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="85.0" styleClass="return-btn" stylesheets="@../designDashboard.css" text="Update">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="clearAddBook_btn1" layoutX="276.0" layoutY="387.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="83.0" styleClass="unsave_btn" stylesheets="@../designDashboard.css" text="Clear">
+                                    <Button fx:id="clearUpdateBook_btn" layoutX="276.0" layoutY="387.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="83.0" styleClass="unsave_btn" stylesheets="@../designDashboard.css" text="Clear">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -332,71 +331,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="addBookTitle_label11" layoutX="238.0" layoutY="128.0" prefHeight="8.0" prefWidth="232.0" />
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane fx:id="deleteBook_form" layoutX="266.0" layoutY="17.0" prefHeight="468.0" prefWidth="777.0">
-                           <children>
-                              <AnchorPane layoutX="8.0" layoutY="7.0" prefHeight="454.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
-                                 <children>
-                                    <ImageView fx:id="addBookImage_View21" fitHeight="174.0" fitWidth="131.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-                                    <AnchorPane layoutX="35.0" layoutY="23.0" prefHeight="179.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css" />
-                                    <Label alignment="CENTER" layoutX="13.0" layoutY="227.0" prefHeight="22.0" prefWidth="176.0">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="220.0" layoutY="6.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
-                                 <children>
-                                    <TextField fx:id="addBookTitle_label11" layoutX="238.0" layoutY="67.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="64.0" layoutY="190.0" prefHeight="27.0" prefWidth="134.0" text="Author">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="addAuthor_label11" layoutX="238.0" layoutY="190.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="70.0" layoutY="255.0" prefHeight="27.0" prefWidth="134.0" text="Genre of Book">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="addBookType_label11" layoutX="238.0" layoutY="255.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="20.0" layoutY="7.0" prefHeight="53.0" prefWidth="235.0" text="Delete Book">
-                                       <font>
-                                          <Font size="36.0" />
-                                       </font>
-                                    </Label>
-                                    <Label alignment="CENTER" layoutX="70.0" layoutY="321.0" prefHeight="27.0" prefWidth="134.0" text="Date of Publish">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label alignment="CENTER" layoutX="64.0" layoutY="66.0" prefHeight="27.0" prefWidth="134.0" text="Book ID">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="addDate_label11" layoutX="238.0" layoutY="322.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Button fx:id="addBook_btn11" layoutX="385.0" layoutY="386.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="85.0" styleClass="return-btn" stylesheets="@../designDashboard.css" text="Delete">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="clearAddBook_btn11" layoutX="276.0" layoutY="387.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="83.0" styleClass="unsave_btn" stylesheets="@../designDashboard.css" text="Clear">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Button>
-                                    <Label alignment="CENTER" layoutX="64.0" layoutY="128.0" prefHeight="27.0" prefWidth="134.0" text="Book Title">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <TextField fx:id="addBookTitle_label111" layoutX="238.0" layoutY="128.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <TextField fx:id="updateBookTitle_label" layoutX="238.0" layoutY="128.0" prefHeight="8.0" prefWidth="232.0" />
                                  </children>
                               </AnchorPane>
                            </children>
