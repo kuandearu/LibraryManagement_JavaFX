@@ -61,6 +61,9 @@ public class DashboardController implements Initializable {
     private Circle circle_image;
 
     @FXML
+    private TableColumn<availableBooks, Integer> col_ab_BookId;
+
+    @FXML
     private TableColumn<availableBooks, String> col_ab_author;
 
     @FXML
@@ -227,6 +230,14 @@ public class DashboardController implements Initializable {
     @FXML
     private TableView<saveBook> saveBook_tableView;
 
+    @FXML
+    private Button addBook_btn;
+
+    @FXML
+    private Button showBook_btn;
+
+
+
     Image image;
 
     private Connection connect;
@@ -234,6 +245,55 @@ public class DashboardController implements Initializable {
     private ResultSet result;
     private Statement statement;
     private String comboBox[] = {"Male", "Female", "Others"};
+
+    public void addBook() {
+        try {
+            conn = DriverManager.getConnection(url, username, password);
+            pst = conn.prepareStatement("INSERT INTO books(Title, Author, Genre, Date, Publisher) VALUES(?, ?, ?, ?, ?)");
+            pst.setString(1, title);
+            pst.setString(2, author);
+            pst.setString(3, genre);
+            pst.setString(4, date);
+            pst.setString(5, publisher);
+            pst.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateBook() {
+        try {
+
+            if(rs.next()) {
+                pst = conn.prepareStatement("UPDATE books SET Title = ?, Author = ?, Genre = ?, Date = ?, Publisher = ?");
+                pst.setString(1, title);
+                pst.setString(2, author);
+                pst.setString(3, genre);
+                pst.setString(4, date);
+                pst.setString(5, publisher);
+                pst.executeUpdate();
+                System.out.println("Update Book Successfully!");
+            }else {
+                System.out.println("No Book Found!");
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteBook() {
+        try {
+            if(rs.next()) {
+                pst = conn.prepareStatement("DELETE FROM books");
+                pst.executeUpdate();
+                System.out.println("Delete Book Successfully!");
+            }else {
+                System.out.println("No Book Found!");
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void gender(){
         List<String> combo = new ArrayList<>();
@@ -648,6 +708,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()){
                 aBooks = new availableBooks(
+                        result.getInt("book_id"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
@@ -666,6 +727,7 @@ public class DashboardController implements Initializable {
 
         listBook = dataList();
 
+        col_ab_BookId.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_ab_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_ab_author.setCellValueFactory(new PropertyValueFactory<>("author"));
         col_ab_bookType.setCellValueFactory(new PropertyValueFactory<>("genre"));
