@@ -29,14 +29,18 @@ public class Database {
                     "`student_id` int(100) NOT NULL AUTO_INCREMENT," +
                     "  `studentNumber` varchar(100) DEFAULT NULL," +
                     "  `studentName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL," +
-                    "  `password` varchar(100) DEFAULT NULL," +
                     "  `dateOfBirth` date DEFAULT NULL," +
+                    "  `gender` varchar(10) DEFAULT NULL," +
+                    "  `phone` varchar(10) DEFAULT NULL," +
+                    "  `email` varchar(50) DEFAULT NULL," +
+                    "  `password` varchar(100) DEFAULT NULL," +
                     "  PRIMARY KEY (`student_id`))";
             prepare = connect.prepareStatement(createStudentTableQuery);
             prepare.executeUpdate();
 
             String createBookTableQuery = "CREATE TABLE IF NOT EXISTS book (" +
                     "`book_id` int(100) NOT NULL AUTO_INCREMENT," +
+                    "  `bookNumber` varchar(100) DEFAULT NULL," +
                     "  `bookTitle` varchar(100) DEFAULT NULL," +
                     "  `author` varchar(100) DEFAULT NULL," +
                     "  `bookType` varchar(100) DEFAULT NULL," +
