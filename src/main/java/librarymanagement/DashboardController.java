@@ -236,7 +236,26 @@ public class DashboardController implements Initializable {
     @FXML
     private Button showBook_btn;
 
+    @FXML
+    private TextField addAuthor_label;
 
+    @FXML
+    private ImageView addBookImage_View;
+
+    @FXML
+    private TextField addBookTitle_label;
+
+    @FXML
+    private TextField addBookType_label;
+
+    @FXML
+    private TextField addDate_label;
+
+    @FXML
+    private Button clearAddBook_btn;
+
+    @FXML
+    private Button uploadImage_View;
 
     Image image;
 
@@ -247,15 +266,12 @@ public class DashboardController implements Initializable {
     private String comboBox[] = {"Male", "Female", "Others"};
 
     public void addBook() {
+
+        String sql = "INSERT INTO book(bookTitle, author, bookType, image, date) " +
+                     "VALUES ('?','?','?','?','?')";
+
         try {
-            conn = DriverManager.getConnection(url, username, password);
-            pst = conn.prepareStatement("INSERT INTO books(Title, Author, Genre, Date, Publisher) VALUES(?, ?, ?, ?, ?)");
-            pst.setString(1, title);
-            pst.setString(2, author);
-            pst.setString(3, genre);
-            pst.setString(4, date);
-            pst.setString(5, publisher);
-            pst.executeUpdate();
+
         } catch(SQLException e) {
             e.printStackTrace();
         }
