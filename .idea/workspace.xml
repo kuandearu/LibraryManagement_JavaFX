@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="add returbook list">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
