@@ -25,7 +25,7 @@ public class LibraryManagement extends Application  {
 
         // Insert students into the database
         Database.insertStudents();
-        Database.insertBooks();
+        Database. insertBooks();
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Scene scene = new Scene(root);
         root.setOnMousePressed((MouseEvent event) -> {
@@ -36,6 +36,7 @@ public class LibraryManagement extends Application  {
         root.setOnMouseDragged((MouseEvent event) ->{
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
+
         });
         stage.initStyle(StageStyle.TRANSPARENT);
 

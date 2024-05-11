@@ -55,6 +55,9 @@ public class DashboardController implements Initializable {
     private Label availableBooks_title;
 
     @FXML
+    private Label issueBook_title;
+
+    @FXML
     private Circle circle_image;
 
     @FXML
@@ -244,12 +247,18 @@ public class DashboardController implements Initializable {
         take_Gender.setItems(list);
     }
 
+    private boolean check_conditions(){
+        return true;
+    }
+
     public void takeBook() throws SQLException {
 
         Date date = new Date();
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
-        String sql = "INSERT INTO take VALUES(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO take(`studentNumber`,`firstname`,`lastname`,`gender`," +
+                "`bookTitle`,`author`,`bookType`,`image`,`date`,`checkReturn`)" +
+                " VALUES(?,?,?,?,?,?,?,?,?,?)";
 
         connect = Database.connectDB();
 
@@ -258,24 +267,24 @@ public class DashboardController implements Initializable {
             Alert alert;
 
             if(take_FirstName.getText().isEmpty()
-            || take_LastName.getText().isEmpty()
-            || take_Gender.getSelectionModel().isEmpty()
-            ||take_titleLabel.getText().isEmpty()){
+                    || take_LastName.getText().isEmpty()
+                    || take_Gender.getSelectionModel().isEmpty()){
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please insert completely all Information!");
                 alert.showAndWait();
             }
-            else if(take_titleLabel.getText().equals("Book is not available!")) {
-                alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("The selected book is not available. Please select another book.");
-                alert.showAndWait();
-
-            }
-            else{
+//            else if(take_titleLabel.getText().equals("Book is not available!")) {
+//                alert = new Alert(AlertType.ERROR);
+//                alert.setTitle("Program message");
+//                alert.setHeaderText(null);
+//                alert.setContentText("The selected book is not available. Please select another book.");
+//                alert.showAndWait();
+//
+//            }
+            else
+            {
                 prepare = connect.prepareStatement(sql);
                 prepare.setString(1, take_StudentNumber.getText());
                 prepare.setString(2, take_FirstName.getText());
@@ -284,7 +293,7 @@ public class DashboardController implements Initializable {
                 prepare.setString(5, take_titleLabel.getText());
                 prepare.setString(6, take_authorLabel.getText());
                 prepare.setString(7, take_genreLabel.getText());
-                prepare.setString(8, getData.path);
+                prepare.setString(8, getData.pathImage);
                 prepare.setDate(9, sqlDate);
 
                 String check = "Not Return";
@@ -372,6 +381,7 @@ public class DashboardController implements Initializable {
     }
 
     public void clearTakeData(){
+        issueBook_title.setText("");
         take_BookTitle.setText("");
         take_titleLabel.setText("");
         take_authorLabel.setText("");
@@ -532,7 +542,7 @@ public class DashboardController implements Initializable {
     }
 
     public void saveBook(){
-        String sql = "INSERT INTO save VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO save(`studentNumber`,`bookTitle`,`author`,`bookType`,`image`,`date`) VALUES(?,?,?,?,?,?)";
         connect = Database.connectDB();
 
         try {
@@ -664,7 +674,7 @@ public class DashboardController implements Initializable {
         availableBooks_tableView.setItems(listBook);
     }
 
-
+    availableBooks getBookData;
     public void selectAvailableBooks(){
 
         availableBooks bookData = availableBooks_tableView.getSelectionModel().getSelectedItem();
@@ -674,6 +684,7 @@ public class DashboardController implements Initializable {
         if ((num - 1) < -1) {
             return;
         }
+        getBookData = bookData;
 
         availableBooks_title.setText(bookData.getTitle());
 
@@ -699,7 +710,37 @@ public class DashboardController implements Initializable {
             availableBooks_form.setVisible(false);
             savedBook_form.setVisible(false);
             returnBook_form.setVisible(false);
+
+            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Issue Books");
         }
+
+        issueBook_title.setText(" " +getBookData.getTitle());
+        take_titleLabel.setText(getBookData.getTitle());
+        take_authorLabel.setText(getBookData.getAuthor());
+        take_genreLabel.setText(getBookData.getGenre());
+        take_dateLabel.setText(getBookData.getDate().toString());
+
+        String uri = "file:" + getBookData.getImage();
+        getData.pathImage = getBookData.getImage();
+        image = new Image(uri, 134, 171, false, true);
+        take_imageView.setImage(image);
+
+//        Alert alert;
+//        alert = new Alert(AlertType.INFORMATION);
+//        alert.setTitle("Program message");
+//        alert.setHeaderText(null);
+//        alert.setContentText(bookData.getTitle());
+//        alert.showAndWait();
 
     }
 

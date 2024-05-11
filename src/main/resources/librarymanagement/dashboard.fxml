@@ -2,6 +2,7 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="986.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.DashboardController">
+<AnchorPane prefHeight="600.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="librarymanagement.DashboardController">
    <children>
       <BorderPane layoutY="1.0" prefHeight="600.0" prefWidth="986.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
          <top>
@@ -24,12 +25,15 @@
                <children>
                   <AnchorPane layoutY="-4.0" prefHeight="40.0" prefWidth="986.0" styleClass="top-form" stylesheets="@../designDashboard.css" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-4.0">
                      <children>
-                        <Button fx:id="close" layoutX="935.0" mnemonicParsing="false" onAction="#exit" prefHeight="24.0" prefWidth="51.0" styleClass="close-btn" stylesheets="@../designDashboard.css">
+                        <Button fx:id="close" layoutX="1298.0" mnemonicParsing="false" onAction="#exit" prefHeight="34.0" prefWidth="51.0" styleClass="close-btn" stylesheets="@../designDashboard.css">
                            <graphic>
-                              <FontAwesomeIcon glyphName="CLOSE" />
+                              <FontAwesomeIcon glyphName="CLOSE">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font></FontAwesomeIcon>
                            </graphic>
                         </Button>
-                        <Button fx:id="minimize" layoutX="883.0" mnemonicParsing="false" onAction="#minimize" prefHeight="24.0" prefWidth="45.0" styleClass="minimize-btn" stylesheets="@../designDashboard.css">
+                        <Button fx:id="minimize" layoutX="1247.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimize" prefHeight="31.0" prefWidth="51.0" styleClass="minimize-btn" stylesheets="@../designDashboard.css">
                            <graphic>
                               <FontAwesomeIcon glyphName="MINUS" />
                            </graphic>
@@ -157,10 +161,13 @@
                               <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="2em" />
                            </graphic>
                         </Button>
-                        <Label layoutX="68.0" layoutY="457.0" styleClass="logout-btn" stylesheets="@../designDashboard.css" text="Sign out" textFill="WHITE">
+                        <Label layoutX="68.0" layoutY="452.0" styleClass="logout-btn" stylesheets="@../designDashboard.css" text="Sign out" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
+                           <padding>
+                              <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                           </padding>
                         </Label>
                      </children>
                   </AnchorPane>
@@ -170,7 +177,7 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="362.0" layoutY="97.0" prefHeight="500.0" prefWidth="723.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="362.0" layoutY="97.0" prefHeight="500.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="249.0" layoutY="14.0" prefHeight="472.0" prefWidth="460.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
@@ -208,7 +215,7 @@
                         <Separator layoutX="237.0" layoutY="57.0" orientation="VERTICAL" prefHeight="417.0" prefWidth="2.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="issue_form" layoutX="26.0" layoutY="26.0" prefHeight="500.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="issue_form" layoutX="26.0" layoutY="26.0" prefHeight="500.0" prefWidth="723.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="249.0" layoutY="13.0" prefHeight="470.0" prefWidth="460.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
@@ -251,13 +258,14 @@
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="take_BookTitle" layoutX="202.0" layoutY="299.0" onAction="#findBook" prefHeight="25.0" prefWidth="222.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="take_BookTitle" layoutX="202.0" layoutY="393.0" onAction="#findBook" prefHeight="25.0" prefWidth="222.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" visible="false" />
                               <Label layoutX="43.0" layoutY="348.0" prefHeight="21.0" prefWidth="139.0" text="Issued Date:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
                               <Label fx:id="take_IssuedDate" layoutX="202.0" layoutY="344.0" prefHeight="30.0" prefWidth="222.0" styleClass="label_take" stylesheets="@../designDashboard.css" text="Label" />
+                              <Label fx:id="issueBook_title" layoutX="201.0" layoutY="294.0" prefHeight="34.0" prefWidth="223.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" text="Label" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="14.0" layoutY="13.0" prefHeight="470.0" prefWidth="217.0" styleClass="card-form" stylesheets="@../designDashboard.css">
