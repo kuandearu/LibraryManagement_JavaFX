@@ -32,6 +32,11 @@ import java.io.File;
 import java.net.URL;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -257,59 +262,168 @@ public class DashboardController implements Initializable {
     @FXML
     private Button uploadImage_View;
 
+    @FXML
+    private Button clearUpdateBook_btn;
+
+    @FXML
+    private TextField updateAuthor;
+
+    @FXML
+    private TextField updateBookID;
+
+    @FXML
+    private ImageView updateBookImage_View;
+
+    @FXML
+    private TextField updateBookTitle;
+
+    @FXML
+    private TextField updateBookType;
+
+    @FXML
+    private Button updateBook_btn;
+
+    @FXML
+    private AnchorPane updateBook_form;
+
+    @FXML
+    private TextField updateDate;
+
+
     Image image;
 
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
     private Statement statement;
+    private File selectedFile;
     private String comboBox[] = {"Male", "Female", "Others"};
 
     public void addBook() {
 
-        String sql = "INSERT INTO book(bookTitle, author, bookType, image, date) " +
-                     "VALUES ('?','?','?','?','?')";
+        String sql = "INSERT INTO book(bookTitle, author, bookType, image, date) VALUES (?,?,?,?,?) ";
 
-        try {
+        connect = Database.connectDB();
 
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
+        try{
+            Alert alert;
 
-    public void updateBook() {
-        try {
+            if (addAuthor_label.getText().isEmpty() ||
+                    addBookTitle_label.getText().isEmpty() ||
+                    addBookType_label.getText().isEmpty() ||
+                    addDate_label.getText().isEmpty() ||
+                    addBookImage_View.getImage() == null) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please insert all Information!");
+                alert.showAndWait();
+            } else {
+                String dateString = addDate_label.getText();
+                Timestamp timestamp = validateAndConvertToTimestamp(dateString);
+                if (timestamp == null) {
+                    // Return if date format is invalid
+                    return;
+                }
+                // Prepare SQL statement
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(1, addBookTitle_label.getText()); // Assuming studentNumber is empty for book addition
+                prepare.setString(2, addAuthor_label.getText()); // Assuming firstname is empty for book addition
+                prepare.setString(3, addBookType_label.getText()); // Assuming lastname is empty for book addition
 
-            if(rs.next()) {
-                pst = conn.prepareStatement("UPDATE books SET Title = ?, Author = ?, Genre = ?, Date = ?, Publisher = ?");
-                pst.setString(1, title);
-                pst.setString(2, author);
-                pst.setString(3, genre);
-                pst.setString(4, date);
-                pst.setString(5, publisher);
-                pst.executeUpdate();
-                System.out.println("Update Book Successfully!");
-            }else {
-                System.out.println("No Book Found!");
+                //save the picture path
+                String imagePath = selectedFile.getAbsolutePath();
+                prepare.setString(4, imagePath);
+
+
+                prepare.setTimestamp(5, timestamp); // Assuming gender is empty for book addition
+
+                // Execute the SQL statement
+                int rowsAffected = prepare.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // Show success message
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Program message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Book added successfully!");
+                    alert.showAndWait();
+
+                    // Clear input fields
+                    clearAddBook();
+                } else {
+                    // Show error message if insertion fails
+                    alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Program message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Failed to add book. Please try again.");
+                    alert.showAndWait();
+                }
             }
-        }catch(SQLException e) {
+        } catch(Exception e){
             e.printStackTrace();
         }
     }
 
-    public void deleteBook() {
+    public Timestamp validateAndConvertToTimestamp(String dateString) {
         try {
-            if(rs.next()) {
-                pst = conn.prepareStatement("DELETE FROM books");
-                pst.executeUpdate();
-                System.out.println("Delete Book Successfully!");
-            }else {
-                System.out.println("No Book Found!");
-            }
-        }catch(SQLException e) {
-            e.printStackTrace();
+            // Parse the user-entered date
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate localDate = LocalDate.parse(dateString, formatter);
+
+            // Set the time part to 00:00:00 (start of day)
+            LocalTime localTime = LocalTime.MIDNIGHT;
+
+            // Combine the date and time into a LocalDateTime object
+            LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
+
+            // Convert LocalDateTime to java.sql.Timestamp for database insertion
+            return Timestamp.valueOf(localDateTime);
+        } catch (DateTimeParseException e) {
+            // If parsing fails, catch the exception and display error message
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Program message");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid date format! It should be 'dd/MM/yyyy'");
+            alert.showAndWait();
+
+            return null;
         }
     }
+
+
+    public void clearAddBook(){
+        addBookTitle_label.setText("");
+        addAuthor_label.setText("");
+        addBookType_label.setText("");
+        addDate_label.setText("");
+        addBookImage_View.setImage(null);
+    }
+
+        public void uploadImage() {
+            // Create a file chooser
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image File");
+
+            // Set initial directory
+            File initialDirectory = new File("src/main/java/image/");
+            fileChooser.setInitialDirectory(initialDirectory);
+
+            // Filter to show only image files
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            // Show open file dialog
+            selectedFile = fileChooser.showOpenDialog(uploadImage_View.getScene().getWindow());
+
+            if (selectedFile != null) {
+                // Load the selected image into the ImageView
+                Image image = new Image(selectedFile.toURI().toString(), 140,162, false, true);
+                addBookImage_View.setImage(image);
+            }
+        }
+
+
 
     public void gender(){
         List<String> combo = new ArrayList<>();
