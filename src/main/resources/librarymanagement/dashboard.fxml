@@ -287,13 +287,15 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="updateBook_form" layoutX="279.0" layoutY="14.0" prefHeight="468.0" prefWidth="777.0" visible="false">
+                        <AnchorPane fx:id="updateBook_form" layoutX="279.0" layoutY="14.0" prefHeight="468.0" prefWidth="777.0">
                            <children>
                               <AnchorPane layoutY="7.0" prefHeight="454.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <ImageView fx:id="updateBookImage_View" fitHeight="174.0" fitWidth="131.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-                                    <AnchorPane layoutX="36.0" layoutY="21.0" prefHeight="179.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css" />
-                                    <Button fx:id="uploadUpdateImage_View" layoutX="58.0" layoutY="223.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="85.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload">
+                                    <AnchorPane layoutX="40.0" layoutY="21.0" prefHeight="144.0" prefWidth="121.0" styleClass="image-card" stylesheets="@../designDashboard.css">
+                                       <children>
+                                          <ImageView fx:id="updateBookImage_View" fitHeight="146.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true" />
+                                       </children></AnchorPane>
+                                    <Button fx:id="uploadUpdateImage_View" layoutX="58.0" layoutY="193.0" mnemonicParsing="false" onAction="#uploadUpdateImage" prefHeight="45.0" prefWidth="85.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -302,7 +304,7 @@
                               </AnchorPane>
                               <AnchorPane layoutX="218.0" layoutY="6.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <TextField fx:id="updateBookID" layoutX="238.0" layoutY="67.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <TextField fx:id="updateBookID" layoutX="238.0" layoutY="67.0" onAction="#findBookforUpdating" prefHeight="8.0" prefWidth="232.0" />
                                     <Label alignment="CENTER" layoutX="64.0" layoutY="190.0" prefHeight="27.0" prefWidth="134.0" text="Author">
                                        <font>
                                           <Font size="18.0" />
@@ -331,17 +333,17 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="updateDate" layoutX="238.0" layoutY="322.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Button fx:id="updateBook_btn" layoutX="385.0" layoutY="386.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="85.0" styleClass="return-btn" stylesheets="@../designDashboard.css" text="Update">
+                                    <Button fx:id="updateBook_btn" layoutX="385.0" layoutY="386.0" mnemonicParsing="false" onAction="#updateBook" prefHeight="47.0" prefWidth="85.0" styleClass="return-btn" stylesheets="@../designDashboard.css" text="Update">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="clearUpdateBook_btn" layoutX="276.0" layoutY="387.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="83.0" styleClass="unsave_btn" stylesheets="@../designDashboard.css" text="Clear">
+                                    <Button fx:id="clearUpdateBook_btn" layoutX="276.0" layoutY="387.0" mnemonicParsing="false" onAction="#clearUpdateBook" prefHeight="45.0" prefWidth="83.0" styleClass="unsave_btn" stylesheets="@../designDashboard.css" text="Clear">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Button>
-                                    <Label alignment="CENTER" layoutX="64.0" layoutY="128.0" prefHeight="27.0" prefWidth="134.0" text="Book Title">
+                                    <Label alignment="CENTER" layoutX="64.0" layoutY="128.0" onDragDetected="#uploadUpdateImage" prefHeight="27.0" prefWidth="134.0" text="Book Title">
                                        <font>
                                           <Font size="18.0" />
                                        </font>

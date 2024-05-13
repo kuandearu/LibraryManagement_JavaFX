@@ -2,8 +2,6 @@ package librarymanagement;
 
 import javafx.animation.TranslateTransition;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -224,7 +221,7 @@ public class DashboardController implements Initializable {
     private TableColumn<saveBook, String> saveBook_title;
 
     @FXML
-    private TableColumn<saveBook, String > saveBook_type;
+    private TableColumn<saveBook, String> saveBook_type;
 
     @FXML
     private Button unsave_btn;
@@ -234,12 +231,6 @@ public class DashboardController implements Initializable {
 
     @FXML
     private TableView<saveBook> saveBook_tableView;
-
-    @FXML
-    private Button addBook_btn;
-
-    @FXML
-    private Button showBook_btn;
 
     @FXML
     private TextField addAuthor_label;
@@ -289,8 +280,12 @@ public class DashboardController implements Initializable {
     @FXML
     private TextField updateDate;
 
+    @FXML
+    private Button uploadUpdateImage_View;
+
 
     Image image;
+
 
     private Connection connect;
     private PreparedStatement prepare;
@@ -305,7 +300,7 @@ public class DashboardController implements Initializable {
 
         connect = Database.connectDB();
 
-        try{
+        try {
             Alert alert;
 
             if (addAuthor_label.getText().isEmpty() ||
@@ -360,12 +355,162 @@ public class DashboardController implements Initializable {
                     alert.showAndWait();
                 }
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Timestamp validateAndConvertToTimestamp(String dateString) {
+    public void clearAddBook() {
+        addBookTitle_label.setText("");
+        addAuthor_label.setText("");
+        addBookType_label.setText("");
+        addDate_label.setText("");
+        addBookImage_View.setImage(null);
+    }
+
+
+    public void findBookforUpdating(ActionEvent event) throws SQLException {
+
+        String bookID = updateBookID.getText(); // Get the BookID from the TextField
+
+        // Construct the SQL query to retrieve book information by BookID
+        String sql = "SELECT * FROM book WHERE book_id = ?";
+
+        connect = Database.connectDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(1, bookID); // Set the BookID parameter in the query
+            result = prepare.executeQuery();
+            boolean check = false;
+
+                while (result.next()) {
+                    updateBookTitle.setText(result.getString("bookTitle"));
+                    updateAuthor.setText(result.getString("author"));
+                    updateBookType.setText(result.getString("bookType"));
+
+                    displayFormattedDate(result.getTimestamp("date"));
+
+                    getData.path = result.getString("image");
+
+                    String uri = "file:" + getData.path;
+
+                    image = new Image(uri, 127, 162, false, true);
+                    updateBookImage_View.setImage(image);
+
+                    check = true;
+                }
+
+                if (!check) {
+                    updateBookTitle.setText("Book is not available!");
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void displayFormattedDate(Timestamp timestamp) {
+        if (timestamp != null) {
+            LocalDate localDate = timestamp.toLocalDateTime().toLocalDate();
+            String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            updateDate.setText(formattedDate);
+        } else {
+            updateDate.setText(""); // Set empty if the date is null
+        }
+    }
+
+    public void updateBook() {
+        String sql = "UPDATE book SET bookTitle=?, author=?, bookType=?, image=?, date=? WHERE book_id=?";
+
+        connect = Database.connectDB();
+
+        try {
+            if ( updateBookID.getText().isEmpty() || updateBookTitle.getText().isEmpty() || updateAuthor.getText().isEmpty() ||
+                    updateBookType.getText().isEmpty() || updateDate.getText().isEmpty()) {
+                showAlert(AlertType.ERROR, "Program message", "Please insert all information!");
+                return;
+            }
+
+            String bookID = updateBookID.getText();
+            if (!isBookIDValid(bookID)) {
+                showAlert(AlertType.ERROR, "Program message", "Book ID does not exist!");
+                return;
+            }
+
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(6, bookID);
+
+            prepare.setString(1, updateBookTitle.getText().isEmpty() ? result.getString("bookTitle") : updateBookTitle.getText());
+            prepare.setString(2, updateAuthor.getText().isEmpty() ? result.getString("author") : updateAuthor.getText());
+            prepare.setString(3, updateBookType.getText().isEmpty() ? result.getString("bookType") : updateBookType.getText());
+
+            String imagePath = "";
+            if (selectedFile != null) {
+                // If a new image is selected, set imagePath accordingly
+                imagePath = selectedFile.getAbsolutePath();
+            } else {
+                // If no new image is selected, or the result set is empty, retain the existing image path
+                if (result.next()) {
+                    imagePath = result.getString("image");
+                } else {
+                    showAlert(AlertType.ERROR, "Program message", "Image not found!");
+                }
+            }
+
+            if (selectedFile != null) {
+                prepare.setString(4, imagePath);
+                // Additional code to update the database with the new image path
+                // prepare.executeUpdate(); // Assuming prepare is your PreparedStatement
+            }
+
+    // Set the image path for display purposes
+            updateBookImage_View.setImage(new Image(new File(imagePath).toURI().toString()));
+
+            Timestamp timestamp = validateAndConvertToTimestamp(updateDate.getText());
+            //Timestamp timestamp = (!updateDate.getText().isEmpty()) ? validateAndConvertToTimestamp(updateDate.getText()) : result.getTimestamp("date");
+            prepare.setTimestamp(5, timestamp);
+
+            int rowsAffected = prepare.executeUpdate();
+
+            if (rowsAffected > 0) {
+                showAlert(AlertType.INFORMATION, "Program message", "Book updated successfully!");
+                clearUpdateBook();
+            } else {
+                showAlert(AlertType.ERROR, "Program message", "Failed to update book. Please try again.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void clearUpdateBook() {
+        updateBookID.setText("");
+        updateBookTitle.setText("");
+        updateAuthor.setText("");
+        updateBookType.setText("");
+        updateDate.setText("");
+        updateBookImage_View.setImage(null);
+    }
+
+    private boolean isBookIDValid(String bookID) throws SQLException {
+        String checkSql = "SELECT * FROM book WHERE book_id=?";
+        PreparedStatement checkStatement = connect.prepareStatement(checkSql);
+        checkStatement.setString(1, bookID);
+        ResultSet resultSet = checkStatement.executeQuery();
+        return resultSet.next();
+    }
+
+    private void showAlert(AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+        public Timestamp validateAndConvertToTimestamp(String dateString) {
         try {
             // Parse the user-entered date
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -391,44 +536,56 @@ public class DashboardController implements Initializable {
         }
     }
 
+    public void uploadImage() {
+        // Create a file chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image File");
 
-    public void clearAddBook(){
-        addBookTitle_label.setText("");
-        addAuthor_label.setText("");
-        addBookType_label.setText("");
-        addDate_label.setText("");
-        addBookImage_View.setImage(null);
+        // Set initial directory
+        File initialDirectory = new File("src/main/java/image/");
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Filter to show only image files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog
+        selectedFile = fileChooser.showOpenDialog(uploadImage_View.getScene().getWindow());
+
+        if (selectedFile != null) {
+            // Load the selected image into the ImageView
+            Image image = new Image(selectedFile.toURI().toString(), 140, 162, false, true);
+            addBookImage_View.setImage(image);
+        }
     }
 
-        public void uploadImage() {
-            // Create a file chooser
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Image File");
+    public void uploadUpdateImage() {
+        // Create a file chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image File");
 
-            // Set initial directory
-            File initialDirectory = new File("src/main/java/image/");
-            fileChooser.setInitialDirectory(initialDirectory);
+        // Set initial directory
+        File initialDirectory = new File("src/main/java/image/");
+        fileChooser.setInitialDirectory(initialDirectory);
 
-            // Filter to show only image files
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif");
-            fileChooser.getExtensionFilters().add(extFilter);
+        // Filter to show only image files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
 
-            // Show open file dialog
-            selectedFile = fileChooser.showOpenDialog(uploadImage_View.getScene().getWindow());
+        // Show open file dialog
+        selectedFile = fileChooser.showOpenDialog(uploadImage_View.getScene().getWindow());
 
-            if (selectedFile != null) {
-                // Load the selected image into the ImageView
-                Image image = new Image(selectedFile.toURI().toString(), 140,162, false, true);
-                addBookImage_View.setImage(image);
-            }
+        if (selectedFile != null) {
+            // Load the selected image into the ImageView
+            Image image = new Image(selectedFile.toURI().toString(), 140, 162, false, true);
+            updateBookImage_View.setImage(image);
         }
+    }
 
-
-
-    public void gender(){
+    public void gender() {
         List<String> combo = new ArrayList<>();
 
-        for(String data: comboBox){
+        for (String data : comboBox) {
             combo.add(data);
         }
 
@@ -437,7 +594,7 @@ public class DashboardController implements Initializable {
         take_Gender.setItems(list);
     }
 
-    private boolean check_conditions(){
+    private boolean check_conditions() {
         return true;
     }
 
@@ -452,13 +609,13 @@ public class DashboardController implements Initializable {
 
         connect = Database.connectDB();
 
-        try{
+        try {
 
             Alert alert;
 
-            if(take_FirstName.getText().isEmpty()
+            if (take_FirstName.getText().isEmpty()
                     || take_LastName.getText().isEmpty()
-                    || take_Gender.getSelectionModel().isEmpty()){
+                    || take_Gender.getSelectionModel().isEmpty()) {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
@@ -473,13 +630,12 @@ public class DashboardController implements Initializable {
 //                alert.showAndWait();
 //
 //            }
-            else
-            {
+            else {
                 prepare = connect.prepareStatement(sql);
                 prepare.setString(1, take_StudentNumber.getText());
                 prepare.setString(2, take_FirstName.getText());
                 prepare.setString(3, take_LastName.getText());
-                prepare.setString(4, (String)take_Gender.getSelectionModel().getSelectedItem());
+                prepare.setString(4, (String) take_Gender.getSelectionModel().getSelectedItem());
                 prepare.setString(5, take_titleLabel.getText());
                 prepare.setString(6, take_authorLabel.getText());
                 prepare.setString(7, take_genreLabel.getText());
@@ -500,18 +656,17 @@ public class DashboardController implements Initializable {
                 clearTakeData();
 
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(result != null)
+            if (result != null)
                 result.close();
-            if(prepare != null)
+            if (prepare != null)
                 prepare.close();
-            if(connect != null)
+            if (connect != null)
                 connect.close();
         }
     }
-
     public void findBook(ActionEvent event) throws SQLException {
 
         clearFindData();
@@ -566,11 +721,11 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void studentNumberLabel(){
+    public void studentNumberLabel() {
         take_StudentNumber.setText(getData.studentNumber);
     }
 
-    public void clearTakeData(){
+    public void clearTakeData() {
         issueBook_title.setText("");
         take_BookTitle.setText("");
         take_titleLabel.setText("");
@@ -580,7 +735,7 @@ public class DashboardController implements Initializable {
         take_imageView.setImage(null);
     }
 
-    public void clearFindData(){
+    public void clearFindData() {
         take_titleLabel.setText("");
         take_authorLabel.setText("");
         take_genreLabel.setText("");
@@ -588,7 +743,7 @@ public class DashboardController implements Initializable {
         take_imageView.setImage(null);
     }
 
-    public void displayDate(){
+    public void displayDate() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String date = format.format(new Date());
         take_IssuedDate.setText(date);
@@ -596,17 +751,17 @@ public class DashboardController implements Initializable {
 
     //Return book
 
-    public ObservableList<returnBook> returnBookData(){
+    public ObservableList<returnBook> returnBookData() {
         ObservableList<returnBook> listReturnBook = FXCollections.observableArrayList();
         String checkReturn = "Not Return";
-        String sql = "SELECT * FROM take WHERE checkReturn = '"+ checkReturn +"' AND studentNumber = '"+ getData.studentNumber +"' ";
+        String sql = "SELECT * FROM take WHERE checkReturn = '" + checkReturn + "' AND studentNumber = '" + getData.studentNumber + "' ";
         Alert alert;
         connect = Database.connectDB();
-        try{
+        try {
             returnBook rBooks;
             prepare = connect.prepareStatement(sql);
             result = prepare.executeQuery();
-            while (result.next()){
+            while (result.next()) {
                 rBooks = new returnBook(
                         result.getString("bookTitle"),
                         result.getString("author"),
@@ -619,25 +774,25 @@ public class DashboardController implements Initializable {
                 listReturnBook.add(rBooks);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return listReturnBook;
     }
 
-    public void returnBook(){
-        String sql = "UPDATE take SET checkReturn = 'Returned' WHERE bookTitle = '"+ getData.takeBookTitle +"' ";
+    public void returnBook() {
+        String sql = "UPDATE take SET checkReturn = 'Returned' WHERE bookTitle = '" + getData.takeBookTitle + "' ";
         connect = Database.connectDB();
 
-        try{
+        try {
 
-            if(return_imageView.getImage() == null){
+            if (return_imageView.getImage() == null) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select the book you want to return!");
                 alert.showAndWait();
-            }else{
+            } else {
                 statement = connect.createStatement();
                 statement.executeUpdate(sql);
                 Alert alert = new Alert(AlertType.INFORMATION);
@@ -649,12 +804,12 @@ public class DashboardController implements Initializable {
                 showReturnBooks();
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void selectReturnBook(){
+    public void selectReturnBook() {
         returnBook rBooks = return_tableView.getSelectionModel().getSelectedItem();
         int num = return_tableView.getSelectionModel().getFocusedIndex();
 
@@ -673,13 +828,14 @@ public class DashboardController implements Initializable {
 
         String uri = "file:" + getData.path;
 
-        image = new Image(uri, 134,171, false, true);
+        image = new Image(uri, 134, 171, false, true);
         return_imageView.setImage(image);
 
     }
 
     private ObservableList<returnBook> returnData;
-    public void showReturnBooks(){
+
+    public void showReturnBooks() {
         returnData = returnBookData();
 
         returnBook_title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -692,18 +848,18 @@ public class DashboardController implements Initializable {
     }
     //Save book
 
-    public  ObservableList<saveBook> saveBookData(){
+    public ObservableList<saveBook> saveBookData() {
         ObservableList<saveBook> listSaveData = FXCollections.observableArrayList();
-        String sql = "Select * from save where studentNumber = '"+ getData.studentNumber +"' ";
+        String sql = "Select * from save where studentNumber = '" + getData.studentNumber + "' ";
         //int count =0;
         connect = Database.connectDB();
         try {
             saveBook sBooks;
             prepare = connect.prepareStatement(sql);
             result = prepare.executeQuery();
-            while(result.next()){
-                sBooks = new saveBook(result.getString("bookTitle"),result.getString("author"),
-                        result.getString("bookType"),result.getString("image"),
+            while (result.next()) {
+                sBooks = new saveBook(result.getString("bookTitle"), result.getString("author"),
+                        result.getString("bookType"), result.getString("image"),
                         result.getDate("date"));
                 listSaveData.add(sBooks);
                 //count ++;
@@ -713,16 +869,17 @@ public class DashboardController implements Initializable {
 //        alert.setHeaderText(null);
 //        alert.setContentText(""+ count +"");
 //        alert.showAndWait();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return listSaveData;
     }
 
     private ObservableList<saveBook> sBookList;
-    public void showSaveBook(){
+
+    public void showSaveBook() {
         sBookList = saveBookData();
-        int count =0;
+        int count = 0;
         saveBook_title.setCellValueFactory(new PropertyValueFactory<>("title"));
         saveBook_author.setCellValueFactory(new PropertyValueFactory<>("author"));
         saveBook_type.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -731,21 +888,20 @@ public class DashboardController implements Initializable {
         saveBook_tableView.setItems(sBookList);
     }
 
-    public void saveBook(){
+    public void saveBook() {
         String sql = "INSERT INTO save(`studentNumber`,`bookTitle`,`author`,`bookType`,`image`,`date`) VALUES(?,?,?,?,?,?)";
         connect = Database.connectDB();
 
         try {
 
             Alert alert;
-            if(availableBooks_title.getText().isEmpty()){
+            if (availableBooks_title.getText().isEmpty()) {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select the book!");
                 alert.showAndWait();
-            }
-            else{
+            } else {
                 prepare = connect.prepareStatement(sql);
                 prepare.setString(1, getData.studentNumber);
                 prepare.setString(2, getData.saveTitle);
@@ -765,12 +921,12 @@ public class DashboardController implements Initializable {
             }
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void selectSaveBook(){
+    public void selectSaveBook() {
         saveBook sBook = saveBook_tableView.getSelectionModel().getSelectedItem();
         int num = saveBook_tableView.getSelectionModel().getFocusedIndex();
 
@@ -784,26 +940,26 @@ public class DashboardController implements Initializable {
 
         String uri = "file:" + getData.path;
 
-        image = new Image(uri, 108,147, false, true);
+        image = new Image(uri, 108, 147, false, true);
         save_imageView.setImage(image);
         getData.saveImg = sBook.getImg();
         getData.saveTitle = sBook.getTitle();
     }
 
-    public void unsaveBook(){
+    public void unsaveBook() {
         String sql = "Delete from save where bookTitle = '" + getData.saveTitle + "' and studentNumber = '" + getData.studentNumber + "'";
 
         connect = Database.connectDB();
         try {
             Alert alert;
 
-            if(save_imageView.getImage() == null){
+            if (save_imageView.getImage() == null) {
                 alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select the book you want to unsave!");
                 alert.showAndWait();
-            }else{
+            } else {
                 statement = connect.createStatement();
                 statement.executeUpdate(sql);
                 alert = new Alert(AlertType.INFORMATION);
@@ -816,13 +972,13 @@ public class DashboardController implements Initializable {
                 save_imageView.setImage(null);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public ObservableList<availableBooks> dataList(){
+    public ObservableList<availableBooks> dataList() {
 
         ObservableList<availableBooks> listBooks = FXCollections.observableArrayList();
 
@@ -836,7 +992,7 @@ public class DashboardController implements Initializable {
             prepare = connect.prepareStatement(sql);
             result = prepare.executeQuery();
 
-            while (result.next()){
+            while (result.next()) {
                 aBooks = new availableBooks(
                         result.getInt("book_id"),
                         result.getString("bookTitle"),
@@ -847,13 +1003,16 @@ public class DashboardController implements Initializable {
                 listBooks.add(aBooks);
             }
 
-        }catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return listBooks;
     }
 
     //SHOWING BOOKS DATA
     private ObservableList<availableBooks> listBook;
-    public void showAvailableBooks(){
+
+    public void showAvailableBooks() {
 
         listBook = dataList();
 
@@ -867,7 +1026,8 @@ public class DashboardController implements Initializable {
     }
 
     availableBooks getBookData;
-    public void selectAvailableBooks(){
+
+    public void selectAvailableBooks() {
 
         availableBooks bookData = availableBooks_tableView.getSelectionModel().getSelectedItem();
 
@@ -895,7 +1055,7 @@ public class DashboardController implements Initializable {
         getData.saveDate = (java.sql.Date) bookData.getDate();
     }
 
-    public void abTakeButton(ActionEvent event){
+        public void abTakeButton(ActionEvent event){
 
         if (event.getSource()== take_btn){
             issue_form.setVisible(true);
