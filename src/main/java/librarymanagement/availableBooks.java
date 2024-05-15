@@ -9,14 +9,16 @@ public class availableBooks {
     private final String genre;
     private final String image;
     private final Date date;
+    private final String status;
 
-    public availableBooks(int id ,String title, String author, String genre, String image, Date date){
+    public availableBooks(int id ,String title, String author, String genre, String image, Date date, String status){
         this.id = id;
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.image = image;
         this.date = date;
+        this.status = status;
     }
 
     public int getId() {
@@ -41,6 +43,10 @@ public class availableBooks {
 
     public Date getDate() {
         return date;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
 }

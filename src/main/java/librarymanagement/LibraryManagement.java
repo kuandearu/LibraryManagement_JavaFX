@@ -23,6 +23,8 @@ public class LibraryManagement extends Application  {
         // Connect to the database
         connect = Database.connectDB();
 
+        Database.insertUsers();
+
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Scene scene = new Scene(root);
         root.setOnMousePressed((MouseEvent event) -> {

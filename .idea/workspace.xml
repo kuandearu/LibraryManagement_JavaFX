@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b306a93-47eb-4545-aeec-316e526343ed" name="Changes" comment="commit" />
+    <list default="true" id="2b306a93-47eb-4545-aeec-316e526343ed" name="Changes" comment="commit">
+      <change afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/UserDashBoardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/userList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/UserDashBoardController.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/FXMLDocumentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/FXMLDocumentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/LibraryManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/LibraryManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/availableBooks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/availableBooks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/getData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/getData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/FXMLDocument.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/FXMLDocument.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -122,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715615149864</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="commit">
+      <option name="closed" value="true" />
+      <created>1715672949931</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715672949931</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

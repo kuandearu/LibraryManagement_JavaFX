@@ -15,7 +15,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class FXMLDocumentController implements Initializable {
@@ -32,10 +31,9 @@ public class FXMLDocumentController implements Initializable {
     private PasswordField password;
 
     @FXML
-    private TextField studentNumber;
+    private TextField userNumber;
 
-
-    //DATABASE TOOLS
+    // DATABASE TOOLS
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
@@ -45,56 +43,64 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         connect = Database.connectDB();
     }
-    public void login(){
-        String sql = "SELECT * FROM student WHERE studentNumber = ? AND password = ?";
 
-        try{
+    public void login() {
+        String sql = "SELECT * FROM users WHERE userNumber = ? AND password = ?";
 
+        try {
             prepare = connect.prepareStatement(sql);
-            prepare.setString(1, studentNumber.getText());
+            prepare.setString(1, userNumber.getText());
             prepare.setString(2, password.getText());
             result = prepare.executeQuery();
 
             Alert alert;
 
-            if(studentNumber.getText().isEmpty() || password.getText().isEmpty()){
-
+            if (userNumber.getText().isEmpty() || password.getText().isEmpty()) {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Admin Message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please fill all blank fields.");
                 alert.showAndWait();
+            } else {
+                if (result.next()) {
+                    getData.userNumber = userNumber.getText();
+                    // getData.path = result.getString("image");
+                    int userRoll = result.getInt("userRoll");
 
-            }else{
-
-                if(result.next()){
-
-                    getData.studentNumber = studentNumber.getText();
-                    //getData.path = result.getString("image");
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Admin Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Login Success");
                     alert.showAndWait();
 
-                    // to Hide LOGIN FORM
+                    // Hide LOGIN FORM
                     login_Btn.getScene().getWindow().hide();
 
-                    //For DashBoard
-                    Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+                    // Determine which dashboard to load
+                    String dashboardFXML;
+                    if (userRoll == 1) {
+                        dashboardFXML = "UserDashBoardController.fxml";
+                    } else if (userRoll == 2) {
+                        dashboardFXML = "newStudentDashBoard.fxml";
+                    } else {
+                        alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Admin Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Invalid user role.");
+                        alert.showAndWait();
+                        return;
+                    }
 
+                    // Load the determined dashboard
+                    Parent root = FXMLLoader.load(getClass().getResource(dashboardFXML));
                     Stage stage = new Stage();
-
                     Scene scene = new Scene(root);
 
                     root.setOnMousePressed((MouseEvent e) -> {
-
                         x = e.getSceneX();
                         y = e.getSceneY();
-
                     });
 
                     root.setOnMouseDragged((MouseEvent e) -> {
@@ -103,42 +109,38 @@ public class FXMLDocumentController implements Initializable {
                     });
 
                     stage.initStyle(StageStyle.TRANSPARENT);
-
                     stage.setScene(scene);
                     stage.show();
-                }else{
+                } else {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Admin Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Your username or password is wrong.");
                     alert.showAndWait();
-
                 }
             }
-
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void numbersOnly(KeyEvent event){
-        if(event.getCharacter().matches("[^\\e\\t\\r\\d+$]")){
+    public void numbersOnly(KeyEvent event) {
+        if (event.getCharacter().matches("[^\\e\\t\\r\\d+$]")) {
             event.consume();
-
-            studentNumber.setStyle("-fx-border-color:#e04040");
-        }else{
-            studentNumber.setStyle("-fx-border-color:#fff");
+            userNumber.setStyle("-fx-border-color:#e04040");
+        } else {
+            userNumber.setStyle("-fx-border-color:#fff");
         }
     }
+
     @FXML
-    public void minimize(){
+    public void minimize() {
         Stage stage = (Stage) minimize.getScene().getWindow();
         stage.setIconified(true);
     }
+
     @FXML
-    public void exit(){
+    public void exit() {
         System.exit(0);
     }
-
-
 }

@@ -180,7 +180,7 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="507.0" prefWidth="1070.0" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="507.0" prefWidth="1070.0" visible="false" AnchorPane.bottomAnchor="-5.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="31.0" layoutY="17.0" prefHeight="491.0" prefWidth="264.0">
                            <children>
