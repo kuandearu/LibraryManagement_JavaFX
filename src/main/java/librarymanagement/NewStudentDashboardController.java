@@ -642,7 +642,8 @@ public class NewStudentDashboardController implements Initializable
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getString("image"),
-                        result.getDate("date"));
+                        result.getDate("date"),
+                        result.getString("status"));
                 listBooks.add(aBooks);
             }
 

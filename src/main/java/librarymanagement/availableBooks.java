@@ -45,8 +45,6 @@ public class availableBooks {
         return date;
     }
 
-    public String getStatus() {
-        return status;
-    }
+    public String getStatus() {return  status;}
 
 }

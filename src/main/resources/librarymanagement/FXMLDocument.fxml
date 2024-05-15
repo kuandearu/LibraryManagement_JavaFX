@@ -18,7 +18,7 @@
                </font>
             </Label>
             <FontAwesomeIcon fill="#fffbfb" glyphName="USERS" layoutX="211.0" layoutY="76.0" selectionFill="#2acdc7" size="5em" text="" wrappingWidth="69.0" />
-            <TextField fx:id="userNumber" layoutX="131.0" layoutY="156.0" onKeyTyped="#numbersOnly" prefHeight="31.0" prefWidth="230.0" promptText="User Number" styleClass="textfield" stylesheets="@../designLogin.css" />
+            <TextField fx:id="studentNumber" layoutX="131.0" layoutY="156.0" onKeyTyped="#numbersOnly" prefHeight="31.0" prefWidth="230.0" promptText="Student Number" styleClass="textfield" stylesheets="@../designLogin.css" />
             <PasswordField fx:id="password" layoutX="131.0" layoutY="199.0" prefHeight="31.0" prefWidth="230.0" promptText="Password" styleClass="textfield" stylesheets="@../designLogin.css" />
             <Button fx:id="login_Btn" layoutX="183.0" layoutY="258.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="107.0" styleClass="login-btn" stylesheets="@../designLogin.css" text="Login" />
          </children>

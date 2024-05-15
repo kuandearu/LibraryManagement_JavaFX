@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b306a93-47eb-4545-aeec-316e526343ed" name="Changes" comment="commit">
-      <change afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/UserDashBoardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/userList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/UserDashBoardController.fxml" afterDir="false" />
+    <list default="true" id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="add returbook list">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" afterDir="false" />
@@ -15,7 +14,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/LibraryManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/LibraryManagement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/availableBooks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/availableBooks.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/getData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/getData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/designDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/designDashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/FXMLDocument.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/FXMLDocument.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/UserDashBoardController.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/UserDashBoardController.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,8 +27,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -46,17 +47,17 @@
     &quot;accountId&quot;: &quot;d2e3335a-737c-41c5-9b5a-f8bf9ed5214d&quot;
   }
 }</component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 2
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2gIt7NjEJmwjUm2q7xdHxlSpvGj" />
+  <component name="ProjectId" id="2faweeb97dXNY169gIACehktMhE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -64,11 +65,12 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.LibraryManagement.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;#2 on Anh__Duc&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Project kì 2/LibraryManagement_JavaFX/src/main/resources/lib/fontawesomefx-8.2.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/JavaFX/JavaFX-Phuc_Toan/LibraryManagement_JavaFX/src/main/resources/lib/fontawesomefx-8.2.jar&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
@@ -88,6 +90,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="LibraryManagement_JavaFX" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="LibraryManagement_JavaFX" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.LibraryManagement" />
@@ -97,57 +112,100 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="2b306a93-47eb-4545-aeec-316e526343ed" name="Changes" comment="" />
-      <created>1715396753750</created>
+      <changelist id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="" />
+      <created>1714052595018</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1715396753750</updated>
+      <updated>1714052595018</updated>
     </task>
-    <task id="LOCAL-00001" summary="commit">
+    <task id="LOCAL-00001" summary="add returbook list">
       <option name="closed" value="true" />
-      <created>1715442214640</created>
+      <created>1714098834219</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1715442214640</updated>
+      <updated>1714098834219</updated>
     </task>
-    <task id="LOCAL-00002" summary="commit">
+    <task id="LOCAL-00002" summary="add returbook list">
       <option name="closed" value="true" />
-      <created>1715442218540</created>
+      <created>1715075483425</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1715442218540</updated>
+      <updated>1715075483425</updated>
     </task>
-    <task id="LOCAL-00003" summary="commit">
+    <task id="LOCAL-00003" summary="add returbook list">
       <option name="closed" value="true" />
-      <created>1715570749270</created>
+      <created>1715247055333</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1715570749270</updated>
+      <updated>1715247055333</updated>
     </task>
-    <task id="LOCAL-00004" summary="commit">
+    <task id="LOCAL-00004" summary="add returbook list">
       <option name="closed" value="true" />
-      <created>1715615149864</created>
+      <created>1715255070179</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1715615149864</updated>
+      <updated>1715255070179</updated>
     </task>
-    <task id="LOCAL-00005" summary="commit">
+    <task id="LOCAL-00005" summary="add returbook list">
       <option name="closed" value="true" />
-      <created>1715672949931</created>
+      <created>1715258189988</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1715672949931</updated>
+      <updated>1715258189988</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715258669555</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1715258669555</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715337539947</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1715337539947</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715339028058</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715339028058</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715339075958</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715339075958</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="add returbook list" />
+    <option name="LAST_COMMIT_MESSAGE" value="add returbook list" />
   </component>
 </project>

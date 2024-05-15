@@ -5,7 +5,7 @@ import java.sql.Date;
 public class getData {
 
     public static String path;
-    public static String userNumber;
+    public static String studentNumber;
 
     public static String pathImage;
     public static String takeBookTitle;

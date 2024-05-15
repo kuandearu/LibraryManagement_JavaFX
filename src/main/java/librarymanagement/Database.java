@@ -25,22 +25,23 @@ public class Database {
             connect = DriverManager.getConnection(url, username, password);
 
             // Create the table if it doesn't exist
-            String createUserTableQuery = "CREATE TABLE IF NOT EXISTS users (" +
-                    "`user_id` int(100) NOT NULL AUTO_INCREMENT," +
-                    "  `userRoll` int(1) DEFAULT NULL," +
-                    "  `userNumber` varchar(100) DEFAULT NULL," +
-                    "  `userName` varchar(100) DEFAULT NULL," +
+            String createStudentTableQuery = "CREATE TABLE IF NOT EXISTS student (" +
+                    "`student_id` int(100) NOT NULL AUTO_INCREMENT," +
+                    "  `studentRoll` int(1) DEFAULT NULL," +
+                    "  `studentNumber` varchar(100) DEFAULT NULL," +
+                    "  `studentName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL," +
                     "  `dateOfBirth` date DEFAULT NULL," +
                     "  `gender` varchar(10) DEFAULT NULL," +
                     "  `phone` varchar(10) DEFAULT NULL," +
                     "  `email` varchar(50) DEFAULT NULL," +
                     "  `password` varchar(100) DEFAULT NULL," +
                     "  PRIMARY KEY (`student_id`))";
-            prepare = connect.prepareStatement(createUserTableQuery);
+            prepare = connect.prepareStatement(createStudentTableQuery);
             prepare.executeUpdate();
 
             String createBookTableQuery = "CREATE TABLE IF NOT EXISTS book (" +
                     "`book_id` int(100) NOT NULL AUTO_INCREMENT," +
+                    "  `bookNumber` varchar(100) DEFAULT NULL," +
                     "  `bookTitle` varchar(100) DEFAULT NULL," +
                     "  `author` varchar(100) DEFAULT NULL," +
                     "  `bookType` varchar(100) DEFAULT NULL," +
@@ -69,7 +70,7 @@ public class Database {
 
             String createSaveBookTableQuery = "CREATE TABLE IF NOT EXISTS save (" +
                     "`id` int(100) NOT NULL AUTO_INCREMENT," +
-                    "  `userNumber` varchar(100) DEFAULT NULL," +
+                    "  `studentNumber` varchar(100) DEFAULT NULL," +
                     "  `bookTitle` varchar(100) DEFAULT NULL," +
                     "  `author` varchar(100) DEFAULT NULL," +
                     "  `bookType` varchar(100) DEFAULT NULL," +
@@ -94,13 +95,13 @@ public class Database {
         return connect;
     }
 
-    public static void insertUsers() {
-        String sql = "INSERT INTO users (userNumber, userName, password, dateOfBirth, userRoll, gender, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public static void insertStudents() {
+        String sql = "INSERT INTO student (studentNumber, studentName, password, dateOfBirth, studentRoll, gender, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             prepare = connect.prepareStatement(sql);
 
             // Insert values for each student only if they don't already exist
-            if (!userExists(Database.connect, "0969571699")) {
+            if (!studentExists(Database.connect, "0969571699")) {
                 prepare.setString(1, "0969571699");
                 prepare.setString(2, "Giang Khánh Quân");
                 prepare.setString(3, "123456");
@@ -112,7 +113,7 @@ public class Database {
                 prepare.addBatch();
             }
 
-            if (!userExists(Database.connect, "123")) {
+            if (!studentExists(Database.connect, "123")) {
                 prepare.setString(1, "123");
                 prepare.setString(2, "Nguyễn Phúc Toàn");
                 prepare.setString(3, "123456");
@@ -124,7 +125,7 @@ public class Database {
                 prepare.addBatch();
             }
 
-            if (!userExists(Database.connect, "456")) {
+            if (!studentExists(Database.connect, "456")) {
                 prepare.setString(1, "456");
                 prepare.setString(2, "Nguyễn Anh Đức");
                 prepare.setString(3, "123456");
@@ -136,7 +137,7 @@ public class Database {
                 prepare.addBatch();
             }
 
-            if (!userExists(Database.connect, "789")) {
+            if (!studentExists(Database.connect, "789")) {
                 prepare.setString(1, "789");
                 prepare.setString(2, "Nguyễn Hoàng Long");
                 prepare.setString(3, "123456");
@@ -148,7 +149,7 @@ public class Database {
                 prepare.addBatch();
             }
 
-            if (!userExists(Database.connect, "27890")) {
+            if (!studentExists(Database.connect, "27890")) {
                 prepare.setString(1, "27890");
                 prepare.setString(2, "Nguyễn Tiến Minh");
                 prepare.setString(3, "123456");
@@ -173,7 +174,7 @@ public class Database {
             prepare = connect.prepareStatement(sql);
 
             // Insert values for each student only if they don't already exist
-            if (!userExists(Database.connect, "0969571699")) {
+            if (!studentExists(Database.connect, "0969571699")) {
                 prepare.setString(1, "0969571699");
                 prepare.setString(2, "Giang Khánh Quân");
                 prepare.setString(3, "123456");
@@ -188,8 +189,8 @@ public class Database {
         }
     }
 
-    private static boolean userExists(Connection connection, String studentNumber) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM users WHERE userNumber = ?";
+    private static boolean studentExists(Connection connection, String studentNumber) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM student WHERE studentNumber = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, studentNumber);
         ResultSet resultSet = preparedStatement.executeQuery();

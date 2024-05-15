@@ -18,15 +18,6 @@
     -fx-background-color: #f13f57;
 }
 
-.maximize-btn{
-    -fx-background-color: transparent;
-    -fx-cursor: hand;
-}
-
-.maximize-btn:hover{
-    -fx-background-color: #dddddd;
-}
-
 .minimize-btn{
     -fx-background-color: transparent;
     -fx-cursor: hand;
