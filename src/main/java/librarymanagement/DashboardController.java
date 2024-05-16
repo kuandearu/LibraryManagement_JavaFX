@@ -210,6 +210,12 @@ public class DashboardController implements Initializable {
     private TableColumn<returnBook, String> returnBook_type;
 
     @FXML
+    private TableColumn<returnBook, String> returnBook_number;
+
+    @FXML
+    private TableColumn<returnBook, String> returnBook_status;
+
+    @FXML
     private Button return_button;
 
     @FXML
@@ -1072,11 +1078,13 @@ public class DashboardController implements Initializable {
             result = prepare.executeQuery();
             while (result.next()){
                 rBooks = new returnBook(
+                        result.getString("bookNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getDate("date"),
-                        result.getString("image")
+                        result.getString("image"),
+                        result.getString("status")
 
                 );
 

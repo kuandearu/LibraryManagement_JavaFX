@@ -407,11 +407,13 @@ public class NewStudentDashboardController implements Initializable
             result = prepare.executeQuery();
             while (result.next()){
                 rBooks = new returnBook(
+                        result.getString("bookNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getDate("date"),
-                        result.getString("image")
+                        result.getString("image"),
+                        result.getString("status")
 
                 );
 

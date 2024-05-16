@@ -170,11 +170,11 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="-565.6" layoutY="97.0" prefHeight="510.0" prefWidth="1262.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-566.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane fx:id="showBooks_form" layoutX="268.0" layoutY="16.0" prefHeight="468.0" prefWidth="777.0" stylesheets="@../designDashboard.css" visible="false">
+                        <AnchorPane fx:id="showBooks_form" layoutX="268.0" layoutY="16.0" prefHeight="468.0" prefWidth="982.0" stylesheets="@../designDashboard.css">
                            <children>
-                              <TableView fx:id="availableBooks_tableView" layoutX="247.0" layoutY="51.0" onMouseClicked="#selectAvailableBooks" prefHeight="390.0" prefWidth="500.0">
+                              <TableView fx:id="availableBooks_tableView" layoutX="247.0" layoutY="51.0" onMouseClicked="#selectAvailableBooks" prefHeight="390.0" prefWidth="718.0">
                                  <columns>
                                     <TableColumn fx:id="col_ab_BookId" prefWidth="66.0" text="Book ID" />
                                     <TableColumn fx:id="col_ab_bookTitle" prefWidth="140.0" text="Book Title" />
@@ -201,7 +201,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="addBook_form" layoutX="279.0" layoutY="17.0" prefHeight="467.0" prefWidth="777.0" stylesheets="@../designDashboard.css">
+                        <AnchorPane fx:id="addBook_form" layoutX="279.0" layoutY="17.0" prefHeight="467.0" prefWidth="777.0" stylesheets="@../designDashboard.css" visible="false">
                            <children>
                               <AnchorPane layoutX="221.0" layoutY="5.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
@@ -263,7 +263,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="-13.0" layoutY="16.0" prefHeight="491.0" prefWidth="378.0">
+                        <AnchorPane layoutX="6.0" layoutY="16.0" prefHeight="491.0" prefWidth="264.0">
                            <children>
                               <Button fx:id="addBook_btn" layoutX="71.0" layoutY="83.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Add Book" textAlignment="CENTER" />
                               <Button fx:id="showBook_btn" layoutX="71.0" layoutY="151.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Show Books" />
@@ -337,7 +337,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="student_list" layoutX="-568.0" layoutY="26.0" prefHeight="510.0" prefWidth="1264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-568.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="student_list" layoutX="-568.0" layoutY="26.0" prefHeight="510.0" prefWidth="1264.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-568.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane fx:id="addStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
                            <children>
@@ -542,7 +542,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="returnBook_form" layoutX="217.0" layoutY="116.0" prefHeight="500.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="returnBook_form" layoutX="-569.6" layoutY="116.0" prefHeight="510.0" prefWidth="1263.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-570.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="292.0" layoutY="11.0" prefHeight="487.0" prefWidth="404.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
@@ -551,12 +551,14 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TableView fx:id="return_tableView" layoutX="9.0" layoutY="48.0" onMouseClicked="#selectReturnBook" prefHeight="418.0" prefWidth="386.0">
+                              <TableView fx:id="return_tableView" layoutX="9.0" layoutY="48.0" onMouseClicked="#selectReturnBook" prefHeight="418.0" prefWidth="713.0">
                                 <columns>
-                                  <TableColumn fx:id="returnBook_title" prefWidth="106.39996337890625" text="Book Title" />
-                                    <TableColumn fx:id="returnBook_author" minWidth="0.0" prefWidth="76.0" text="Author" />
-                                    <TableColumn fx:id="returnBook_type" minWidth="0.0" prefWidth="97.5999755859375" text="Book Type" />
-                                    <TableColumn fx:id="returnBook_date" minWidth="0.0" prefWidth="108.0" text="Date Issued" />
+                                    <TableColumn fx:id="returnBook_number" prefWidth="93.60000610351562" text="Book Number" />
+                                  <TableColumn fx:id="returnBook_title" prefWidth="201.60000610351562" text="Book Title" />
+                                    <TableColumn fx:id="returnBook_author" minWidth="0.0" prefWidth="105.5999755859375" text="Author" />
+                                    <TableColumn fx:id="returnBook_type" minWidth="0.0" prefWidth="108.0" text="Book Type" />
+                                    <TableColumn fx:id="returnBook_date" minWidth="0.0" prefWidth="101.60003662109375" text="Date Issued" />
+                                    <TableColumn fx:id="returnBook_status" minWidth="0.0" prefWidth="102.4000244140625" text="Book status" />
                                 </columns>
                               </TableView>
                            </children>
