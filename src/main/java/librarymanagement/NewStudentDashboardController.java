@@ -50,6 +50,9 @@ public class NewStudentDashboardController implements Initializable
     private Circle circle_image;
 
     @FXML
+    private TableColumn<availableBooks, Integer> col_ab_BookId;
+
+    @FXML
     private TableColumn<availableBooks, String> col_ab_author;
 
     @FXML
@@ -634,11 +637,13 @@ public class NewStudentDashboardController implements Initializable
 
             while (result.next()){
                 aBooks = new availableBooks(
+                        result.getInt("book_id"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getString("image"),
-                        result.getDate("date"));
+                        result.getDate("date"),
+                        result.getString("status"));
                 listBooks.add(aBooks);
             }
 
@@ -652,6 +657,7 @@ public class NewStudentDashboardController implements Initializable
 
         listBook = dataList();
 
+        col_ab_BookId.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_ab_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_ab_author.setCellValueFactory(new PropertyValueFactory<>("author"));
         col_ab_bookType.setCellValueFactory(new PropertyValueFactory<>("genre"));
