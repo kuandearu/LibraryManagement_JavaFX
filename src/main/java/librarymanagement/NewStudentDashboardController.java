@@ -94,6 +94,9 @@ public class NewStudentDashboardController implements Initializable {
     private Button close;
 
     @FXML
+    private Button maximized;
+
+    @FXML
     private Button minimize;
 
     @FXML
@@ -1007,6 +1010,11 @@ public class NewStudentDashboardController implements Initializable {
 
     public void exit(){
         System.exit(0);
+    }
+
+    public void maximized(){
+        Stage stage = (Stage) maximized.getScene().getWindow();
+        stage.setMaximized(true);
     }
 
     public void minimize(){
