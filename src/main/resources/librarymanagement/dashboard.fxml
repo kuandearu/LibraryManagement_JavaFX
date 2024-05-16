@@ -337,9 +337,9 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="student_list" layoutX="-568.0" layoutY="26.0" prefHeight="507.0" prefWidth="1264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-568.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="student_list" layoutX="-568.0" layoutY="26.0" prefHeight="510.0" prefWidth="1264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-568.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane layoutX="257.0" layoutY="13.0" prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                        <AnchorPane fx:id="addStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
                            <children>
                               <Label layoutX="285.0" layoutY="14.0" prefHeight="36.0" prefWidth="248.0" text="Add Student" AnchorPane.leftAnchor="285.0">
                                  <font>
@@ -351,7 +351,6 @@
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="addStudentNumber_text" layoutX="455.0" layoutY="64.0" prefHeight="30.0" prefWidth="156.0" styleClass="label_take" stylesheets="@../designDashboard.css" />
                               <Label layoutX="290.0" layoutY="116.0" prefHeight="21.0" prefWidth="134.0" text="First Name:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
@@ -369,10 +368,8 @@
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="addGender_text" layoutX="457.0" layoutY="278.0" onAction="#gender" prefHeight="30.0" prefWidth="152.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
+                              <ComboBox fx:id="addGender_text" layoutX="457.0" layoutY="278.0" prefHeight="30.0" prefWidth="152.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
                               <TextField fx:id="take_BookTitle" layoutX="455.0" layoutY="393.0" onAction="#findBook" prefHeight="25.0" prefWidth="222.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" visible="false" />
-                              <Label fx:id="addEmail_text" layoutX="791.0" layoutY="162.0" prefHeight="30.0" prefWidth="168.0" styleClass="label_take" stylesheets="@../designDashboard.css" />
-                              <Label fx:id="addPhoneNumber_text" layoutX="792.0" layoutY="108.0" prefHeight="29.0" prefWidth="168.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
                               <Label layoutX="290.0" layoutY="225.0" prefHeight="21.0" prefWidth="134.0" text="Date of Birth:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
@@ -394,15 +391,14 @@
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="addRoll_text" layoutX="815.0" layoutY="53.0" onAction="#gender" prefHeight="30.0" prefWidth="120.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
+                              <ComboBox fx:id="addRoll_text" layoutX="815.0" layoutY="53.0" prefHeight="30.0" prefWidth="120.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
                               <Label layoutX="677.0" layoutY="225.0" prefHeight="21.0" prefWidth="134.0" text="Password:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="addPassword_text" layoutX="791.0" layoutY="220.0" prefHeight="30.0" prefWidth="169.0" styleClass="label_take" stylesheets="@../designDashboard.css" />
-                              <Button fx:id="addStudent_btn" layoutX="853.0" layoutY="368.0" mnemonicParsing="false" onAction="#takeBook" prefHeight="50.0" prefWidth="82.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Add" />
-                              <Button fx:id="clearAddStudent_btn" layoutX="732.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearTakeData" prefHeight="51.0" prefWidth="86.0" styleClass="clear-btn" stylesheets="@../designDashboard.css" text="Clear">
+                              <Button fx:id="addStudent_btn" layoutX="853.0" layoutY="368.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="50.0" prefWidth="82.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Add" />
+                              <Button fx:id="clearAddStudent_btn" layoutX="732.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearAddStudent" prefHeight="51.0" prefWidth="86.0" styleClass="clear-btn" stylesheets="@../designDashboard.css" text="Clear">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -414,10 +410,14 @@
                                           <ImageView fx:id="studentImage_View" fitHeight="174.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" />
                                        </children>
                                     </AnchorPane>
-                                    <Button fx:id="uploadStudentImage_View" layoutX="64.0" layoutY="216.0" mnemonicParsing="false" onAction="#clearTakeData" prefHeight="52.0" prefWidth="90.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload" />
+                                    <Button fx:id="uploadStudentImage_View" layoutX="64.0" layoutY="216.0" mnemonicParsing="false" onAction="#uploadStudentImage" prefHeight="52.0" prefWidth="90.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload" />
                                  </children>
                               </AnchorPane>
                               <Separator layoutX="260.0" layoutY="11.0" orientation="VERTICAL" prefHeight="449.0" prefWidth="0.0" />
+                              <TextField fx:id="addStudentNumber_text" layoutX="454.0" layoutY="65.0" prefHeight="30.0" prefWidth="157.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="addPhone_text" layoutX="796.0" layoutY="108.0" prefHeight="27.0" prefWidth="158.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="addPassword_text" layoutX="796.0" layoutY="224.0" prefHeight="27.0" prefWidth="158.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="addEmail_text" layoutX="796.0" layoutY="163.0" prefHeight="27.0" prefWidth="158.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="510.0" prefWidth="250.0">
@@ -427,6 +427,32 @@
                               <Button layoutX="23.0" layoutY="181.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Update Student" />
                               <Button layoutX="23.0" layoutY="440.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Back" />
                               <Button layoutX="23.0" layoutY="255.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Delete Student" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="showStudent_form" layoutX="255.0" layoutY="14.0" prefHeight="475.0" prefWidth="995.0">
+                           <children>
+                              <AnchorPane layoutY="7.0" prefHeight="466.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                                 <children>
+                                    <AnchorPane layoutX="35.0" layoutY="14.0" prefHeight="174.0" prefWidth="131.0" styleClass="image-card" stylesheets="@../designDashboard.css">
+                                       <children>
+                                          <ImageView fx:id="showStudentImage_View" fitHeight="174.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                              <TableView fx:id="availableStudent_TableView" layoutX="213.0" layoutY="9.0" onMouseClicked="#selectAvailableStudents" prefHeight="462.0" prefWidth="773.0">
+                                <columns>
+                                  <TableColumn fx:id="col_ab_studentNumber" prefWidth="103.0" text="StudentNumber" />
+                                  <TableColumn fx:id="col_ab_studentName" prefWidth="114.0" text="StudentName" />
+                                    <TableColumn fx:id="col_ab_dateOfBirth" prefWidth="94.0" text="Date of Birth" />
+                                    <TableColumn fx:id="col_ab_Gender" prefWidth="55.0" text="Gender" />
+                                    <TableColumn fx:id="col_ab_Phone" prefWidth="92.0" text="Phone" />
+                                    <TableColumn fx:id="col_ab_Email" prefWidth="94.0" text="Email" />
+                                    <TableColumn fx:id="col_ab_Password" prefWidth="108.0" text="Password" />
+                                    <TableColumn fx:id="col_ab_UpdateStudent" prefWidth="58.0" />
+                                    <TableColumn fx:id="col_ab_DeleteStudent" prefWidth="54.0" />
+                                </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                      </children>

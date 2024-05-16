@@ -162,9 +162,6 @@ public class DashboardController implements Initializable {
     private TextField take_FirstName;
 
     @FXML
-    private ComboBox<?> take_Gender;
-
-    @FXML
     private Label take_IssuedDate;
 
     @FXML
@@ -214,6 +211,7 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button return_button;
+
     @FXML
     private TableColumn<saveBook, String> saveBook_author;
 
@@ -286,6 +284,75 @@ public class DashboardController implements Initializable {
     @FXML
     private Button uploadUpdateImage_View;
 
+    @FXML
+    private ComboBox<?> addGender_text;
+
+    @FXML
+    private AnchorPane student_list;
+
+    @FXML
+    private ImageView studentImage_View;
+
+    @FXML
+    private Button clearAddStudent_btn;
+
+    @FXML
+    private TextField addStudentNumber_text;
+
+    @FXML
+    private TextField addFirstName_text;
+
+    @FXML
+    private TextField addLastName_text;
+
+    @FXML
+    private TextField addDateofBirth_text;
+
+    @FXML
+    private TextField addEmail_text;
+
+    @FXML
+    private ComboBox<?> addRoll_text;
+
+    @FXML
+    private TextField addPhone_text;
+
+    @FXML
+    private TextField addPassword_text;
+
+    @FXML
+    private TableView<userList> availableStudent_TableView;
+
+    @FXML
+    private TableColumn<?, ?> col_ab_DeleteStudent;
+
+    @FXML
+    private TableColumn<userList, String> col_ab_Email;
+
+    @FXML
+    private TableColumn<userList, String> col_ab_Gender;
+
+    @FXML
+    private TableColumn<userList, String> col_ab_Password;
+
+    @FXML
+    private TableColumn<userList, String> col_ab_Phone;
+
+    @FXML
+    private TableColumn<?, ?> col_ab_UpdateStudent;
+
+    @FXML
+    private TableColumn<userList, Date> col_ab_dateOfBirth;
+
+    @FXML
+    private TableColumn<userList, String> col_ab_studentName;
+
+    @FXML
+    private TableColumn<userList, String> col_ab_studentNumber;
+
+    @FXML
+    private ImageView showStudentImage_View;
+
     Image image;
 
     private Connection connect;
@@ -294,7 +361,156 @@ public class DashboardController implements Initializable {
     private Statement statement;
     private File selectedFile;
     private String comboBox[] = {"Male", "Female", "Others"};
+    private int rollBox[] = {1, 2};
 
+
+    public void addStudent() {
+        String sql = "INSERT INTO student(studentNumber, studentName, dateOfBirth, email, studentRoll, gender, phone, password, image) VALUES (?,?,?,?,?,?,?,?,?) ";
+
+        connect = Database.connectDB();
+
+        try {
+
+            if (addStudentNumber_text.getText().isEmpty() ||
+                    addFirstName_text.getText().isEmpty() ||
+                    addLastName_text.getText().isEmpty() ||
+                    addDateofBirth_text.getText().isEmpty() ||
+                    addEmail_text.getText().isEmpty() ||
+                    addPhone_text.getText().isEmpty() ||
+                    addPassword_text.getText().isEmpty() ||
+                    addGender_text.getValue() == null ||
+                    addRoll_text.getValue() == null ||
+                    studentImage_View.getImage() == null) {
+                showAlert(AlertType.ERROR, "Program message", "Please insert all information!");
+            } else {
+                //Check validate date of birth
+                String dateString = addDateofBirth_text.getText();
+                Timestamp timestamp = validateAndConvertToTimestamp(dateString);
+                if (timestamp == null) {
+                    // Return if date format is invalid
+                    return;
+                }
+                // Combine first name and last name into full name
+                String fullName = addFirstName_text.getText() + " " + addLastName_text.getText();
+
+                // Prepare SQL statement
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(1, addStudentNumber_text.getText());
+                prepare.setString(2, fullName);
+                prepare.setTimestamp(3, timestamp);
+                prepare.setString(4, addEmail_text.getText());
+                prepare.setInt(5, (int) addRoll_text.getValue()); // Assuming roll is an Integer in the database
+                prepare.setString(6, addGender_text.getValue().toString()); // Assuming gender is a String in the database
+                prepare.setString(7, addPhone_text.getText());
+                prepare.setString(8, addPassword_text.getText());
+
+                String imagePath = selectedFile.getAbsolutePath();
+                prepare.setString(9, imagePath);
+
+                // Execute the SQL statement
+                int rowsAffected = prepare.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    // Show success message
+                    showAlert(AlertType.INFORMATION, "Program message", "Student added successfully!");
+
+                    // Clear input fields
+                    clearAddStudent(); // Assuming you have a method to clear input fields
+                } else {
+                    // Show error message if insertion fails
+                    showAlert(AlertType.ERROR, "Program message", "Failed to add student. Please try again.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clearAddStudent() {
+        addStudentNumber_text.setText("");
+        addFirstName_text.setText("");
+        addLastName_text.setText("");
+        addDateofBirth_text.setText("");
+        addEmail_text.setText("");
+        addPhone_text.setText("");
+        addPassword_text.setText("");
+        addGender_text.setValue(null);
+        addRoll_text.setValue(null);
+        studentImage_View.setImage(null);
+    }
+
+    public ObservableList<userList> studentList() {
+
+        ObservableList<userList> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM student";
+
+        connect = Database.connectDB();
+
+        try {
+            userList student;
+
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                student = new userList(
+                        result.getString("studentNumber"),
+                        result.getString("studentName"),
+                        result.getDate("dateOfBirth"),
+                        result.getString("gender"),
+                        result.getString("phone"),
+                        result.getString("email"),
+                        result.getString("image"),
+                        result.getString("password"));
+                listStudents.add(student);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listStudents;
+    }
+
+    //SHOWING STUDENT DATA
+    private ObservableList<userList> listStudents;
+
+    public void showAvailableStudents() {
+
+        listStudents = studentList();
+
+        col_ab_studentNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
+        col_ab_studentName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        col_ab_dateOfBirth.setCellValueFactory(new PropertyValueFactory<>("date"));
+        col_ab_Gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        col_ab_Phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        col_ab_Email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        col_ab_Password.setCellValueFactory(new PropertyValueFactory<>("password"));
+
+        availableStudent_TableView.setItems(listStudents);
+    }
+
+    userList getStudentData;
+
+    public void selectAvailableStudents() {
+
+        userList studentData = availableStudent_TableView.getSelectionModel().getSelectedItem();
+
+        int num = availableStudent_TableView.getSelectionModel().getFocusedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        getStudentData = studentData;
+
+        // This is required to display the image
+        // Note: Don't forget the "file:"
+        String uri = "file:" + studentData.getImage();
+
+        Image image = new Image(uri, 134, 171, false, true);
+        showStudentImage_View.setImage(image);
+    }
 
     public void addBook() {
 
@@ -310,11 +526,7 @@ public class DashboardController implements Initializable {
                     addBookType_label.getText().isEmpty() ||
                     addDate_label.getText().isEmpty() ||
                     addBookImage_View.getImage() == null) {
-                alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please insert all Information!");
-                alert.showAndWait();
+                showAlert(AlertType.ERROR, "Program message", "Please insert all information!");
             } else {
                 String dateString = addDate_label.getText();
                 Timestamp timestamp = validateAndConvertToTimestamp(dateString);
@@ -340,21 +552,13 @@ public class DashboardController implements Initializable {
 
                 if (rowsAffected > 0) {
                     // Show success message
-                    alert = new Alert(AlertType.INFORMATION);
-                    alert.setTitle("Program message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Book added successfully!");
-                    alert.showAndWait();
+                    showAlert(AlertType.INFORMATION, "Program message", "Book added successfully!");
 
                     // Clear input fields
                     clearAddBook();
                 } else {
                     // Show error message if insertion fails
-                    alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Program message");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Failed to add book. Please try again.");
-                    alert.showAndWait();
+                    showAlert(AlertType.INFORMATION, "Program message", "Failed to add book. Please try again!");
                 }
             }
         } catch (Exception e) {
@@ -584,6 +788,29 @@ public class DashboardController implements Initializable {
         }
     }
 
+    public void uploadStudentImage() {
+        // Create a file chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image File");
+
+        // Set initial directory
+        File initialDirectory = new File("src/main/java/image/");
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Filter to show only image files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog
+        selectedFile = fileChooser.showOpenDialog(uploadImage_View.getScene().getWindow());
+
+        if (selectedFile != null) {
+            // Load the selected image into the ImageView
+            Image image = new Image(selectedFile.toURI().toString(), 140, 162, false, true);
+            studentImage_View.setImage(image);
+        }
+    }
+
     public ObservableList<availableBooks> dataList() {
 
         ObservableList<availableBooks> listBooks = FXCollections.observableArrayList();
@@ -662,6 +889,17 @@ public class DashboardController implements Initializable {
         getData.saveDate = (java.sql.Date) bookData.getDate();
     }
 
+    public void roll() {
+        List<Integer> rollCombo = new ArrayList<>();
+
+        for (int data : rollBox) {
+            rollCombo.add(data);
+        }
+
+        ObservableList listRoll = FXCollections.observableList(rollCombo);
+        addRoll_text.setItems(listRoll);
+    }
+
     public void gender() {
         List<String> combo = new ArrayList<>();
 
@@ -671,7 +909,7 @@ public class DashboardController implements Initializable {
 
         ObservableList list = FXCollections.observableList(combo);
 
-        take_Gender.setItems(list);
+        addGender_text.setItems(list);
     }
 
     public void findBook(ActionEvent event) throws SQLException {
@@ -733,83 +971,79 @@ public class DashboardController implements Initializable {
         return true;
     }
 
-    public void takeBook() throws SQLException {
+//    public void takeBook() throws SQLException {
+//
+//        Date date = new Date();
+//        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+//
+//        String sql = "INSERT INTO take(`studentNumber`,`firstname`,`lastname`,`gender`," +
+//                "`bookTitle`,`author`,`bookType`,`image`,`date`,`checkReturn`)" +
+//                " VALUES(?,?,?,?,?,?,?,?,?,?)";
+//
+//        connect = Database.connectDB();
+//
+//        try{
+//
+//            Alert alert;
+//
+//            if(take_FirstName.getText().isEmpty()
+//                    || take_LastName.getText().isEmpty()
+//                    || addGender_text.getSelectionModel().isEmpty()){
+//                alert = new Alert(AlertType.ERROR);
+//                alert.setTitle("Program message");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Please insert completely all Information!");
+//                alert.showAndWait();
+//            } else
+//            {
+//                prepare = connect.prepareStatement(sql);
+//                prepare.setString(1, take_StudentNumber.getText());
+//                prepare.setString(2, take_FirstName.getText());
+//                prepare.setString(3, take_LastName.getText());
+//                prepare.setString(4, (String)addGender_text.getSelectionModel().getSelectedItem());
+//                prepare.setString(5, take_titleLabel.getText());
+//                prepare.setString(6, take_authorLabel.getText());
+//                prepare.setString(7, take_genreLabel.getText());
+//                prepare.setString(8, getData.pathImage);
+//                prepare.setDate(9, sqlDate);
+//
+//                String check = "Not Return";
+//
+//                prepare.setString(10, check);
+//                prepare.executeUpdate();
+//
+//                alert = new Alert(AlertType.INFORMATION);
+//                alert.setTitle("Program message");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Successfully take the book");
+//                alert.showAndWait();
+//
+//                clearTakeData();
+//
+//            }
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        } finally {
+//            if(result != null)
+//                result.close();
+//            if(prepare != null)
+//                prepare.close();
+//            if(connect != null)
+//                connect.close();
+//        }
+//    }
 
-        Date date = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
-        String sql = "INSERT INTO take(`studentNumber`,`firstname`,`lastname`,`gender`," +
-                "`bookTitle`,`author`,`bookType`,`image`,`date`,`checkReturn`)" +
-                " VALUES(?,?,?,?,?,?,?,?,?,?)";
-
-        connect = Database.connectDB();
-
-        try{
-
-            Alert alert;
-
-            if(take_FirstName.getText().isEmpty()
-                    || take_LastName.getText().isEmpty()
-                    || take_Gender.getSelectionModel().isEmpty()){
-                alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please insert completely all Information!");
-                alert.showAndWait();
-            } else
-            {
-                prepare = connect.prepareStatement(sql);
-                prepare.setString(1, take_StudentNumber.getText());
-                prepare.setString(2, take_FirstName.getText());
-                prepare.setString(3, take_LastName.getText());
-                prepare.setString(4, (String)take_Gender.getSelectionModel().getSelectedItem());
-                prepare.setString(5, take_titleLabel.getText());
-                prepare.setString(6, take_authorLabel.getText());
-                prepare.setString(7, take_genreLabel.getText());
-                prepare.setString(8, getData.pathImage);
-                prepare.setDate(9, sqlDate);
-
-                String check = "Not Return";
-
-                prepare.setString(10, check);
-                prepare.executeUpdate();
-
-                alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Successfully take the book");
-                alert.showAndWait();
-
-                clearTakeData();
-
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        } finally {
-            if(result != null)
-                result.close();
-            if(prepare != null)
-                prepare.close();
-            if(connect != null)
-                connect.close();
-        }
-    }
-
-
-    public void studentNumberLabel(){
-        take_StudentNumber.setText(getData.studentNumber);
-    }
-
-    public void clearTakeData(){
-        issueBook_title.setText("");
-        take_BookTitle.setText("");
-        take_titleLabel.setText("");
-        take_authorLabel.setText("");
-        take_genreLabel.setText("");
-        take_dateLabel.setText("");
-        take_imageView.setImage(null);
-    }
-
+//    public void clearTakeData(){
+//        issueBook_title.setText("");
+//        take_BookTitle.setText("");
+//        take_titleLabel.setText("");
+//        take_authorLabel.setText("");
+//        take_genreLabel.setText("");
+//        take_dateLabel.setText("");
+//        take_imageView.setImage(null);
+//    }
+//
     public void clearFindData(){
         take_titleLabel.setText("");
         take_authorLabel.setText("");
@@ -818,11 +1052,11 @@ public class DashboardController implements Initializable {
         take_imageView.setImage(null);
     }
 
-    public void displayDate(){
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String date = format.format(new Date());
-        take_IssuedDate.setText(date);
-    }
+//    public void displayDate(){
+//        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+//        String date = format.format(new Date());
+//        take_IssuedDate.setText(date);
+//    }
 
     //Return book
 
@@ -1388,12 +1622,12 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //TO SHOW THE AVAILABLE BOOKS
         showAvailableBooks();
+        showAvailableStudents();
         setUserImage();
         hideInsertImage();
         studentNumber();
         gender();
-        studentNumberLabel();
-        displayDate();
+        roll();
 //        uploadImage_View.setOnAction(event -> uploadImage());
         try {
             showSaveBook();
