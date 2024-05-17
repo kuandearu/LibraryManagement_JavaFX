@@ -738,14 +738,13 @@ public class DashboardController implements Initializable {
         }
 
         // Process image path
-        imagePath = existingImagePath;
         if (selectedFile != null) {
-            // If a new image is selected, set imagePath accordingly
-            String absolutePath = selectedFile.getAbsolutePath();
-            String basePath = new File("").getAbsolutePath() + File.separator + "src" + File.separator;
-            imagePath = absolutePath.substring(basePath.length());
+            // If a new image is selected, set imagePath to the absolute path of the selected file
+            imagePath = selectedFile.getAbsolutePath();
+        } else {
+            // If no new image is selected, retain the existing image path
+            imagePath = existingImagePath;
         }
-
         return imagePath;
     }
 
