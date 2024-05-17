@@ -577,8 +577,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 String studentName = result.getString("studentName");
-                if (studentName != null && !studentName.isEmpty()) {
-                    String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
+                String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
                     if (nameParts.length == 2) {
                         String firstName = nameParts[1]; // Rest as first name
                         String lastName = nameParts[0]; // First word as last name
@@ -586,7 +585,6 @@ public class DashboardController implements Initializable {
                         updateFirstName_text.setText(firstName);
                         updateLastName_text.setText(lastName);
                     }
-                }
 
                 updateEmail_text.setText(result.getString("email"));
                 updatePhone_text.setText(result.getString("phone"));
