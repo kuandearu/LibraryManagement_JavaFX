@@ -456,7 +456,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="updateStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="475.0" prefWidth="990.0">
                            <children>
-                              <AnchorPane fx:id="addStudent_form1" prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                              <AnchorPane prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
                                     <Label layoutX="285.0" layoutY="14.0" prefHeight="36.0" prefWidth="248.0" text="Update Person" AnchorPane.leftAnchor="285.0">
                                        <font>

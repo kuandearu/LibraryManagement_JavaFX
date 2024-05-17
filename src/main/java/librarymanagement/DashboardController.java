@@ -2,8 +2,6 @@ package librarymanagement;
 
 import javafx.animation.TranslateTransition;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -31,7 +28,6 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.File;
 import java.net.URL;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -448,7 +444,7 @@ public class DashboardController implements Initializable {
                 prepare.setString(2, fullName);
                 prepare.setTimestamp(3, timestamp);
                 prepare.setString(4, addEmail_text.getText());
-                prepare.setInt(5, (int) addRoll_text.getValue()); // Assuming roll is an Integer in the database
+                prepare.setString(5, addRoll_text.getValue().toString()); // Assuming roll is an Integer in the database
                 prepare.setString(6, addGender_text.getValue().toString()); // Assuming gender is a String in the database
                 prepare.setString(7, addPhone_text.getText());
                 prepare.setString(8, addPassword_text.getText());
@@ -575,9 +571,10 @@ public class DashboardController implements Initializable {
             result = prepare.executeQuery();
             boolean check = false;
 
-            while (result.next()) {
-                String studentName = result.getString("studentName");
-                String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
+                while (result.next()) {
+
+                    String studentName = result.getString("studentName");
+                    String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
                     if (nameParts.length == 2) {
                         String firstName = nameParts[1]; // Rest as first name
                         String lastName = nameParts[0]; // First word as last name
@@ -586,36 +583,34 @@ public class DashboardController implements Initializable {
                         updateLastName_text.setText(lastName);
                     }
 
-                updateEmail_text.setText(result.getString("email"));
-                updatePhone_text.setText(result.getString("phone"));
-                updatePassword_text.setText(result.getString("password"));
+                    updateEmail_text.setText(result.getString("email"));
+                    updatePhone_text.setText(result.getString("phone"));
+                    updatePassword_text.setText(result.getString("password"));
 
-                String gender = result.getString("gender");
-                ComboBox genderBox = updateGender_text;
-                setComboBoxValue(genderBox, gender);
+                    String gender = result.getString("gender");
+                    ComboBox genderBox = updateGender_text;
+                    setComboBoxValue(genderBox, gender);
 
 
-                String roll = result.getString("studentRoll");
-                ComboBox rollbox = updateRoll_text;
-                setComboBoxValue(rollbox, roll);
+                    String roll = result.getString("studentRoll");
+                    ComboBox rollbox = updateRoll_text;
+                    setComboBoxValue(rollbox, roll);
 
-                displayFormattedDate(result.getTimestamp("dateOfBirth"));
+                    displayFormattedDate(result.getTimestamp("dateOfBirth"));
 
-                String imagePath = result.getString("image");
-                if (imagePath != null && !imagePath.isEmpty()) {
+                    String imagePath = result.getString("image");
+
                     String uri = "file:" + imagePath;
                     Image image = new Image(uri, 127, 162, false, true);
                     updateStudentImage_View.setImage(image);
-                } else {
-                    updateStudentImage_View.setImage(null);
+
+                    check = true;
                 }
 
-                check = true;
-            }
-
-            if (!check) {
-                updateFirstName_text.setText("Student not found!");
-            }
+                if (!check) {
+                    showAlert(AlertType.INFORMATION, "Program message", "No Student Found!");
+                    clearUpdatePerson();
+                }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -627,12 +622,22 @@ public class DashboardController implements Initializable {
     }
 
     public void clearUpdatePerson(){
-
+        updateStudentNumber_text.setText("");
+        updateFirstName_text.setText("");
+        updateLastName_text.setText("");
+        updateDate.setText("");
+        updateGender_text.setValue(null);
+        updateRoll_text.setValue(null);
+        updatePhone_text.setText("");
+        updateEmail_text.setText("");
+        updatePassword_text.setText("");
+        updateStudentImage_View.setImage(null);
     }
 
     public void setComboBoxValue(ComboBox<String> comboBox, String value) {
         comboBox.setValue(value);
     }
+
 
     public void addBook() {
 
@@ -1121,6 +1126,15 @@ public class DashboardController implements Initializable {
         return true;
     }
 
+    private boolean studentExists(String studentNumber) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM student WHERE studentNumber = ?";
+        prepare = connect.prepareStatement(sql);
+        prepare.setString(1, studentNumber);
+        result = prepare.executeQuery();
+        result.next();
+        return result.getInt(1) > 0;
+    }
+
     private boolean containsMaliciousContent(String input) {
         // Define a pattern to match potentially malicious content
         String regex = ".*(['\";\\-\\-]+|\\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION|SCRIPT|<|>|\\(\\)|\\{|\\}|\\[|\\])\\b).*";
@@ -1128,82 +1142,6 @@ public class DashboardController implements Initializable {
         return pattern.matcher(input).matches();
     }
 
-
-
-
-//    public void takeBook() throws SQLException {
-//
-//        Date date = new Date();
-//        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-//
-//        String sql = "INSERT INTO take(`studentNumber`,`firstname`,`lastname`,`gender`," +
-//                "`bookTitle`,`author`,`bookType`,`image`,`date`,`checkReturn`)" +
-//                " VALUES(?,?,?,?,?,?,?,?,?,?)";
-//
-//        connect = Database.connectDB();
-//
-//        try{
-//
-//            Alert alert;
-//
-//            if(take_FirstName.getText().isEmpty()
-//                    || take_LastName.getText().isEmpty()
-//                    || addGender_text.getSelectionModel().isEmpty()){
-//                alert = new Alert(AlertType.ERROR);
-//                alert.setTitle("Program message");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Please insert completely all Information!");
-//                alert.showAndWait();
-//            } else
-//            {
-//                prepare = connect.prepareStatement(sql);
-//                prepare.setString(1, take_StudentNumber.getText());
-//                prepare.setString(2, take_FirstName.getText());
-//                prepare.setString(3, take_LastName.getText());
-//                prepare.setString(4, (String)addGender_text.getSelectionModel().getSelectedItem());
-//                prepare.setString(5, take_titleLabel.getText());
-//                prepare.setString(6, take_authorLabel.getText());
-//                prepare.setString(7, take_genreLabel.getText());
-//                prepare.setString(8, getData.pathImage);
-//                prepare.setDate(9, sqlDate);
-//
-//                String check = "Not Return";
-//
-//                prepare.setString(10, check);
-//                prepare.executeUpdate();
-//
-//                alert = new Alert(AlertType.INFORMATION);
-//                alert.setTitle("Program message");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Successfully take the book");
-//                alert.showAndWait();
-//
-//                clearTakeData();
-//
-//            }
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        } finally {
-//            if(result != null)
-//                result.close();
-//            if(prepare != null)
-//                prepare.close();
-//            if(connect != null)
-//                connect.close();
-//        }
-//    }
-
-
-//    public void clearTakeData(){
-//        issueBook_title.setText("");
-//        take_BookTitle.setText("");
-//        take_titleLabel.setText("");
-//        take_authorLabel.setText("");
-//        take_genreLabel.setText("");
-//        take_dateLabel.setText("");
-//        take_imageView.setImage(null);
-//    }
-//
     public void clearFindData(){
         take_titleLabel.setText("");
         take_authorLabel.setText("");
@@ -1212,13 +1150,6 @@ public class DashboardController implements Initializable {
         take_imageView.setImage(null);
     }
 
-//    public void displayDate(){
-//        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-//        String date = format.format(new Date());
-//        take_IssuedDate.setText(date);
-//    }
-
-    //Return book
 
     public ObservableList<returnBook> returnBookData(){
         ObservableList<returnBook> listReturnBook = FXCollections.observableArrayList();
