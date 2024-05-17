@@ -34,6 +34,7 @@ public class Database {
                     "  `gender` varchar(10) DEFAULT NULL," +
                     "  `phone` varchar(10) DEFAULT NULL," +
                     "  `email` varchar(50) DEFAULT NULL," +
+                    "  `image` varchar(200) DEFAULT NULL," +
                     "  `password` varchar(100) DEFAULT NULL," +
                     "  PRIMARY KEY (`student_id`))";
             prepare = connect.prepareStatement(createStudentTableQuery);
@@ -111,7 +112,7 @@ public class Database {
     }
 
     public static void insertStudents() {
-        String sql = "INSERT INTO student (studentNumber, studentName, password, dateOfBirth, studentRoll, gender, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO student (studentNumber, studentName, password, dateOfBirth, studentRoll, gender, phone, email, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             prepare = connect.prepareStatement(sql);
 
@@ -125,6 +126,7 @@ public class Database {
                 prepare.setString(6, "Male");
                 prepare.setString(7, "0123456789"); // Example phone number
                 prepare.setString(8, "quan.giang@example.com");
+                prepare.setString(9, "default_image");
                 prepare.addBatch();
             }
 
@@ -137,6 +139,7 @@ public class Database {
                 prepare.setString(6, "Male");
                 prepare.setString(7, "0987654321"); // Example phone number
                 prepare.setString(8, "toan.nguyen@example.com");
+                prepare.setString(9, "default_image");
                 prepare.addBatch();
             }
 
@@ -149,6 +152,7 @@ public class Database {
                 prepare.setString(6, "Male");
                 prepare.setString(7, "0123987654"); // Example phone number
                 prepare.setString(8, "duc.nguyen@example.com");
+                prepare.setString(9, "default_image");
                 prepare.addBatch();
             }
 
@@ -161,6 +165,7 @@ public class Database {
                 prepare.setString(6, "Male");
                 prepare.setString(7, "0987123456"); // Example phone number
                 prepare.setString(8, "long.nguyen@example.com");
+                prepare.setString(9, "default_image");
                 prepare.addBatch();
             }
 
@@ -173,6 +178,7 @@ public class Database {
                 prepare.setString(6, "Male");
                 prepare.setString(7, "0982789023"); // Example phone number
                 prepare.setString(8, "minh.nguyen@example.com");
+                prepare.setString(9, "default_image");
                 prepare.addBatch();
             }
 
