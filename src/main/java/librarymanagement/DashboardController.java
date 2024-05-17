@@ -577,13 +577,15 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 String studentName = result.getString("studentName");
-                if (studentName != null) {
-                    // Split studentName into firstName and lastName
-                    String firstName = studentName.substring(0, 1); // First letter as firstName
-                    String lastName = studentName.substring(1); // Rest as lastName
+                if (studentName != null && !studentName.isEmpty()) {
+                    String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
+                    if (nameParts.length == 2) {
+                        String firstName = nameParts[1]; // Rest as first name
+                        String lastName = nameParts[0]; // First word as last name
 
-                    updateFirstName_text.setText(firstName);
-                    updateLastName_text.setText(lastName);
+                        updateFirstName_text.setText(firstName);
+                        updateLastName_text.setText(lastName);
+                    }
                 }
 
                 updateEmail_text.setText(result.getString("email"));
@@ -595,11 +597,11 @@ public class DashboardController implements Initializable {
                 setComboBoxValue(genderBox, gender);
 
 
-                String roll = result.getString("gender");
-                ComboBox rollbox = updateGender_text;
+                String roll = result.getString("studentRoll");
+                ComboBox rollbox = updateRoll_text;
                 setComboBoxValue(rollbox, roll);
 
-                displayFormattedDate(result.getTimestamp("date"));
+                displayFormattedDate(result.getTimestamp("dateOfBirth"));
 
                 String imagePath = result.getString("image");
                 if (imagePath != null && !imagePath.isEmpty()) {
@@ -620,6 +622,14 @@ public class DashboardController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void updatePerson(){
+
+    }
+
+    public void clearUpdatePerson(){
+
     }
 
     public void setComboBoxValue(ComboBox<String> comboBox, String value) {
@@ -879,7 +889,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void uploadUpdateImage() {
+    public void uploadUpdateBookImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image File");
@@ -902,7 +912,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void uploadStudentImage() {
+    public void uploadPersonImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image File");
@@ -922,6 +932,29 @@ public class DashboardController implements Initializable {
             // Load the selected image into the ImageView
             Image image = new Image(selectedFile.toURI().toString(), 140, 162, false, true);
             studentImage_View.setImage(image);
+        }
+    }
+
+    public void uploadUpdatePersonImage() {
+        // Create a file chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image File");
+
+        // Set initial directory
+        File initialDirectory = new File("src/main/java/image/");
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Filter to show only image files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog
+        selectedFile = fileChooser.showOpenDialog(uploadImage_View.getScene().getWindow());
+
+        if (selectedFile != null) {
+            // Load the selected image into the ImageView
+            Image image = new Image(selectedFile.toURI().toString(), 140, 162, false, true);
+            updateStudentImage_View.setImage(image);
         }
     }
 
@@ -1011,7 +1044,10 @@ public class DashboardController implements Initializable {
         }
 
         ObservableList listRoll = FXCollections.observableList(rollCombo);
+
         addRoll_text.setItems(listRoll);
+
+        updateRoll_text.setItems(listRoll);
     }
 
     public void gender() {
@@ -1024,6 +1060,8 @@ public class DashboardController implements Initializable {
         ObservableList list = FXCollections.observableList(combo);
 
         addGender_text.setItems(list);
+
+        updateGender_text.setItems(list);
     }
 
     public void findBook(ActionEvent event) throws SQLException {
