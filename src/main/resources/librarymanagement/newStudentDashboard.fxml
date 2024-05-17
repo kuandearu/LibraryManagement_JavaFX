@@ -128,12 +128,12 @@
                                         <Font name="Microsoft Sans Serif" size="18.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="availableBooks_btn" layoutX="32.0" layoutY="269.0" mnemonicParsing="false" onAction="#navButtonDesign" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Available Books">
+                                <Button fx:id="availableBooks_btn" layoutX="35.0" layoutY="265.0" mnemonicParsing="false" onAction="#navButtonDesign" prefHeight="47.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Available Books">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="savedBooks_btn" layoutX="30.0" layoutY="406.0" mnemonicParsing="false" onAction="#navButtonDesign" prefHeight="27.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Saved Books">
+                                <Button fx:id="savedBooks_btn" layoutX="35.0" layoutY="343.0" mnemonicParsing="false" onAction="#navButtonDesign" prefHeight="51.0" prefWidth="200.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Saved Books">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
