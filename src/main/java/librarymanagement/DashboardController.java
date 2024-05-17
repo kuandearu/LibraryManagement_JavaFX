@@ -397,7 +397,7 @@ public class DashboardController implements Initializable {
     private String rollBox[] = {"Admin", "User"};
 
 
-    public void addStudent() {
+    public void addPerson() {
         String sql = "INSERT INTO student(studentNumber, studentName, dateOfBirth, email, studentRoll, gender, phone, password, image) VALUES (?,?,?,?,?,?,?,?,?) ";
 
         connect = Database.connectDB();
@@ -425,7 +425,7 @@ public class DashboardController implements Initializable {
                         containsMaliciousContent(addPassword_text.getText())) {
 
                     // Clear all text fields
-                   clearAddStudent();
+                   clearAddPerson();
 
                     showAlert(AlertType.ERROR, "Program message", "Are you trying to hack? Nice try!");
                     return;
@@ -463,7 +463,7 @@ public class DashboardController implements Initializable {
                     showAlert(AlertType.INFORMATION, "Program message", "Student added successfully!");
 
                     // Clear input fields
-                    clearAddStudent(); // Assuming you have a method to clear input fields
+                    clearAddPerson(); // Assuming you have a method to clear input fields
                 } else {
                     // Show error message if insertion fails
                     showAlert(AlertType.ERROR, "Program message", "Failed to add student. Please try again.");
@@ -474,7 +474,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void clearAddStudent() {
+    public void clearAddPerson() {
         addStudentNumber_text.setText("");
         addFirstName_text.setText("");
         addLastName_text.setText("");

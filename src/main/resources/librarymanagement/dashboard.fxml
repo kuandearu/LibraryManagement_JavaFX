@@ -396,8 +396,8 @@
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="addStudent_btn" layoutX="853.0" layoutY="368.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="50.0" prefWidth="82.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Add" />
-                              <Button fx:id="clearAddStudent_btn" layoutX="732.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearAddStudent" prefHeight="51.0" prefWidth="86.0" styleClass="clear-btn" stylesheets="@../designDashboard.css" text="Clear">
+                              <Button fx:id="addStudent_btn" layoutX="853.0" layoutY="368.0" mnemonicParsing="false" onAction="#addPerson" prefHeight="50.0" prefWidth="82.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Add" />
+                              <Button fx:id="clearAddStudent_btn" layoutX="732.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearAddPerson" prefHeight="51.0" prefWidth="86.0" styleClass="clear-btn" stylesheets="@../designDashboard.css" text="Clear">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -456,7 +456,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="updateStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="475.0" prefWidth="990.0">
                            <children>
-                              <AnchorPane prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                              <AnchorPane prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
                                  <children>
                                     <Label layoutX="285.0" layoutY="14.0" prefHeight="36.0" prefWidth="248.0" text="Update Person" AnchorPane.leftAnchor="285.0">
                                        <font>
