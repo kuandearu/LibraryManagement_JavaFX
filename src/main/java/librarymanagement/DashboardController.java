@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class DashboardController implements Initializable {
 
@@ -386,7 +387,6 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane updateStudent_form;
 
-
     Image image;
 
     private Connection connect;
@@ -395,7 +395,7 @@ public class DashboardController implements Initializable {
     private Statement statement;
     private File selectedFile;
     private String comboBox[] = {"Male", "Female", "Others"};
-    private int rollBox[] = {1, 2};
+    private String rollBox[] = {"Admin", "User"};
 
 
     public void addStudent() {
@@ -404,7 +404,6 @@ public class DashboardController implements Initializable {
         connect = Database.connectDB();
 
         try {
-
             if (addStudentNumber_text.getText().isEmpty() ||
                     addFirstName_text.getText().isEmpty() ||
                     addLastName_text.getText().isEmpty() ||
@@ -417,13 +416,29 @@ public class DashboardController implements Initializable {
                     studentImage_View.getImage() == null) {
                 showAlert(AlertType.ERROR, "Program message", "Please insert all information!");
             } else {
-                //Check validate date of birth
+                // Validate input fields
+                if (containsMaliciousContent(addStudentNumber_text.getText()) ||
+                        containsMaliciousContent(addFirstName_text.getText()) ||
+                        containsMaliciousContent(addLastName_text.getText()) ||
+                        containsMaliciousContent(addDateofBirth_text.getText()) ||
+                        containsMaliciousContent(addEmail_text.getText()) ||
+                        containsMaliciousContent(addPhone_text.getText()) ||
+                        containsMaliciousContent(addPassword_text.getText())) {
+
+                    // Clear all text fields
+                   clearAddStudent();
+
+                    showAlert(AlertType.ERROR, "Program message", "Are you trying to hack? Nice try!");
+                    return;
+                }
+
+                // Check and convert date of birth
                 String dateString = addDateofBirth_text.getText();
                 Timestamp timestamp = validateAndConvertToTimestamp(dateString);
                 if (timestamp == null) {
-                    // Return if date format is invalid
-                    return;
+                    return; // Invalid date format
                 }
+
                 // Combine first name and last name into full name
                 String fullName = addFirstName_text.getText() + " " + addLastName_text.getText();
 
@@ -544,6 +559,71 @@ public class DashboardController implements Initializable {
 
         Image image = new Image(uri, 134, 171, false, true);
         showStudentImage_View.setImage(image);
+    }
+
+    public void findPersonByNumber(ActionEvent event) throws SQLException {
+        String studentNumber = updateStudentNumber_text.getText(); // Get the student number from the TextField
+
+        // Construct the SQL query to retrieve student information by student number
+        String sql = "SELECT * FROM student WHERE studentNumber = ?";
+
+        connect = Database.connectDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(1, studentNumber); // Set the student number parameter in the query
+            result = prepare.executeQuery();
+            boolean check = false;
+
+            while (result.next()) {
+                String studentName = result.getString("studentName");
+                if (studentName != null) {
+                    // Split studentName into firstName and lastName
+                    String firstName = studentName.substring(0, 1); // First letter as firstName
+                    String lastName = studentName.substring(1); // Rest as lastName
+
+                    updateFirstName_text.setText(firstName);
+                    updateLastName_text.setText(lastName);
+                }
+
+                updateEmail_text.setText(result.getString("email"));
+                updatePhone_text.setText(result.getString("phone"));
+                updatePassword_text.setText(result.getString("password"));
+
+                String gender = result.getString("gender");
+                ComboBox genderBox = updateGender_text;
+                setComboBoxValue(genderBox, gender);
+
+
+                String roll = result.getString("gender");
+                ComboBox rollbox = updateGender_text;
+                setComboBoxValue(rollbox, roll);
+
+                displayFormattedDate(result.getTimestamp("date"));
+
+                String imagePath = result.getString("image");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    String uri = "file:" + imagePath;
+                    Image image = new Image(uri, 127, 162, false, true);
+                    updateStudentImage_View.setImage(image);
+                } else {
+                    updateStudentImage_View.setImage(null);
+                }
+
+                check = true;
+            }
+
+            if (!check) {
+                updateFirstName_text.setText("Student not found!");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setComboBoxValue(ComboBox<String> comboBox, String value) {
+        comboBox.setValue(value);
     }
 
     public void addBook() {
@@ -776,7 +856,6 @@ public class DashboardController implements Initializable {
         }
     }
 
-    //Upload New Book Image
     public void uploadImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
@@ -800,7 +879,6 @@ public class DashboardController implements Initializable {
         }
     }
 
-    //Update BookImage
     public void uploadUpdateImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
@@ -926,9 +1004,9 @@ public class DashboardController implements Initializable {
     }
 
     public void roll() {
-        List<Integer> rollCombo = new ArrayList<>();
+        List<String> rollCombo = new ArrayList<>();
 
-        for (int data : rollBox) {
+        for (String data : rollBox) {
             rollCombo.add(data);
         }
 
@@ -1006,6 +1084,16 @@ public class DashboardController implements Initializable {
     private boolean check_conditions(){
         return true;
     }
+
+    private boolean containsMaliciousContent(String input) {
+        // Define a pattern to match potentially malicious content
+        String regex = ".*(['\";\\-\\-]+|\\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION|SCRIPT|<|>|\\(\\)|\\{|\\}|\\[|\\])\\b).*";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        return pattern.matcher(input).matches();
+    }
+
+
+
 
 //    public void takeBook() throws SQLException {
 //

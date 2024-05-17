@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="add returbook list">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +40,13 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 6
@@ -61,14 +65,28 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;#2 on Anh__Duc&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/JavaFX/JavaFX-Phuc_Toan/LibraryManagement_JavaFX/src/main/resources/lib/fontawesomefx-8.2.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Global Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
   <component name="RunManager">
+    <configuration name="LibraryManagement" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="librarymanagement.LibraryManagement" />
+      <module name="LibraryManagementFX" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="librarymanagement.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="LibraryManagement_JavaFX" />
       <method v="2">
@@ -82,6 +100,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.LibraryManagement" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -100,7 +123,111 @@
       <option name="project" value="LOCAL" />
       <updated>1714098834219</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715075483425</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715075483425</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715247055333</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715247055333</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715255070179</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1715255070179</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715258189988</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715258189988</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715258669555</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1715258669555</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715337539947</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1715337539947</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715339028058</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715339028058</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715339075958</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715339075958</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715771072316</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1715771072316</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715771487888</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1715771487888</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715777360604</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1715777360604</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715850576370</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1715850576370</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715854466129</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1715854466129</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
