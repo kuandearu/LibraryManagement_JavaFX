@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class DashboardController implements Initializable {
 
@@ -369,6 +370,12 @@ public class DashboardController implements Initializable {
     private String comboBox[] = {"Male", "Female", "Others"};
     private int rollBox[] = {1, 2};
 
+    private boolean containsMaliciousContent(String input) {
+        // Define a pattern to match potentially malicious content
+        String regex = ".*(['\";\\-\\-]+|\\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION|SCRIPT|<|>|\\(\\)|\\{|\\}|\\[|\\])\\b).*";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        return pattern.matcher(input).matches();
+    }
 
     public void addStudent() {
         String sql = "INSERT INTO student(studentNumber, studentName, dateOfBirth, email, studentRoll, gender, phone, password, image) VALUES (?,?,?,?,?,?,?,?,?) ";
