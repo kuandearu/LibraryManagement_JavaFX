@@ -26,6 +26,9 @@ public class FXMLDocumentController implements Initializable {
     private Button login_Btn;
 
     @FXML
+    private Button loginStudent_Btn;
+
+    @FXML
     private Button minimize;
 
     @FXML
@@ -85,6 +88,78 @@ public class FXMLDocumentController implements Initializable {
 
                     //For DashBoard
                     Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+
+                    Stage stage = new Stage();
+
+                    Scene scene = new Scene(root);
+
+                    root.setOnMousePressed((MouseEvent e) -> {
+
+                        x = e.getSceneX();
+                        y = e.getSceneY();
+
+                    });
+
+                    root.setOnMouseDragged((MouseEvent e) -> {
+                        stage.setX(e.getScreenX() - x);
+                        stage.setY(e.getScreenY() - y);
+                    });
+
+                    stage.initStyle(StageStyle.TRANSPARENT);
+
+                    stage.setScene(scene);
+                    stage.show();
+                }else{
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Admin Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your username or password is wrong.");
+                    alert.showAndWait();
+
+                }
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void loginStudent(){
+        String sql = "SELECT * FROM newstudent WHERE studentNumber = ? AND password = ?";
+        try{
+
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(1, studentNumber.getText());
+            prepare.setString(2, password.getText());
+            result = prepare.executeQuery();
+
+            Alert alert;
+
+            if(studentNumber.getText().isEmpty() || password.getText().isEmpty()){
+
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Admin Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields.");
+                alert.showAndWait();
+
+            }else{
+
+                if(result.next()){
+
+                    getData.studentNumber = studentNumber.getText();
+                    //getData.path = result.getString("image");
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Admin Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Login Success");
+                    alert.showAndWait();
+
+                    // to Hide LOGIN FORM
+                    loginStudent_Btn.getScene().getWindow().hide();
+
+                    //For DashBoard
+                    Parent root = FXMLLoader.load(getClass().getResource("newStudentDashBoard.fxml"));
 
                     Stage stage = new Stage();
 
