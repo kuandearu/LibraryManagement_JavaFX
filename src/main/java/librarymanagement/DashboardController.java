@@ -353,6 +353,40 @@ public class DashboardController implements Initializable {
     @FXML
     private ImageView showStudentImage_View;
 
+    @FXML
+    private TextField updateEmail_text;
+
+    @FXML
+    private TextField updateFirstName_text;
+
+    @FXML
+    private ComboBox<?> updateGender_text;
+
+    @FXML
+    private TextField updateLastName_text;
+
+    @FXML
+    private TextField updatePassword_text;
+
+    @FXML
+    private TextField updatePhone_text;
+
+    @FXML
+    private ComboBox<?> updateRoll_text;
+
+    @FXML
+    private ImageView updateStudentImage_View;
+
+    @FXML
+    private TextField updateStudentNumber_text;
+
+    @FXML
+    private Button updateStudent_btn;
+
+    @FXML
+    private AnchorPane updateStudent_form;
+
+
     Image image;
 
     private Connection connect;
@@ -742,6 +776,7 @@ public class DashboardController implements Initializable {
         }
     }
 
+    //Upload New Book Image
     public void uploadImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
@@ -765,6 +800,7 @@ public class DashboardController implements Initializable {
         }
     }
 
+    //Update BookImage
     public void uploadUpdateImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
