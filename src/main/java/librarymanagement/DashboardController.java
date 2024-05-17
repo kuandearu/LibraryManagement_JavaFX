@@ -39,6 +39,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+
+
+
 public class DashboardController implements Initializable {
 
     @FXML
@@ -436,7 +439,7 @@ public class DashboardController implements Initializable {
                 }
 
                 // Combine first name and last name into full name
-                String fullName = addFirstName_text.getText() + " " + addLastName_text.getText();
+                String fullName = addLastName_text.getText() + " " + addFirstName_text.getText();
 
                 // Prepare SQL statement
                 prepare = connect.prepareStatement(sql);
@@ -581,6 +584,10 @@ public class DashboardController implements Initializable {
 
                         updateFirstName_text.setText(firstName);
                         updateLastName_text.setText(lastName);
+                    } else {
+                        // If the name format is not as expected, set the whole name as first name
+                        updateFirstName_text.setText(studentName);
+                        updateLastName_text.setText(""); // Set last name as empty
                     }
 
                     updateEmail_text.setText(result.getString("email"));
@@ -617,9 +624,131 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void updatePerson(){
+    public void updatePerson() {
+        String sql = "UPDATE student SET studentRoll=?, studentNumber=?, studentName=?, dateOfBirth=?, gender=?, phone=?, email=?, password=?, image=? WHERE studentNumber=?";
 
+        connect = Database.connectDB();
+
+        try {
+            if (updateStudentNumber_text.getText().isEmpty()) {
+                showAlert(AlertType.ERROR, "Program message", "Please enter the student number!");
+                return;
+            }
+
+            if (updateStudentNumber_text.getText().isEmpty() ||
+                    updateFirstName_text.getText().isEmpty() ||
+                    updateLastName_text.getText().isEmpty() ||
+                    updateEmail_text.getText().isEmpty() ||
+                    updatePhone_text.getText().isEmpty() ||
+                    updatePassword_text.getText().isEmpty() ||
+                    updateGender_text.getValue() == null ||
+                    updateRoll_text.getValue() == null ||
+                    updateDate.getText().isEmpty() ||
+                    updateStudentImage_View.getImage() == null) {
+                showAlert(AlertType.ERROR, "Program message", "Please insert all information!");
+                return;
+            }
+
+            String imagePath = processImagePath(getData.studentNumber);
+            if (imagePath == null) {
+                return; // If imagePath is null, there was an error, and we should not proceed
+            }
+
+            String studentNumber = updateStudentNumber_text.getText();
+
+            // Retrieve existing student data
+            String fetchSql = "SELECT * FROM student WHERE studentNumber = ?";
+            prepare = connect.prepareStatement(fetchSql);
+            prepare.setString(1, studentNumber);
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                // Prepare SQL statement
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(10, result.getString("studentNumber"));
+                // Update studentRoll
+                prepare.setString(1, updateRoll_text.getValue() != null ? updateRoll_text.getValue().toString() : result.getString("studentRoll"));
+
+                // Update studentNumber
+                prepare.setString(2, updateStudentNumber_text.getText().isEmpty() ? result.getString("studentNumber") : updateStudentNumber_text.getText());
+
+                // Update studentName
+                String fullName = (updateLastName_text.getText().isEmpty() ? result.getString("studentName").split(" ")[0] : updateLastName_text.getText())
+                        + " " + (updateFirstName_text.getText().isEmpty() ? result.getString("studentName").split(" ")[1] : updateFirstName_text.getText());
+                prepare.setString(3, fullName);
+
+                // Update dateOfBirth
+                Timestamp timestamp = validateAndConvertToTimestamp(updateDate.getText());
+                if(timestamp == null){
+                    return;
+                }
+                prepare.setTimestamp(4, updateDate.getText().isEmpty() ? result.getTimestamp("dateOfBirth") : timestamp);
+
+                // Update gender
+                prepare.setString(5, updateGender_text.getValue() != null ? updateGender_text.getValue().toString() : result.getString("gender"));
+
+                // Update phone
+                prepare.setString(6, updatePhone_text.getText().isEmpty() ? result.getString("phone") : updatePhone_text.getText());
+
+                // Update email
+                prepare.setString(7, updateEmail_text.getText().isEmpty() ? result.getString("email") : updateEmail_text.getText());
+
+                // Update password
+                prepare.setString(8, updatePassword_text.getText().isEmpty() ? result.getString("password") : updatePassword_text.getText());
+
+                prepare.setString(9, imagePath);
+                // Execute the SQL statement
+                int rowsAffected = prepare.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    showAlert(AlertType.INFORMATION, "Program message", "Student updated successfully!");
+
+                    // Clear input fields
+                    clearUpdatePerson();
+                } else {
+                    showAlert(AlertType.ERROR, "Program message", "Failed to update student. Please try again.");
+                }
+            } else {
+                showAlert(AlertType.ERROR, "Program message", "No Student Found!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    public String processImagePath(String studentNumber) {
+        String existingImagePath = "";
+        String imagePath = "";
+
+        // Fetch existing image path from the database
+        String fetchImageSql = "SELECT image FROM student WHERE studentNumber=?";
+        try (Connection connect = Database.connectDB();
+             PreparedStatement fetchImageStmt = connect.prepareStatement(fetchImageSql)) {
+            fetchImageStmt.setString(1, studentNumber);
+            try (ResultSet result = fetchImageStmt.executeQuery()) {
+                if (result.next()) {
+                    existingImagePath = result.getString("image");
+                } else {
+                    showAlert(AlertType.ERROR, "Program message", "Student not found!");
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Process image path
+        imagePath = existingImagePath;
+        if (selectedFile != null) {
+            // If a new image is selected, set imagePath accordingly
+            String absolutePath = selectedFile.getAbsolutePath();
+            String basePath = new File("").getAbsolutePath() + File.separator + "src" + File.separator;
+            imagePath = absolutePath.substring(basePath.length());
+        }
+
+        return imagePath;
+    }
+
 
     public void clearUpdatePerson(){
         updateStudentNumber_text.setText("");
