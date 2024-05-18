@@ -241,7 +241,7 @@ public class Database {
     }
 
     public static void insertNewStudents() {
-        String sql = "INSERT INTO student (id, studentName, studentNumber, password) VALUES (?, ?, ?,?)";
+        String sql = "INSERT INTO newstudent (id, studentName, studentNumber, password) VALUES (?, ?, ?,?)";
         try {
             prepare = connect.prepareStatement(sql);
 
