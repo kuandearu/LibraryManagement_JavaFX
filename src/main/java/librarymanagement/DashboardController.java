@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -438,6 +439,17 @@ public class DashboardController implements Initializable {
                     return; // Invalid date format
                 }
 
+                if (!isValidPhoneNumber(addPhone_text.getText())) {
+                    showAlert(AlertType.ERROR, "Program message", "Invalid phone number! Please enter a 10-digit phone number.");
+                    return;
+                }
+
+                // Validate email
+                if (!isValidEmail(addEmail_text.getText())) {
+                    showAlert(AlertType.ERROR, "Program message", "Invalid email format! Please enter a valid email address (e.g., user@gmail.com).");
+                    return;
+                }
+
                 // Combine first name and last name into full name
                 String fullName = addLastName_text.getText() + " " + addFirstName_text.getText();
 
@@ -652,6 +664,17 @@ public class DashboardController implements Initializable {
             String imagePath = processImagePath(getData.studentNumber);
             if (imagePath == null) {
                 return; // If imagePath is null, there was an error, and we should not proceed
+            }
+
+            if (!isValidPhoneNumber(updatePhone_text.getText())) {
+                showAlert(AlertType.ERROR, "Program message", "Invalid phone number! Please enter a 10-digit phone number.");
+                return;
+            }
+
+            // Validate email
+            if (!isValidEmail(updateEmail_text.getText())) {
+                showAlert(AlertType.ERROR, "Program message", "Invalid email format! Please enter a valid email address (e.g., user@gmail.com).");
+                return;
             }
 
             String studentNumber = updateStudentNumber_text.getText();
@@ -1503,6 +1526,17 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+
+    private boolean isValidPhoneNumber(String phone) {
+        return phone != null && phone.matches("\\d{10}");
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
 

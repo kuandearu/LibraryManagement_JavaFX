@@ -428,7 +428,7 @@
                               <Button layoutX="23.0" layoutY="255.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Delete Student" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="showStudent_form" layoutX="255.0" layoutY="14.0" prefHeight="475.0" prefWidth="995.0" visible="false">
+                        <AnchorPane fx:id="showStudent_form" layoutX="255.0" layoutY="14.0" prefHeight="475.0" prefWidth="995.0">
                            <children>
                               <AnchorPane layoutY="7.0" prefHeight="466.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
@@ -454,7 +454,7 @@
                               </TableView>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="updateStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="475.0" prefWidth="990.0" visible="false">
+                        <AnchorPane fx:id="updateStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="475.0" prefWidth="990.0">
                            <children>
                               <AnchorPane prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
@@ -473,13 +473,13 @@
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateFirstName_text" layoutX="454.0" layoutY="112.0" prefHeight="30.0" prefWidth="158.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updateFirstName_text" layoutX="454.0" layoutY="112.0" prefHeight="30.0" prefWidth="158.0" promptText="Anh Đức" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
                                     <Label layoutX="290.0" layoutY="167.0" prefHeight="21.0" prefWidth="134.0" text="Last Name:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateLastName_text" layoutX="455.0" layoutY="163.0" prefHeight="30.0" prefWidth="159.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updateLastName_text" layoutX="455.0" layoutY="163.0" prefHeight="30.0" prefWidth="159.0" promptText="Nguyen" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
                                     <Label layoutX="292.0" layoutY="283.0" prefHeight="21.0" prefWidth="134.0" text="Gender:" AnchorPane.leftAnchor="292.0">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
@@ -492,7 +492,7 @@
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateDate" layoutX="456.0" layoutY="221.0" prefHeight="30.0" prefWidth="158.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updateDate" layoutX="456.0" layoutY="221.0" prefHeight="30.0" prefWidth="158.0" promptText="dd/mm/yyyy" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
                                     <Label layoutX="657.0" layoutY="112.0" prefHeight="21.0" prefWidth="134.0" text="Phone number:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
@@ -531,10 +531,10 @@
                                        </children>
                                     </AnchorPane>
                                     <Separator layoutX="260.0" layoutY="11.0" orientation="VERTICAL" prefHeight="449.0" prefWidth="0.0" />
-                                    <TextField fx:id="updateStudentNumber_text" layoutX="454.0" layoutY="65.0" onAction="#findPersonByNumber" prefHeight="30.0" prefWidth="157.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <TextField fx:id="updatePhone_text" layoutX="797.0" layoutY="108.0" prefHeight="27.0" prefWidth="158.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <TextField fx:id="updatePassword_text" layoutX="796.0" layoutY="224.0" prefHeight="27.0" prefWidth="158.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <TextField fx:id="updateEmail_text" layoutX="796.0" layoutY="163.0" prefHeight="27.0" prefWidth="158.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updateStudentNumber_text" layoutX="454.0" layoutY="65.0" onAction="#findPersonByNumber" prefHeight="30.0" prefWidth="157.0" promptText="BK30" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updatePhone_text" layoutX="797.0" layoutY="108.0" prefHeight="27.0" prefWidth="158.0" promptText="10 digital numbers" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updatePassword_text" layoutX="796.0" layoutY="224.0" prefHeight="27.0" prefWidth="158.0" promptText="12345678" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updateEmail_text" layoutX="796.0" layoutY="163.0" prefHeight="27.0" prefWidth="158.0" promptText="duc@gmail.com" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
                                  </children>
                               </AnchorPane>
                            </children>
