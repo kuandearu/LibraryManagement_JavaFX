@@ -174,6 +174,72 @@ public class Database {
         }
     }
 
+    public static void insertBooks() throws SQLException {
+        String sql = "INSERT INTO book (bookNumber, bookTitle, author, bookType, image, date, status) VALUES(?,?,?,?,?,?,?)";
+
+        try {
+            prepare = connect.prepareStatement(sql);
+
+            if (!bookExists(Database.connect, "Java Tutorial")) {
+                prepare.setString(1, "JKV30");
+                prepare.setString(2, "Java Tutorial");
+                prepare.setString(3, "March");
+                prepare.setString(4, "Thesis, Education, IT");
+                prepare.setString(5, "src/main/java/image/java tutorial.jpg");
+                prepare.setString(6, "2020-09-24");
+                prepare.setString(7, "Available");
+                prepare.addBatch();
+            }
+
+            if (!bookExists(Database.connect, "JavaFX Tutorial")) {
+                prepare.setString(1, "JSRG30");
+                prepare.setString(2, "JavaFX Tutorial");
+                prepare.setString(3, "Steven");
+                prepare.setString(4, "Journal, Education, IT");
+                prepare.setString(5, "src/main/java/image/javafx tutorial book.jpg");
+                prepare.setString(6, "2023-06-27");
+                prepare.setString(7, "Available");
+                prepare.addBatch();
+            }
+
+            if (!bookExists(Database.connect, "Programming Language")) {
+                prepare.setString(1, "PFM30");
+                prepare.setString(2, "Programming Language");
+                prepare.setString(3, "Ammy Adam");
+                prepare.setString(4, "Note, Education, Tutorial, IT");
+                prepare.setString(5, "src/main/java/image/programming language book.jpg");
+                prepare.setString(6, "2024-05-30");
+                prepare.setString(7, "Available");
+                prepare.addBatch();
+            }
+
+            if (!bookExists(Database.connect, "Python")) {
+                prepare.setString(1, "PYCK12");
+                prepare.setString(2, "Python");
+                prepare.setString(3, "Army");
+                prepare.setString(4, "Magazine, Education, Introduction, Tutorial");
+                prepare.setString(5, "src/main/java/image/python tutorial.jpg");
+                prepare.setString(6, "2022-09-12");
+                prepare.setString(7, "Available");
+                prepare.addBatch();
+            }
+
+            // Execute the batch insert
+            prepare.executeBatch();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean bookExists(Connection connection, String bookTitle) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM book WHERE bookTitle = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, bookTitle);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt(1) > 0;
+    }
+
     public static void insertNewStudents() {
         String sql = "INSERT INTO student (id, studentName, studentNumber, password) VALUES (?, ?, ?,?)";
         try {

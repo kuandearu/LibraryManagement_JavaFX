@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="add returbook list">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/LibraryManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/LibraryManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -265,7 +269,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715961132637</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715961390183</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1715961390183</updated>
+    </task>
+    <task id="LOCAL-00021" summary="add returbook list">
+      <option name="closed" value="true" />
+      <created>1715961567212</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1715961567212</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -25,6 +25,7 @@ public class LibraryManagement extends Application  {
 
         // Insert students into the database
         Database.insertStudents();
+        Database.insertBooks();
         Database.insertNewStudents();
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Scene scene = new Scene(root);
