@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,13 +25,11 @@ import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.ResourceBundle;
 
-public class NewStudentDashboardController implements Initializable
-{
+public class NewStudentDashboardController implements Initializable {
+
     @FXML
     private Button availableBooks_btn;
 
@@ -47,10 +46,13 @@ public class NewStudentDashboardController implements Initializable
     private Label availableBooks_title;
 
     @FXML
+    private Label issueBook_title;
+
+    @FXML
     private Circle circle_image;
 
     @FXML
-    private TableColumn<availableBooks, Integer> col_ab_BookId;
+    private TableColumn<availableBooks, String> col_ab_Id;
 
     @FXML
     private TableColumn<availableBooks, String> col_ab_author;
@@ -67,11 +69,11 @@ public class NewStudentDashboardController implements Initializable
     @FXML
     private Button edit_btn;
 
-    @FXML
-    private Button issueBooks_btn;
+//    @FXML
+//    private Button issueBooks_btn;
 
-    @FXML
-    private Button returnBooks_btn;
+//    @FXML
+//    private Button returnBooks_btn;
 
     @FXML
     private Button save_btn;
@@ -93,6 +95,9 @@ public class NewStudentDashboardController implements Initializable
 
     @FXML
     private Button close;
+
+    @FXML
+    private Button maximized;
 
     @FXML
     private Button minimize;
@@ -127,11 +132,11 @@ public class NewStudentDashboardController implements Initializable
     @FXML
     private Circle smallCircle_image;
 
-    @FXML
-    private AnchorPane issue_form;
-
-    @FXML
-    private AnchorPane returnBook_form;
+//    @FXML
+//    private AnchorPane issue_form;
+//
+//    @FXML
+//    private AnchorPane returnBook_form;
 
     @FXML
     private AnchorPane savedBook_form;
@@ -198,6 +203,7 @@ public class NewStudentDashboardController implements Initializable
 
     @FXML
     private Button return_button;
+
     @FXML
     private TableColumn<saveBook, String> saveBook_author;
 
@@ -226,91 +232,91 @@ public class NewStudentDashboardController implements Initializable
     private ResultSet result;
     private Statement statement;
     private String comboBox[] = {"Male", "Female", "Others"};
+    @FXML
+    private Button sendBook_btn;
 
-    public void gender(){
-        List<String> combo = new ArrayList<>();
+//    public void gender(){
+//        List<String> combo = new ArrayList<>();
+//
+//        for(String data: comboBox){
+//            combo.add(data);
+//        }
+//
+//        ObservableList list = FXCollections.observableList(combo);
+//
+//        take_Gender.setItems(list);
+//    }
 
-        for(String data: comboBox){
-            combo.add(data);
-        }
-
-        ObservableList list = FXCollections.observableList(combo);
-
-        take_Gender.setItems(list);
+    private boolean check_conditions(){
+        return true;
     }
 
-    public void takeBook() throws SQLException {
+    public void sendBook() {
+        // SQL statement to insert book request
+        String insertBookRequestSQL = "INSERT INTO book_request (studentNumber, bookTitle, author, bookType, image, date) VALUES (?, ?, ?, ?, ?, ?)";
+        String checkBookExistsSQL = "SELECT COUNT(*) FROM book_request WHERE studentNumber = ? AND bookTitle = ? AND author = ?";
 
-        java.util.Date date = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-
-        String sql = "INSERT INTO take VALUES(?,?,?,?,?,?,?,?,?,?)";
-
+        // Connect to the database
         connect = Database.connectDB();
 
-        try{
-
-            Alert alert;
-
-            if(take_FirstName.getText().isEmpty()
-                    || take_LastName.getText().isEmpty()
-                    || take_Gender.getSelectionModel().isEmpty()){
-                alert = new Alert(Alert.AlertType.ERROR);
+        try {
+            // Check if there are any books to send
+            if (sBookList.isEmpty()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
-                alert.setContentText("Please insert completely all Student's Information!");
+                alert.setContentText("No books to send!");
                 alert.showAndWait();
-            }else if(take_titleLabel.getText().isEmpty()){
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please indicate the book you want to take");
-                alert.showAndWait();
-            }else if(take_titleLabel.getText().equals("Book is not available!")) {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("The selected book is not available. Please select another book.");
-                alert.showAndWait();
+                return;
             }
-            else{
 
-                prepare = connect.prepareStatement(sql);
-                prepare.setString(1, take_StudentNumber.getText());
-                prepare.setString(2, take_FirstName.getText());
-                prepare.setString(3, take_LastName.getText());
-                prepare.setString(4, (String)take_Gender.getSelectionModel().getSelectedItem());
-                prepare.setString(5, take_titleLabel.getText());
-                prepare.setString(6, take_authorLabel.getText());
-                prepare.setString(7, take_genreLabel.getText());
-                prepare.setString(8, getData.path);
-                prepare.setDate(9, sqlDate);
+            // Prepare statements
+            PreparedStatement insertStatement = connect.prepareStatement(insertBookRequestSQL);
+            PreparedStatement checkStatement = connect.prepareStatement(checkBookExistsSQL);
 
-                String check = "Not Return";
+            // Iterate through the list of saved books and insert each book into the book_request table
+            for (saveBook sBook : sBookList) {
+                // Check if the book already exists
+                checkStatement.setString(1, getData.studentNumber);
+                checkStatement.setString(2, sBook.getTitle());
+                checkStatement.setString(3, sBook.getAuthor());
+                ResultSet resultSet = checkStatement.executeQuery();
+                resultSet.next();
+                int count = resultSet.getInt(1);
 
-                prepare.setString(10, check);
-                prepare.executeUpdate();
+                if (count == 0) { // Book doesn't exist, insert it
+                    insertStatement.setString(1, getData.studentNumber);
+                    insertStatement.setString(2, sBook.getTitle());
+                    insertStatement.setString(3, sBook.getAuthor());
+                    insertStatement.setString(4, sBook.getType());
+                    insertStatement.setString(5, sBook.getImg());
+                    insertStatement.setDate(6, sBook.getDate());
 
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Successfully take the book");
-                alert.showAndWait();
-
-                clearTakeData();
-
+                    // Execute the insert statement
+                    insertStatement.executeUpdate();
+                }
             }
-        }catch(Exception e){
+
+            // Display a confirmation message
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Program message");
+            alert.setHeaderText(null);
+            alert.setContentText("Books sent successfully!");
+            alert.showAndWait();
+
+            sBookList.clear(); // Clear the list of saved books
+            saveBook_tableView.getItems().clear(); // Clear the TableView
+            saveBook_tableView.refresh(); // Refresh the TableView
+
+            // Refresh the saved book list after sending
+            showSaveBook();
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if(result != null)
-                result.close();
-            if(prepare != null)
-                prepare.close();
-            if(connect != null)
-                connect.close();
+            // Handle SQL exception
         }
     }
+
+
 
     public void findBook(ActionEvent event) throws SQLException {
 
@@ -328,7 +334,7 @@ public class NewStudentDashboardController implements Initializable
             Alert alert;
 
             if(take_BookTitle.getText().isEmpty()){
-                alert = new Alert(Alert.AlertType.ERROR);
+                alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select the book!");
@@ -366,11 +372,12 @@ public class NewStudentDashboardController implements Initializable
         }
     }
 
-    public void studentNumberLabel(){
-        take_StudentNumber.setText(getData.studentNumber);
-    }
+//    public void studentNumberLabel(){
+//        take_StudentNumber.setText(getData.studentNumber);
+//    }
 
     public void clearTakeData(){
+        issueBook_title.setText("");
         take_BookTitle.setText("");
         take_titleLabel.setText("");
         take_authorLabel.setText("");
@@ -387,11 +394,11 @@ public class NewStudentDashboardController implements Initializable
         take_imageView.setImage(null);
     }
 
-    public void displayDate(){
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String date = format.format(new java.util.Date());
-        take_IssuedDate.setText(date);
-    }
+//    public void displayDate(){
+//        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+//        String date = format.format(new Date());
+//        take_IssuedDate.setText(date);
+//    }
 
     //Return book
 
@@ -407,13 +414,11 @@ public class NewStudentDashboardController implements Initializable
             result = prepare.executeQuery();
             while (result.next()){
                 rBooks = new returnBook(
-                        result.getString("bookNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getDate("date"),
-                        result.getString("image"),
-                        result.getString("status")
+                        result.getString("image")
 
                 );
 
@@ -433,7 +438,7 @@ public class NewStudentDashboardController implements Initializable
         try{
 
             if(return_imageView.getImage() == null){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
+                Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select the book you want to return!");
@@ -441,13 +446,13 @@ public class NewStudentDashboardController implements Initializable
             }else{
                 statement = connect.createStatement();
                 statement.executeUpdate(sql);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Return successfully!");
                 alert.showAndWait();
 
-                showReturnBooks();
+//                showReturnBooks();
             }
 
         }catch (Exception e){
@@ -480,17 +485,17 @@ public class NewStudentDashboardController implements Initializable
     }
 
     private ObservableList<returnBook> returnData;
-    public void showReturnBooks(){
-        returnData = returnBookData();
-
-        returnBook_title.setCellValueFactory(new PropertyValueFactory<>("title"));
-        returnBook_author.setCellValueFactory(new PropertyValueFactory<>("author"));
-        returnBook_type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        returnBook_date.setCellValueFactory(new PropertyValueFactory<>("date"));
-
-        return_tableView.setItems(returnData);
-
-    }
+//    public void showReturnBooks(){
+//        returnData = returnBookData();
+//
+//        returnBook_title.setCellValueFactory(new PropertyValueFactory<>("title"));
+//        returnBook_author.setCellValueFactory(new PropertyValueFactory<>("author"));
+//        returnBook_type.setCellValueFactory(new PropertyValueFactory<>("type"));
+//        returnBook_date.setCellValueFactory(new PropertyValueFactory<>("date"));
+//
+//        return_tableView.setItems(returnData);
+//
+//    }
     //Save book
 
     public  ObservableList<saveBook> saveBookData(){
@@ -532,42 +537,60 @@ public class NewStudentDashboardController implements Initializable
         saveBook_tableView.setItems(sBookList);
     }
 
-    public void saveBook(){
-        String sql = "INSERT INTO save VALUES(?,?,?,?,?,?)";
+    public void saveBook() {
+        String insertSQL = "INSERT INTO save(`studentNumber`,`bookTitle`,`author`,`bookType`,`image`,`date`) VALUES(?,?,?,?,?,?)";
+        String checkSQL = "SELECT COUNT(*) FROM save WHERE studentNumber = ? AND bookTitle = ? AND author = ?";
         connect = Database.connectDB();
 
         try {
-
             Alert alert;
-            if(availableBooks_title.getText().isEmpty()){
-                alert = new Alert(Alert.AlertType.ERROR);
+
+            if (availableBooks_title.getText().isEmpty()) {
+                alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select the book!");
                 alert.showAndWait();
+            } else {
+                // Prepare the check statement
+                PreparedStatement checkStatement = connect.prepareStatement(checkSQL);
+                checkStatement.setString(1, getData.studentNumber);
+                checkStatement.setString(2, getData.saveTitle);
+                checkStatement.setString(3, getData.saveAuthor);
+                ResultSet resultSet = checkStatement.executeQuery();
+                resultSet.next();
+                int count = resultSet.getInt(1);
+
+                if (count > 0) {
+                    // Book already exists, show a message
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Program message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("This book is already saved!");
+                    alert.showAndWait();
+                } else {
+                    // Book does not exist, proceed with saving
+                    PreparedStatement insertStatement = connect.prepareStatement(insertSQL);
+                    insertStatement.setString(1, getData.studentNumber);
+                    insertStatement.setString(2, getData.saveTitle);
+                    insertStatement.setString(3, getData.saveAuthor);
+                    insertStatement.setString(4, getData.saveType);
+                    insertStatement.setString(5, getData.saveImg);
+                    insertStatement.setDate(6, getData.saveDate);
+                    insertStatement.executeUpdate();
+
+                    alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Program message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Book saved!");
+                    alert.showAndWait();
+
+                    showSaveBook();
+                }
             }
-            else{
-                prepare = connect.prepareStatement(sql);
-                prepare.setString(1, getData.studentNumber);
-                prepare.setString(2, getData.saveTitle);
-                prepare.setString(3, getData.saveAuthor);
-                prepare.setString(4, getData.saveType);
-                prepare.setString(5, getData.saveImg);
-                prepare.setDate(6, getData.saveDate);
-                prepare.executeUpdate();
-
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Book saved!");
-                alert.showAndWait();
-
-                showSaveBook();
-            }
-
-
-        }catch (Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
+            // Handle SQL exception
         }
     }
 
@@ -578,6 +601,7 @@ public class NewStudentDashboardController implements Initializable
         if ((num - 1) < -1) {
             return;
         }
+
 
         getData.takeBookTitle = sBook.getTitle();
 
@@ -591,36 +615,69 @@ public class NewStudentDashboardController implements Initializable
         getData.saveTitle = sBook.getTitle();
     }
 
-    public void unsaveBook(){
-        String sql = "Delete from save where bookTitle = '" + getData.saveTitle + "' and studentNumber = '" + getData.studentNumber + "'";
+    public void unsaveBook() {
+        String sqlSave = "DELETE FROM save WHERE bookTitle = ? AND studentNumber = ?";
+        String sqlRequest = "DELETE FROM book_request WHERE bookTitle = ? AND studentNumber = ?";
 
         connect = Database.connectDB();
+
         try {
             Alert alert;
 
-            if(save_imageView.getImage() == null){
-                alert = new Alert(Alert.AlertType.ERROR);
+            if (save_imageView.getImage() == null) {
+                alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Please select the book you want to unsave!");
                 alert.showAndWait();
-            }else{
-                statement = connect.createStatement();
-                statement.executeUpdate(sql);
-                alert = new Alert(Alert.AlertType.INFORMATION);
+                return;
+            }
+
+            // Prepare the delete statements
+            PreparedStatement deleteSaveStatement = connect.prepareStatement(sqlSave);
+            deleteSaveStatement.setString(1, getData.saveTitle);
+            deleteSaveStatement.setString(2, getData.studentNumber);
+
+            PreparedStatement deleteRequestStatement = connect.prepareStatement(sqlRequest);
+            deleteRequestStatement.setString(1, getData.saveTitle);
+            deleteRequestStatement.setString(2, getData.studentNumber);
+
+            // Execute delete statements
+            int rowsAffectedSave = deleteSaveStatement.executeUpdate();
+            int rowsAffectedRequest = deleteRequestStatement.executeUpdate();
+
+            System.out.println("Rows affected in save table: " + rowsAffectedSave);
+            System.out.println("Rows affected in book_request table: " + rowsAffectedRequest);
+
+            if (rowsAffectedSave > 0) {
+                // Remove the book from the list
+                sBookList.removeIf(sBook -> sBook.getTitle().equals(getData.saveTitle) && sBook.getAuthor().equals(getData.saveAuthor));
+                // Remove the book from the TableView
+                saveBook_tableView.getItems().removeIf(book -> book.getTitle().equals(getData.saveTitle) && book.getAuthor().equals(getData.saveAuthor));
+                saveBook_tableView.refresh(); // Refresh the TableView
+
+                alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Program message");
                 alert.setHeaderText(null);
                 alert.setContentText("Unsave successfully!");
                 alert.showAndWait();
 
+                // Refresh the saved book list
                 showSaveBook();
+                // Clear the image view
                 save_imageView.setImage(null);
+            } else {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Failed to unsave the book!");
+                alert.showAndWait();
             }
 
-        }catch (Exception e){
+        } catch (SQLException e) {
             e.printStackTrace();
+            // Handle SQL exception
         }
-
     }
 
     public ObservableList<availableBooks> dataList(){
@@ -644,8 +701,7 @@ public class NewStudentDashboardController implements Initializable
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getString("image"),
-                        result.getDate("date"),
-                        result.getString("status"));
+                        result.getDate("date"));
                 listBooks.add(aBooks);
             }
 
@@ -658,8 +714,7 @@ public class NewStudentDashboardController implements Initializable
     public void showAvailableBooks(){
 
         listBook = dataList();
-
-        col_ab_BookId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_ab_Id.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col_ab_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_ab_author.setCellValueFactory(new PropertyValueFactory<>("author"));
         col_ab_bookType.setCellValueFactory(new PropertyValueFactory<>("genre"));
@@ -668,7 +723,7 @@ public class NewStudentDashboardController implements Initializable
         availableBooks_tableView.setItems(listBook);
     }
 
-
+    availableBooks getBookData;
     public void selectAvailableBooks(){
 
         availableBooks bookData = availableBooks_tableView.getSelectionModel().getSelectedItem();
@@ -678,6 +733,7 @@ public class NewStudentDashboardController implements Initializable
         if ((num - 1) < -1) {
             return;
         }
+        getBookData = bookData;
 
         availableBooks_title.setText(bookData.getTitle());
 
@@ -699,11 +755,41 @@ public class NewStudentDashboardController implements Initializable
     public void abTakeButton(ActionEvent event){
 
         if (event.getSource()== take_btn){
-            issue_form.setVisible(true);
+//            issue_form.setVisible(true);
             availableBooks_form.setVisible(false);
             savedBook_form.setVisible(false);
-            returnBook_form.setVisible(false);
+//            returnBook_form.setVisible(false);
+
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+
+            currentForm_label.setText("Issue Books");
         }
+
+        issueBook_title.setText(" " +getBookData.getTitle());
+        take_titleLabel.setText(getBookData.getTitle());
+        take_authorLabel.setText(getBookData.getAuthor());
+        take_genreLabel.setText(getBookData.getGenre());
+        take_dateLabel.setText(getBookData.getDate().toString());
+
+        String uri = "file:" + getBookData.getImage();
+        getData.pathImage = getBookData.getImage();
+        image = new Image(uri, 134, 171, false, true);
+        take_imageView.setImage(image);
+
+//        Alert alert;
+//        alert = new Alert(AlertType.INFORMATION);
+//        alert.setTitle("Program message");
+//        alert.setHeaderText(null);
+//        alert.setContentText(bookData.getTitle());
+//        alert.showAndWait();
 
     }
 
@@ -729,14 +815,14 @@ public class NewStudentDashboardController implements Initializable
     public void sideNavButtonDesign(ActionEvent event){
         if (event.getSource() == halfNav_availableBtn){
 
-            issue_form.setVisible(false);
+//            issue_form.setVisible(false);
             availableBooks_form.setVisible(true);
             savedBook_form.setVisible(false);
-            returnBook_form.setVisible(false);
+//            returnBook_form.setVisible(false);
 
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
@@ -747,14 +833,14 @@ public class NewStudentDashboardController implements Initializable
             currentForm_label.setText("Available Books");
         }else if (event.getSource() == halfNav_takeBtn){
 
-            issue_form.setVisible(true);
+//            issue_form.setVisible(true);
             availableBooks_form.setVisible(false);
             savedBook_form.setVisible(false);
-            returnBook_form.setVisible(false);
+//            returnBook_form.setVisible(false);
 
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
@@ -766,14 +852,14 @@ public class NewStudentDashboardController implements Initializable
 
         }else if (event.getSource() == halfNav_returnBtn){
 
-            issue_form.setVisible(false);
+//            issue_form.setVisible(false);
             availableBooks_form.setVisible(false);
             savedBook_form.setVisible(false);
-            returnBook_form.setVisible(true);
+//            returnBook_form.setVisible(true);
 
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
@@ -782,19 +868,19 @@ public class NewStudentDashboardController implements Initializable
             halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             currentForm_label.setText("Return Books");
-            showReturnBooks();
+//            showReturnBooks();
 
         }else if (event.getSource() == halfNav_saveBtn){
 
-            issue_form.setVisible(false);
+//            issue_form.setVisible(false);
             availableBooks_form.setVisible(false);
             savedBook_form.setVisible(true);
-            returnBook_form.setVisible(false);
+//            returnBook_form.setVisible(false);
 
             savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
@@ -810,14 +896,14 @@ public class NewStudentDashboardController implements Initializable
 
         if (event.getSource() == availableBooks_btn){
 
-            issue_form.setVisible(false);
+//            issue_form.setVisible(false);
             availableBooks_form.setVisible(true);
             savedBook_form.setVisible(false);
-            returnBook_form.setVisible(false);
+//            returnBook_form.setVisible(false);
 
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
@@ -827,57 +913,57 @@ public class NewStudentDashboardController implements Initializable
 
             currentForm_label.setText("Available Books");
 
-        }else if (event.getSource() == issueBooks_btn){
-
-            issue_form.setVisible(true);
-            availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(false);
-            returnBook_form.setVisible(false);
-
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            currentForm_label.setText("Issue Books");
-
-        }else if (event.getSource() == returnBooks_btn){
-
-            issue_form.setVisible(false);
-            availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(false);
-            returnBook_form.setVisible(true);
-
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            currentForm_label.setText("Return Books");
-
-            showReturnBooks();
+//        }else if (event.getSource() == issueBooks_btn){
+//
+////            issue_form.setVisible(true);
+//            availableBooks_form.setVisible(false);
+//            savedBook_form.setVisible(false);
+////            returnBook_form.setVisible(false);
+//
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//
+//            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//
+//            currentForm_label.setText("Issue Books");
+//
+//        }else if (event.getSource() == returnBooks_btn){
+//
+////            issue_form.setVisible(false);
+//            availableBooks_form.setVisible(false);
+//            savedBook_form.setVisible(false);
+////            returnBook_form.setVisible(true);
+//
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//
+//            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//
+//            currentForm_label.setText("Return Books");
+//
+////            showReturnBooks();
 
         }else if (event.getSource() == savedBooks_btn){
 
-            issue_form.setVisible(false);
+//            issue_form.setVisible(false);
             availableBooks_form.setVisible(false);
             savedBook_form.setVisible(true);
-            returnBook_form.setVisible(false);
+//            returnBook_form.setVisible(false);
 
             savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
@@ -993,6 +1079,11 @@ public class NewStudentDashboardController implements Initializable
         System.exit(0);
     }
 
+    public void maximized(){
+        Stage stage = (Stage) maximized.getScene().getWindow();
+        stage.setMaximized(true);
+    }
+
     public void minimize(){
         Stage stage = (Stage) minimize.getScene().getWindow();
         stage.setIconified(true);
@@ -1004,20 +1095,20 @@ public class NewStudentDashboardController implements Initializable
         setUserImage();
         hideInsertImage();
         studentNumber();
-        gender();
-        studentNumberLabel();
-        displayDate();
+//        gender();
+//        studentNumberLabel();
+//        displayDate();
         try {
             showSaveBook();
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        try{
-            showReturnBooks();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        try{
+//            showReturnBooks();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
     }
 //    public void insertImage(){
 //

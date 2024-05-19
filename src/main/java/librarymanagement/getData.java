@@ -4,6 +4,8 @@ import java.sql.Date;
 
 public class getData {
 
+
+    public static int id;
     public static String path;
     public static String studentNumber;
 

@@ -2,8 +2,6 @@ package librarymanagement;
 
 import javafx.animation.TranslateTransition;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -31,7 +28,6 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.File;
 import java.net.URL;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -41,7 +37,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
+
 
 public class DashboardController implements Initializable {
 
@@ -211,12 +211,6 @@ public class DashboardController implements Initializable {
     private TableColumn<returnBook, String> returnBook_type;
 
     @FXML
-    private TableColumn<returnBook, String> returnBook_number;
-
-    @FXML
-    private TableColumn<returnBook, String> returnBook_status;
-
-    @FXML
     private Button return_button;
 
     @FXML
@@ -360,6 +354,39 @@ public class DashboardController implements Initializable {
     @FXML
     private ImageView showStudentImage_View;
 
+    @FXML
+    private TextField updateEmail_text;
+
+    @FXML
+    private TextField updateFirstName_text;
+
+    @FXML
+    private ComboBox<?> updateGender_text;
+
+    @FXML
+    private TextField updateLastName_text;
+
+    @FXML
+    private TextField updatePassword_text;
+
+    @FXML
+    private TextField updatePhone_text;
+
+    @FXML
+    private ComboBox<?> updateRoll_text;
+
+    @FXML
+    private ImageView updateStudentImage_View;
+
+    @FXML
+    private TextField updateStudentNumber_text;
+
+    @FXML
+    private Button updateStudent_btn;
+
+    @FXML
+    private AnchorPane updateStudent_form;
+
     Image image;
 
     private Connection connect;
@@ -368,22 +395,15 @@ public class DashboardController implements Initializable {
     private Statement statement;
     private File selectedFile;
     private String comboBox[] = {"Male", "Female", "Others"};
-    private int rollBox[] = {1, 2};
+    private String rollBox[] = {"Admin", "User"};
 
-    private boolean containsMaliciousContent(String input) {
-        // Define a pattern to match potentially malicious content
-        String regex = ".*(['\";\\-\\-]+|\\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION|SCRIPT|<|>|\\(\\)|\\{|\\}|\\[|\\])\\b).*";
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        return pattern.matcher(input).matches();
-    }
 
-    public void addStudent() {
+    public void addPerson() {
         String sql = "INSERT INTO student(studentNumber, studentName, dateOfBirth, email, studentRoll, gender, phone, password, image) VALUES (?,?,?,?,?,?,?,?,?) ";
 
         connect = Database.connectDB();
 
         try {
-
             if (addStudentNumber_text.getText().isEmpty() ||
                     addFirstName_text.getText().isEmpty() ||
                     addLastName_text.getText().isEmpty() ||
@@ -396,15 +416,42 @@ public class DashboardController implements Initializable {
                     studentImage_View.getImage() == null) {
                 showAlert(AlertType.ERROR, "Program message", "Please insert all information!");
             } else {
-                //Check validate date of birth
+                // Validate input fields
+                if (containsMaliciousContent(addStudentNumber_text.getText()) ||
+                        containsMaliciousContent(addFirstName_text.getText()) ||
+                        containsMaliciousContent(addLastName_text.getText()) ||
+                        containsMaliciousContent(addDateofBirth_text.getText()) ||
+                        containsMaliciousContent(addEmail_text.getText()) ||
+                        containsMaliciousContent(addPhone_text.getText()) ||
+                        containsMaliciousContent(addPassword_text.getText())) {
+
+                    // Clear all text fields
+                   clearAddPerson();
+
+                    showAlert(AlertType.ERROR, "Program message", "Are you trying to hack? Nice try!");
+                    return;
+                }
+
+                // Check and convert date of birth
                 String dateString = addDateofBirth_text.getText();
                 Timestamp timestamp = validateAndConvertToTimestamp(dateString);
                 if (timestamp == null) {
-                    // Return if date format is invalid
+                    return; // Invalid date format
+                }
+
+                if (!isValidPhoneNumber(addPhone_text.getText())) {
+                    showAlert(AlertType.ERROR, "Program message", "Invalid phone number! Please enter a 10-digit phone number.");
                     return;
                 }
+
+                // Validate email
+                if (!isValidEmail(addEmail_text.getText())) {
+                    showAlert(AlertType.ERROR, "Program message", "Invalid email format! Please enter a valid email address (e.g., user@gmail.com).");
+                    return;
+                }
+
                 // Combine first name and last name into full name
-                String fullName = addFirstName_text.getText() + " " + addLastName_text.getText();
+                String fullName = addLastName_text.getText() + " " + addFirstName_text.getText();
 
                 // Prepare SQL statement
                 prepare = connect.prepareStatement(sql);
@@ -412,7 +459,7 @@ public class DashboardController implements Initializable {
                 prepare.setString(2, fullName);
                 prepare.setTimestamp(3, timestamp);
                 prepare.setString(4, addEmail_text.getText());
-                prepare.setInt(5, (int) addRoll_text.getValue()); // Assuming roll is an Integer in the database
+                prepare.setString(5, addRoll_text.getValue().toString()); // Assuming roll is an Integer in the database
                 prepare.setString(6, addGender_text.getValue().toString()); // Assuming gender is a String in the database
                 prepare.setString(7, addPhone_text.getText());
                 prepare.setString(8, addPassword_text.getText());
@@ -428,7 +475,7 @@ public class DashboardController implements Initializable {
                     showAlert(AlertType.INFORMATION, "Program message", "Student added successfully!");
 
                     // Clear input fields
-                    clearAddStudent(); // Assuming you have a method to clear input fields
+                    clearAddPerson(); // Assuming you have a method to clear input fields
                 } else {
                     // Show error message if insertion fails
                     showAlert(AlertType.ERROR, "Program message", "Failed to add student. Please try again.");
@@ -439,7 +486,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void clearAddStudent() {
+    public void clearAddPerson() {
         addStudentNumber_text.setText("");
         addFirstName_text.setText("");
         addLastName_text.setText("");
@@ -524,6 +571,224 @@ public class DashboardController implements Initializable {
         Image image = new Image(uri, 134, 171, false, true);
         showStudentImage_View.setImage(image);
     }
+
+    public void findPersonByNumber(ActionEvent event) throws SQLException {
+        String studentNumber = updateStudentNumber_text.getText(); // Get the student number from the TextField
+
+        // Construct the SQL query to retrieve student information by student number
+        String sql = "SELECT * FROM student WHERE studentNumber = ?";
+
+        connect = Database.connectDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(1, studentNumber); // Set the student number parameter in the query
+            result = prepare.executeQuery();
+            boolean check = false;
+
+                while (result.next()) {
+
+                    String studentName = result.getString("studentName");
+                    String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
+                    if (nameParts.length == 2) {
+                        String firstName = nameParts[1]; // Rest as first name
+                        String lastName = nameParts[0]; // First word as last name
+
+                        updateFirstName_text.setText(firstName);
+                        updateLastName_text.setText(lastName);
+                    } else {
+                        // If the name format is not as expected, set the whole name as first name
+                        updateFirstName_text.setText(studentName);
+                        updateLastName_text.setText(""); // Set last name as empty
+                    }
+
+                    updateEmail_text.setText(result.getString("email"));
+                    updatePhone_text.setText(result.getString("phone"));
+                    updatePassword_text.setText(result.getString("password"));
+
+                    String gender = result.getString("gender");
+                    ComboBox genderBox = updateGender_text;
+                    setComboBoxValue(genderBox, gender);
+
+
+                    String roll = result.getString("studentRoll");
+                    ComboBox rollbox = updateRoll_text;
+                    setComboBoxValue(rollbox, roll);
+
+                    displayFormattedDate(result.getTimestamp("dateOfBirth"));
+
+                    String imagePath = result.getString("image");
+
+                    String uri = "file:" + imagePath;
+                    Image image = new Image(uri, 127, 162, false, true);
+                    updateStudentImage_View.setImage(image);
+
+                    check = true;
+                }
+
+                if (!check) {
+                    showAlert(AlertType.INFORMATION, "Program message", "No Student Found!");
+                    clearUpdatePerson();
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePerson() {
+        String sql = "UPDATE student SET studentRoll=?, studentNumber=?, studentName=?, dateOfBirth=?, gender=?, phone=?, email=?, password=?, image=? WHERE studentNumber=?";
+
+        connect = Database.connectDB();
+
+        try {
+            if (updateStudentNumber_text.getText().isEmpty()) {
+                showAlert(AlertType.ERROR, "Program message", "Please enter the student number!");
+                return;
+            }
+
+            if (updateStudentNumber_text.getText().isEmpty() ||
+                    updateFirstName_text.getText().isEmpty() ||
+                    updateLastName_text.getText().isEmpty() ||
+                    updateEmail_text.getText().isEmpty() ||
+                    updatePhone_text.getText().isEmpty() ||
+                    updatePassword_text.getText().isEmpty() ||
+                    updateGender_text.getValue() == null ||
+                    updateRoll_text.getValue() == null ||
+                    updateDate.getText().isEmpty() ||
+                    updateStudentImage_View.getImage() == null) {
+                showAlert(AlertType.ERROR, "Program message", "Please insert all information!");
+                return;
+            }
+
+            String imagePath = processImagePath(getData.studentNumber);
+            if (imagePath == null) {
+                return; // If imagePath is null, there was an error, and we should not proceed
+            }
+
+            if (!isValidPhoneNumber(updatePhone_text.getText())) {
+                showAlert(AlertType.ERROR, "Program message", "Invalid phone number! Please enter a 10-digit phone number.");
+                return;
+            }
+
+            // Validate email
+            if (!isValidEmail(updateEmail_text.getText())) {
+                showAlert(AlertType.ERROR, "Program message", "Invalid email format! Please enter a valid email address (e.g., user@gmail.com).");
+                return;
+            }
+
+            String studentNumber = updateStudentNumber_text.getText();
+
+            // Retrieve existing student data
+            String fetchSql = "SELECT * FROM student WHERE studentNumber = ?";
+            prepare = connect.prepareStatement(fetchSql);
+            prepare.setString(1, studentNumber);
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                // Prepare SQL statement
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(10, result.getString("studentNumber"));
+                // Update studentRoll
+                prepare.setString(1, updateRoll_text.getValue() != null ? updateRoll_text.getValue().toString() : result.getString("studentRoll"));
+
+                // Update studentNumber
+                prepare.setString(2, updateStudentNumber_text.getText().isEmpty() ? result.getString("studentNumber") : updateStudentNumber_text.getText());
+
+                // Update studentName
+                String fullName = (updateLastName_text.getText().isEmpty() ? result.getString("studentName").split(" ")[0] : updateLastName_text.getText())
+                        + " " + (updateFirstName_text.getText().isEmpty() ? result.getString("studentName").split(" ")[1] : updateFirstName_text.getText());
+                prepare.setString(3, fullName);
+
+                // Update dateOfBirth
+                Timestamp timestamp = validateAndConvertToTimestamp(updateDate.getText());
+                if(timestamp == null){
+                    return;
+                }
+                prepare.setTimestamp(4, updateDate.getText().isEmpty() ? result.getTimestamp("dateOfBirth") : timestamp);
+
+                // Update gender
+                prepare.setString(5, updateGender_text.getValue() != null ? updateGender_text.getValue().toString() : result.getString("gender"));
+
+                // Update phone
+                prepare.setString(6, updatePhone_text.getText().isEmpty() ? result.getString("phone") : updatePhone_text.getText());
+
+                // Update email
+                prepare.setString(7, updateEmail_text.getText().isEmpty() ? result.getString("email") : updateEmail_text.getText());
+
+                // Update password
+                prepare.setString(8, updatePassword_text.getText().isEmpty() ? result.getString("password") : updatePassword_text.getText());
+
+                prepare.setString(9, imagePath);
+                // Execute the SQL statement
+                int rowsAffected = prepare.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    showAlert(AlertType.INFORMATION, "Program message", "Student updated successfully!");
+
+                    // Clear input fields
+                    clearUpdatePerson();
+                } else {
+                    showAlert(AlertType.ERROR, "Program message", "Failed to update student. Please try again.");
+                }
+            } else {
+                showAlert(AlertType.ERROR, "Program message", "No Student Found!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String processImagePath(String studentNumber) {
+        String existingImagePath = "";
+        String imagePath = "";
+
+        // Fetch existing image path from the database
+        String fetchImageSql = "SELECT image FROM student WHERE studentNumber=?";
+        try (Connection connect = Database.connectDB();
+             PreparedStatement fetchImageStmt = connect.prepareStatement(fetchImageSql)) {
+            fetchImageStmt.setString(1, studentNumber);
+            try (ResultSet result = fetchImageStmt.executeQuery()) {
+                if (result.next()) {
+                    existingImagePath = result.getString("image");
+                } else {
+                    showAlert(AlertType.ERROR, "Program message", "Student not found!");
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Process image path
+        if (selectedFile != null) {
+            // If a new image is selected, set imagePath to the absolute path of the selected file
+            imagePath = selectedFile.getAbsolutePath();
+        } else {
+            // If no new image is selected, retain the existing image path
+            imagePath = existingImagePath;
+        }
+        return imagePath;
+    }
+
+
+    public void clearUpdatePerson(){
+        updateStudentNumber_text.setText("");
+        updateFirstName_text.setText("");
+        updateLastName_text.setText("");
+        updateDate.setText("");
+        updateGender_text.setValue(null);
+        updateRoll_text.setValue(null);
+        updatePhone_text.setText("");
+        updateEmail_text.setText("");
+        updatePassword_text.setText("");
+        updateStudentImage_View.setImage(null);
+    }
+
+    public void setComboBoxValue(ComboBox<String> comboBox, String value) {
+        comboBox.setValue(value);
+    }
+
 
     public void addBook() {
 
@@ -778,7 +1043,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void uploadUpdateImage() {
+    public void uploadUpdateBookImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image File");
@@ -801,7 +1066,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void uploadStudentImage() {
+    public void uploadPersonImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image File");
@@ -821,6 +1086,29 @@ public class DashboardController implements Initializable {
             // Load the selected image into the ImageView
             Image image = new Image(selectedFile.toURI().toString(), 140, 162, false, true);
             studentImage_View.setImage(image);
+        }
+    }
+
+    public void uploadUpdatePersonImage() {
+        // Create a file chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Image File");
+
+        // Set initial directory
+        File initialDirectory = new File("src/main/java/image/");
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Filter to show only image files
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog
+        selectedFile = fileChooser.showOpenDialog(uploadImage_View.getScene().getWindow());
+
+        if (selectedFile != null) {
+            // Load the selected image into the ImageView
+            Image image = new Image(selectedFile.toURI().toString(), 140, 162, false, true);
+            updateStudentImage_View.setImage(image);
         }
     }
 
@@ -903,14 +1191,17 @@ public class DashboardController implements Initializable {
     }
 
     public void roll() {
-        List<Integer> rollCombo = new ArrayList<>();
+        List<String> rollCombo = new ArrayList<>();
 
-        for (int data : rollBox) {
+        for (String data : rollBox) {
             rollCombo.add(data);
         }
 
         ObservableList listRoll = FXCollections.observableList(rollCombo);
+
         addRoll_text.setItems(listRoll);
+
+        updateRoll_text.setItems(listRoll);
     }
 
     public void gender() {
@@ -923,6 +1214,8 @@ public class DashboardController implements Initializable {
         ObservableList list = FXCollections.observableList(combo);
 
         addGender_text.setItems(list);
+
+        updateGender_text.setItems(list);
     }
 
     public void findBook(ActionEvent event) throws SQLException {
@@ -984,79 +1277,22 @@ public class DashboardController implements Initializable {
         return true;
     }
 
-//    public void takeBook() throws SQLException {
-//
-//        Date date = new Date();
-//        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-//
-//        String sql = "INSERT INTO take(`studentNumber`,`firstname`,`lastname`,`gender`," +
-//                "`bookTitle`,`author`,`bookType`,`image`,`date`,`checkReturn`)" +
-//                " VALUES(?,?,?,?,?,?,?,?,?,?)";
-//
-//        connect = Database.connectDB();
-//
-//        try{
-//
-//            Alert alert;
-//
-//            if(take_FirstName.getText().isEmpty()
-//                    || take_LastName.getText().isEmpty()
-//                    || addGender_text.getSelectionModel().isEmpty()){
-//                alert = new Alert(AlertType.ERROR);
-//                alert.setTitle("Program message");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Please insert completely all Information!");
-//                alert.showAndWait();
-//            } else
-//            {
-//                prepare = connect.prepareStatement(sql);
-//                prepare.setString(1, take_StudentNumber.getText());
-//                prepare.setString(2, take_FirstName.getText());
-//                prepare.setString(3, take_LastName.getText());
-//                prepare.setString(4, (String)addGender_text.getSelectionModel().getSelectedItem());
-//                prepare.setString(5, take_titleLabel.getText());
-//                prepare.setString(6, take_authorLabel.getText());
-//                prepare.setString(7, take_genreLabel.getText());
-//                prepare.setString(8, getData.pathImage);
-//                prepare.setDate(9, sqlDate);
-//
-//                String check = "Not Return";
-//
-//                prepare.setString(10, check);
-//                prepare.executeUpdate();
-//
-//                alert = new Alert(AlertType.INFORMATION);
-//                alert.setTitle("Program message");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Successfully take the book");
-//                alert.showAndWait();
-//
-//                clearTakeData();
-//
-//            }
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        } finally {
-//            if(result != null)
-//                result.close();
-//            if(prepare != null)
-//                prepare.close();
-//            if(connect != null)
-//                connect.close();
-//        }
-//    }
+    private boolean studentExists(String studentNumber) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM student WHERE studentNumber = ?";
+        prepare = connect.prepareStatement(sql);
+        prepare.setString(1, studentNumber);
+        result = prepare.executeQuery();
+        result.next();
+        return result.getInt(1) > 0;
+    }
 
+    private boolean containsMaliciousContent(String input) {
+        // Define a pattern to match potentially malicious content
+        String regex = ".*(['\";\\-\\-]+|\\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION|SCRIPT|<|>|\\(\\)|\\{|\\}|\\[|\\])\\b).*";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        return pattern.matcher(input).matches();
+    }
 
-//    public void clearTakeData(){
-//        issueBook_title.setText("");
-//        take_BookTitle.setText("");
-//        take_titleLabel.setText("");
-//        take_authorLabel.setText("");
-//        take_genreLabel.setText("");
-//        take_dateLabel.setText("");
-//        take_imageView.setImage(null);
-//    }
-//
     public void clearFindData(){
         take_titleLabel.setText("");
         take_authorLabel.setText("");
@@ -1065,13 +1301,6 @@ public class DashboardController implements Initializable {
         take_imageView.setImage(null);
     }
 
-//    public void displayDate(){
-//        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-//        String date = format.format(new Date());
-//        take_IssuedDate.setText(date);
-//    }
-
-    //Return book
 
     public ObservableList<returnBook> returnBookData(){
         ObservableList<returnBook> listReturnBook = FXCollections.observableArrayList();
@@ -1085,13 +1314,11 @@ public class DashboardController implements Initializable {
             result = prepare.executeQuery();
             while (result.next()){
                 rBooks = new returnBook(
-                        result.getString("bookNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getDate("date"),
-                        result.getString("image"),
-                        result.getString("status")
+                        result.getString("image")
 
                 );
 
@@ -1301,38 +1528,49 @@ public class DashboardController implements Initializable {
 
     }
 
+    private boolean isValidPhoneNumber(String phone) {
+        return phone != null && phone.matches("\\d{10}");
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
 
     public void abTakeButton(ActionEvent event){
 
-        if (event.getSource()== take_btn){
-            issue_form.setVisible(true);
-            availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(false);
-            returnBook_form.setVisible(false);
-
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            currentForm_label.setText("Issue Books");
-        }
-
-        issueBook_title.setText(" " +getBookData.getTitle());
-        take_titleLabel.setText(getBookData.getTitle());
-        take_authorLabel.setText(getBookData.getAuthor());
-        take_genreLabel.setText(getBookData.getGenre());
-        take_dateLabel.setText(getBookData.getDate().toString());
-
-        String uri = "file:" + getBookData.getImage();
-        getData.pathImage = getBookData.getImage();
-        image = new Image(uri, 134, 171, false, true);
-        take_imageView.setImage(image);
+//        if (event.getSource()== take_btn){
+//            issue_form.setVisible(true);
+//            availableBooks_form.setVisible(false);
+//            savedBook_form.setVisible(false);
+//            returnBook_form.setVisible(false);
+//
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//
+//            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//
+//            currentForm_label.setText("Issue Books");
+//        }
+//
+//        issueBook_title.setText(" " +getBookData.getTitle());
+//        take_titleLabel.setText(getBookData.getTitle());
+//        take_authorLabel.setText(getBookData.getAuthor());
+//        take_genreLabel.setText(getBookData.getGenre());
+//        take_dateLabel.setText(getBookData.getDate().toString());
+//
+//        String uri = "file:" + getBookData.getImage();
+//        getData.pathImage = getBookData.getImage();
+//        image = new Image(uri, 134, 171, false, true);
+//        take_imageView.setImage(image);
 
 //        Alert alert;
 //        alert = new Alert(AlertType.INFORMATION);
