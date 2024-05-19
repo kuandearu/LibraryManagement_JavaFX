@@ -157,7 +157,7 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane fx:id="showBooks_form" layoutX="268.0" layoutY="16.0" prefHeight="468.0" prefWidth="777.0" stylesheets="@../designDashboard.css">
                            <children>
@@ -175,8 +175,10 @@
                                  <children>
                                     <AnchorPane layoutY="12.0" prefHeight="416.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                        <children>
-                                          <ImageView fx:id="availableBooks_imageView" fitHeight="174.0" fitWidth="131.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-                                          <AnchorPane layoutX="36.0" layoutY="21.0" prefHeight="179.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css" />
+                                          <AnchorPane layoutX="37.0" layoutY="21.0" prefHeight="163.0" prefWidth="125.0" styleClass="image-card" stylesheets="@../designDashboard.css">
+                                             <children>
+                                                <ImageView fx:id="availableBooks_imageView" fitHeight="161.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" />
+                                             </children></AnchorPane>
                                           <Label fx:id="availableBooks_title" alignment="CENTER" layoutX="6.0" layoutY="225.0" prefHeight="26.0" prefWidth="187.0">
                                              <font>
                                                 <Font size="14.0" />
@@ -237,9 +239,11 @@
                                  <children>
                                     <AnchorPane layoutY="4.0" prefHeight="454.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                        <children>
-                                          <ImageView fx:id="addBookImage_View" fitHeight="174.0" fitWidth="131.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-                                          <AnchorPane layoutX="36.0" layoutY="21.0" prefHeight="179.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css" />
-                                          <Button fx:id="uploadImage_View" layoutX="58.0" layoutY="223.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="45.0" prefWidth="85.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload">
+                                          <AnchorPane layoutX="42.0" layoutY="21.0" prefHeight="135.0" prefWidth="110.0" styleClass="image-card" stylesheets="@../designDashboard.css">
+                                             <children>
+                                                <ImageView fx:id="addBookImage_View" fitHeight="131.0" fitWidth="113.0" layoutX="2.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
+                                             </children></AnchorPane>
+                                          <Button fx:id="uploadImage_View" layoutX="58.0" layoutY="182.0" mnemonicParsing="false" onAction="#uploadImage" prefHeight="45.0" prefWidth="85.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
@@ -252,19 +256,20 @@
                         </AnchorPane>
                         <AnchorPane layoutX="-13.0" layoutY="16.0" prefHeight="491.0" prefWidth="378.0">
                            <children>
-                              <Button fx:id="addBook_btn" layoutX="71.0" layoutY="83.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Add Book" textAlignment="CENTER" />
-                              <Button fx:id="showBook_btn" layoutX="71.0" layoutY="151.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Show Books" />
-                              <Button fx:id="updateBooks_btn" layoutX="71.0" layoutY="225.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Update Book" />
-                              <Button fx:id="importBook_btn" layoutX="71.0" layoutY="302.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="155.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Import" />
+                              <Button fx:id="addBook_btn" layoutX="46.0" layoutY="49.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Add Book" textAlignment="CENTER" />
+                              <Button fx:id="showBook_btn" layoutX="46.0" layoutY="125.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Show Books" />
+                              <Button fx:id="updateBooks_btn" layoutX="46.0" layoutY="204.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Update Book" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="updateBooks_form" layoutX="279.0" layoutY="14.0" prefHeight="468.0" prefWidth="777.0" visible="false">
                            <children>
                               <AnchorPane layoutY="7.0" prefHeight="454.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <ImageView fx:id="updateBookImage_View" fitHeight="174.0" fitWidth="131.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
-                                    <AnchorPane layoutX="36.0" layoutY="21.0" prefHeight="179.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css" />
-                                    <Button fx:id="uploadImage_View" layoutX="58.0" layoutY="223.0" mnemonicParsing="false" onAction="#uploadUpdateBookImage" prefHeight="45.0" prefWidth="85.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload">
+                                    <AnchorPane layoutX="43.0" layoutY="21.0" prefHeight="133.0" prefWidth="95.0" styleClass="image-card" stylesheets="@../designDashboard.css">
+                                       <children>
+                                          <ImageView fx:id="updateBookImage_View" fitHeight="131.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true" />
+                                       </children></AnchorPane>
+                                    <Button fx:id="uploadImage_View" layoutX="58.0" layoutY="182.0" mnemonicParsing="false" onAction="#uploadUpdateBookImage" prefHeight="45.0" prefWidth="85.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Upload">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -324,7 +329,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="student_list" layoutX="-568.0" layoutY="26.0" prefHeight="510.0" prefWidth="1264.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-568.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="student_list" layoutX="-355.0" prefHeight="510.0" prefWidth="1264.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-355.0" AnchorPane.rightAnchor="-213.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane fx:id="addStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
                            <children>
@@ -413,7 +418,7 @@
                               <Button fx:id="updateStudentBtn" layoutX="23.0" layoutY="181.0" mnemonicParsing="false" onAction="#buttonStudent" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Update Student" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="showStudent_form" layoutX="255.0" layoutY="14.0" prefHeight="475.0" prefWidth="995.0">
+                        <AnchorPane fx:id="showStudent_form" layoutX="290.0" layoutY="15.0" prefHeight="475.0" prefWidth="995.0">
                            <children>
                               <AnchorPane layoutY="7.0" prefHeight="466.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
@@ -424,7 +429,7 @@
                                     </AnchorPane>
                                  </children>
                               </AnchorPane>
-                              <TableView fx:id="availableStudent_TableView" layoutX="213.0" layoutY="9.0" onMouseClicked="#selectAvailableStudents" prefHeight="462.0" prefWidth="773.0">
+                              <TableView fx:id="availableStudent_TableView" layoutX="213.0" layoutY="9.0" onMouseClicked="#selectAvailableStudents" prefHeight="462.0" prefWidth="661.0">
                                 <columns>
                                   <TableColumn fx:id="col_ab_studentNumber" prefWidth="103.0" text="StudentNumber" />
                                   <TableColumn fx:id="col_ab_studentName" prefWidth="114.0" text="StudentName" />
@@ -433,8 +438,8 @@
                                     <TableColumn fx:id="col_ab_Phone" prefWidth="92.0" text="Phone" />
                                     <TableColumn fx:id="col_ab_Email" prefWidth="94.0" text="Email" />
                                     <TableColumn fx:id="col_ab_Password" prefWidth="108.0" text="Password" />
-                                    <TableColumn fx:id="col_ab_UpdateStudent" prefWidth="58.0" />
-                                    <TableColumn fx:id="col_ab_DeleteStudent" prefWidth="54.0" />
+                                    <TableColumn fx:id="col_ab_UpdateStudent" minWidth="0.0" prefWidth="0.0" />
+                                    <TableColumn fx:id="col_ab_DeleteStudent" prefWidth="41.0" />
                                 </columns>
                               </TableView>
                            </children>
@@ -526,7 +531,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="returnBook_form" layoutX="-243.0" layoutY="116.0" prefHeight="510.0" prefWidth="938.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-243.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="returnBook_form" layoutX="-243.0" layoutY="116.0" prefHeight="510.0" prefWidth="938.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-243.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="292.0" layoutY="12.0" prefHeight="487.0" prefWidth="624.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
