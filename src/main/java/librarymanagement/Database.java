@@ -53,22 +53,6 @@ public class Database {
             prepare = connect.prepareStatement(createBookTableQuery);
             prepare.executeUpdate();
 
-            String createTakeBookTableQuery = "CREATE TABLE IF NOT EXISTS take (" +
-                    "`id` int(100) NOT NULL AUTO_INCREMENT," +
-                    "  `studentNumber` varchar(100) DEFAULT NULL," +
-                    "  `firstname` varchar(100) DEFAULT NULL," +
-                    "  `lastname` varchar(100) DEFAULT NULL," +
-                    "  `gender` varchar(100) DEFAULT NULL," +
-                    "  `bookTitle` varchar(100) DEFAULT NULL," +
-                    "  `author` varchar(100) NOT NULL," +
-                    "  `bookType` varchar(100) NOT NULL," +
-                    "  `image` varchar(500) DEFAULT NULL," +
-                    "  `date` date DEFAULT NULL," +
-                    "  `checkReturn` varchar(100) DEFAULT NULL," +
-                    "  PRIMARY KEY (`id`))";
-            prepare = connect.prepareStatement(createTakeBookTableQuery);
-            prepare.executeUpdate();
-
             String createSaveBookTableQuery = "CREATE TABLE IF NOT EXISTS save (" +
                     "`id` int(100) NOT NULL AUTO_INCREMENT," +
                     "  `studentNumber` varchar(100) DEFAULT NULL," +
@@ -101,6 +85,7 @@ public class Database {
                     "  `bookType` varchar(100) DEFAULT NULL," +
                     "  `image` varchar(500) DEFAULT NULL," +
                     "  `date` date DEFAULT NULL," +
+                    "`status` varchar(100) DEFAULT NULL,"+
                     "  PRIMARY KEY (`id`))" ;
             prepare = connect.prepareStatement(createBookRequestTableQuery);
             prepare.executeUpdate();
@@ -182,6 +167,19 @@ public class Database {
                 prepare.addBatch();
             }
 
+            if (!studentExists(Database.connect, "1")) {
+                prepare.setString(1, "1");
+                prepare.setString(2, "Demo");
+                prepare.setString(3, "1");
+                prepare.setString(4, "2000-05-20");
+                prepare.setString(5, "Admin");
+                prepare.setString(6, "Male");
+                prepare.setString(7, "0982789023"); // Example phone number
+                prepare.setString(8, "minh.nguyen@example.com");
+                prepare.setString(9, "src/main/java/image/logo.png");
+                prepare.addBatch();
+            }
+
             // Execute the batch insert
             prepare.executeBatch();
         } catch (SQLException e) {
@@ -234,6 +232,17 @@ public class Database {
                 prepare.setString(3, "Army");
                 prepare.setString(4, "Magazine, Education, Introduction, Tutorial");
                 prepare.setString(5, "src/main/java/image/python tutorial.jpg");
+                prepare.setString(6, "2022-09-12");
+                prepare.setString(7, "Available");
+                prepare.addBatch();
+            }
+
+            if (!bookExists(Database.connect, "Demo book")) {
+                prepare.setString(1, "demo");
+                prepare.setString(2, "Demo book");
+                prepare.setString(3, "Admin");
+                prepare.setString(4, "Magazine, Education, Introduction, Tutorial");
+                prepare.setString(5, "src/main/java/image/programming language book.jpg");
                 prepare.setString(6, "2022-09-12");
                 prepare.setString(7, "Available");
                 prepare.addBatch();

@@ -157,7 +157,7 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane fx:id="showBooks_form" layoutX="268.0" layoutY="16.0" prefHeight="468.0" prefWidth="777.0" stylesheets="@../designDashboard.css">
                            <children>
@@ -535,26 +535,28 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="returnBook_form" layoutX="-243.0" layoutY="116.0" prefHeight="510.0" prefWidth="938.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-243.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="returnBook_form" layoutX="-368.0" layoutY="116.0" prefHeight="510.0" prefWidth="1086.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-368.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane layoutX="292.0" layoutY="12.0" prefHeight="487.0" prefWidth="624.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                        <AnchorPane layoutX="292.0" layoutY="12.0" onMouseClicked="#selectReturnBook" prefHeight="487.0" prefWidth="728.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
                               <Label alignment="CENTER" layoutY="4.0" prefHeight="44.0" prefWidth="148.0" text="Return Books:">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TableView fx:id="return_tableView" layoutX="9.0" layoutY="48.0" onMouseClicked="#selectReturnBook" prefHeight="418.0" prefWidth="609.0">
+                              <TableView fx:id="return_tableView" layoutX="9.0" layoutY="48.0" onMouseClicked="#selectReturnBook" prefHeight="418.0" prefWidth="629.0">
                                 <columns>
-                                  <TableColumn fx:id="returnBook_title" prefWidth="106.39996337890625" text="Book Title" />
-                                    <TableColumn fx:id="returnBook_author" minWidth="0.0" prefWidth="76.0" text="Author" />
-                                    <TableColumn fx:id="returnBook_type" minWidth="0.0" prefWidth="97.5999755859375" text="Book Type" />
-                                    <TableColumn fx:id="returnBook_date" minWidth="0.0" prefWidth="108.0" text="Date Issued" />
+                                    <TableColumn fx:id="returnBook_number" minWidth="0.0" prefWidth="108.0" text="Student Number" />
+                                  <TableColumn fx:id="returnBook_title" prefWidth="155.19998168945312" text="Book Title" />
+                                    <TableColumn fx:id="returnBook_author" minWidth="0.0" prefWidth="96.7999267578125" text="Author" />
+                                    <TableColumn fx:id="returnBook_type" minWidth="0.0" prefWidth="88.7999267578125" text="Book Type" />
+                                    <TableColumn fx:id="returnBook_date" minWidth="0.0" prefWidth="89.60009765625" text="Date Issued" />
+                                    <TableColumn fx:id="returnBook_status" minWidth="0.0" prefWidth="89.60009765625" text="Status" />
                                 </columns>
                               </TableView>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutY="14.0" prefHeight="480.0" prefWidth="276.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                        <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="480.0" prefWidth="267.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
                               <AnchorPane layoutX="73.0" layoutY="30.0" prefHeight="176.0" prefWidth="130.0" styleClass="image-card" stylesheets="@../designDashboard.css">
                                  <children>
