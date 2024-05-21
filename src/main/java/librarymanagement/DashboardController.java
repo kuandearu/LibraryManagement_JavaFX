@@ -1727,48 +1727,6 @@ public class DashboardController implements Initializable {
         return matcher.matches();
     }
 
-
-    public void abTakeButton(ActionEvent event){
-
-//        if (event.getSource()== take_btn){
-//            issue_form.setVisible(true);
-//            availableBooks_form.setVisible(false);
-//            savedBook_form.setVisible(false);
-//            returnBook_form.setVisible(false);
-//
-//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-//            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//
-//            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-//            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//
-//            currentForm_label.setText("Issue Books");
-//        }
-//
-//        issueBook_title.setText(" " +getBookData.getTitle());
-//        take_titleLabel.setText(getBookData.getTitle());
-//        take_authorLabel.setText(getBookData.getAuthor());
-//        take_genreLabel.setText(getBookData.getGenre());
-//        take_dateLabel.setText(getBookData.getDate().toString());
-//
-//        String uri = "file:" + getBookData.getImage();
-//        getData.pathImage = getBookData.getImage();
-//        image = new Image(uri, 134, 171, false, true);
-//        take_imageView.setImage(image);
-
-//        Alert alert;
-//        alert = new Alert(AlertType.INFORMATION);
-//        alert.setTitle("Program message");
-//        alert.setHeaderText(null);
-//        alert.setContentText(bookData.getTitle());
-//        alert.showAndWait();
-
-    }
-
     public void studentNumber(){
 //        WE CAN DISPLAY THE STUDENT NUMBER THAT STUDENT USED
         studentNumber_label.setText(getData.studentNumber);
