@@ -29,15 +29,13 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.File;
 import java.net.URL;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -456,6 +454,12 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button show_updateButton;
+
+    @FXML
+    private Button student_deleteBtn;
+
+    @FXML
+    private Button student_updateBtn;
     Image image;
 
     private Connection connect;
@@ -584,6 +588,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 student = new userList(
+                        result.getString("studentRole"),
                         result.getString("studentNumber"),
                         result.getString("studentName"),
                         result.getDate("dateOfBirth"),
@@ -617,6 +622,9 @@ public class DashboardController implements Initializable {
         col_ab_Password.setCellValueFactory(new PropertyValueFactory<>("password"));
 
         availableStudent_TableView.setItems(listStudents);
+
+        student_deleteBtn.setDisable(true);
+        //student_updateBtn.setDisable(true);
     }
 
     userList getStudentData;
@@ -631,14 +639,112 @@ public class DashboardController implements Initializable {
             return;
         }
 
+        student_deleteBtn.setDisable(false);
+        //student_updateBtn.setDisable(false);
         getStudentData = studentData;
 
+        getData.userName = getStudentData.getName();
+        getData.userNumber = getStudentData.getNumber();
+        getData.userDoB = (java.sql.Date) getStudentData.getDate();
+        getData.userGender = getStudentData.getGender();
+        getData.userPhone = getStudentData.getPhone();
+        getData.userEmail = getStudentData.getEmail();
+        getData.userImg = getStudentData.getImage();
+        getData.userPass = getStudentData.getPassword();
+        getData.userRole = getStudentData.getRole();
+        System.out.println(getData.userNumber);
         // This is required to display the image
         // Note: Don't forget the "file:"
-        String uri = "file:" + studentData.getImage();
+        String uri = "file:" + getStudentData.getImage();
 
         Image image = new Image(uri, 134, 171, false, true);
         showStudentImage_View.setImage(image);
+    }
+
+//    public void studentUpdateBtn(ActionEvent e){
+//        if(e.getSource() == student_updateBtn){
+//            addStudent_form.setVisible(false);
+//            showStudent_form.setVisible(false);
+//            updateStudent_form.setVisible(true);
+//
+//            updateStudentNumber_text.setText(getData.userNumber);
+//            String studentName = getData.userName;
+//            String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
+//            if (nameParts.length == 2) {
+//                String firstName = nameParts[1]; // Rest as first name
+//                String lastName = nameParts[0]; // First word as last name
+//
+//                updateFirstName_text.setText(firstName);
+//                updateLastName_text.setText(lastName);
+//            } else {
+//                // If the name format is not as expected, set the whole name as first name
+//                updateFirstName_text.setText(studentName);
+//                updateLastName_text.setText(""); // Set last name as empty
+//            }
+//            updateEmail_text.setText(getData.userEmail);
+//            updatePhone_text.setText(getData.userPhone);
+//            updatePassword_text.setText(getData.userPass);
+//
+//            String gender = getData.userGender;
+//            ComboBox genderBox = updateGender_text;
+//            setComboBoxValue(genderBox, gender);
+//
+//
+//            String roll = getData.userRole;
+//            ComboBox rollbox = updateRoll_text;
+//            setComboBoxValue(rollbox, roll);
+//
+//            updateDate.setText(getData.userDoB.toString());
+//
+//            String imagePath = getData.userImg;
+//
+//            String uri = "file:" + imagePath;
+//            Image image = new Image(uri, 127, 162, false, true);
+//            updateStudentImage_View.setImage(image);
+//        }
+//    }
+
+    public void studentDeleteBtn(ActionEvent e){
+        if (e.getSource() == student_deleteBtn) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Do you want to remove this user");
+            if (alert.showAndWait().get().equals(javafx.scene.control.ButtonType.OK)) {
+                deleteUserData();
+            } else {
+
+            }
+        }
+    }
+
+    public void deleteUserData(){
+        String sql = "Delete from student where studentNumber = '" + getData.userNumber + "'";
+        System.out.println(getData.userNumber);
+        connect = Database.connectDB();
+        try {
+            Alert alert;
+
+            if (showStudentImage_View.getImage() == null) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select user you want to delete!");
+                alert.showAndWait();
+            } else {
+                statement = connect.createStatement();
+                statement.executeUpdate(sql);
+                alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("User deleted successfully!");
+                alert.showAndWait();
+
+                showAvailableBooks();
+                showStudentImage_View.setImage(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void findPersonByNumber(ActionEvent event) throws SQLException {
@@ -759,7 +865,7 @@ public class DashboardController implements Initializable {
                 prepare = connect.prepareStatement(sql);
                 prepare.setString(10, result.getString("studentNumber"));
                 // Update studentRoll
-                prepare.setString(1, updateRoll_text.getValue() != null ? updateRoll_text.getValue().toString() : result.getString("studentRoll"));
+                prepare.setString(1, updateRoll_text.getValue() != null ? updateRoll_text.getValue().toString() : result.getString("studentRole"));
 
                 // Update studentNumber
                 prepare.setString(2, updateStudentNumber_text.getText().isEmpty() ? result.getString("studentNumber") : updateStudentNumber_text.getText());
@@ -1335,15 +1441,6 @@ public class DashboardController implements Initializable {
             }
         }
     }
-//
-//    public void start(Stage primaryStage) {
-//        show_deleteButton.setOnAction(this::showDeleteButton);
-//        VBox root = new VBox(show_deleteButton);
-//        Scene scene = new Scene(root, 300, 200);
-//        primaryStage.setScene(scene);
-//        primaryStage.setTitle("Delete Data");
-//        primaryStage.show();
-//    }
 
     private void deleteBookData() {
         String sql = "Delete from book where bookNumber = '" + getData.updateNumber + "'";
@@ -1420,6 +1517,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 int id = result.getInt("student_id");
+                String role = result.getString("studentRole");
                 String studentNumber = result.getString("studentNumber");
                 String studentName = result.getString("studentName");
                 Date dateOfBirth = result.getDate("dateOfBirth");
@@ -1429,7 +1527,7 @@ public class DashboardController implements Initializable {
                 String password = result.getString("password");
                 String imagePath = result.getString("image");
 
-                userList student = new userList(studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
+                userList student = new userList(role,studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
                 studentList.add(student);
             }
 
@@ -1457,6 +1555,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 int id = result.getInt("student_id");
+                String role = result.getString("studentRole");
                 String studentNumber = result.getString("studentNumber");
                 String studentName = result.getString("studentName");
                 Date dateOfBirth = result.getDate("dateOfBirth");
@@ -1466,7 +1565,7 @@ public class DashboardController implements Initializable {
                 String password = result.getString("password");
                 String imagePath = result.getString("image");
 
-                userList student = new userList(studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
+                userList student = new userList(role,studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
                 studentList.add(student);
             }
 

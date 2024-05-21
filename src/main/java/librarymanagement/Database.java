@@ -27,14 +27,14 @@ public class Database {
             // Create the table if it doesn't exist
             String createStudentTableQuery = "CREATE TABLE IF NOT EXISTS student (" +
                     "`student_id` int(100) NOT NULL AUTO_INCREMENT," +
-                    "  `studentRoll` varchar(100) DEFAULT NULL," +
+                    "  `studentRole` varchar(100) DEFAULT NULL," +
                     "  `studentNumber` varchar(100) DEFAULT NULL," +
                     "  `studentName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL," +
                     "  `dateOfBirth` date DEFAULT NULL," +
                     "  `gender` varchar(10) DEFAULT NULL," +
                     "  `phone` varchar(10) DEFAULT NULL," +
                     "  `email` varchar(50) DEFAULT NULL," +
-                    "  `image` varchar(200) DEFAULT NULL," +
+                    "  `image` varchar(200) DEFAULT 'src/main/java/image/logo.png'," +
                     "  `password` varchar(100) DEFAULT NULL," +
                     "  PRIMARY KEY (`student_id`))";
             prepare = connect.prepareStatement(createStudentTableQuery);
@@ -97,7 +97,7 @@ public class Database {
     }
 
     public static void insertStudents() {
-        String sql = "INSERT INTO student (studentNumber, studentName, password, dateOfBirth, studentRoll, gender, phone, email, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO student (studentNumber, studentName, password, dateOfBirth, studentRole, gender, phone, email, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             prepare = connect.prepareStatement(sql);
 

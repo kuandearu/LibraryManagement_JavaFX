@@ -3,6 +3,7 @@ package librarymanagement;
 import java.util.Date;
 
 public class userList {
+    private String role;
     private String number;
     private String name;
     private Date date;
@@ -13,7 +14,8 @@ public class userList {
     private String password;
 
 
-    public userList(String number, String name, Date date, String gender, String phone, String email, String image, String password) {
+    public userList(String role,String number, String name, Date date, String gender, String phone, String email, String image, String password) {
+        this.role = role;
         this.number = number;
         this.name = name;
         this.date = date;
@@ -22,6 +24,10 @@ public class userList {
         this.email = email;
         this.image = image;
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getNumber() {

@@ -1,6 +1,7 @@
 package librarymanagement;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class getData {
     public static int id;
@@ -20,4 +21,14 @@ public class getData {
     public static String updateType;
     public static String updateImg;
     public static Date updateDate;
+
+    public static String userNumber;
+    public static String userName;
+    public static Date userDoB;
+    public static String userGender;
+    public static String userPhone;
+    public static String userEmail;
+    public static String userImg;
+    public static String userPass;
+    public static String userRole;
 }
