@@ -387,6 +387,64 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane updateStudent_form;
 
+    @FXML
+    private Button addStudentBtn;
+
+    @FXML
+    private Button showStudentBtn;
+
+    @FXML
+    private Button updateStudentBtn;
+
+    @FXML
+    private Button deleteStudentBtn;
+
+    @FXML
+    private AnchorPane addStudent_form;
+
+    @FXML
+    private AnchorPane showStudent_form;
+
+    @FXML
+    private Button addBook_btn;
+
+    @FXML
+    private AnchorPane addBook_form;
+
+    @FXML
+    private Button showBook_btn;
+
+    @FXML
+    private AnchorPane showBooks_form;
+
+    @FXML
+    private Button updateBooks_btn;
+
+    @FXML
+    private AnchorPane updateBooks_form;
+
+    @FXML
+    private TextField searchBook_field;
+
+    @FXML
+    private TextField searchStudent_field;
+
+    @FXML
+    private TextField updateBookNumber_label;
+
+    @FXML
+    private TextField updateBookTitle_label;
+
+    @FXML
+    private TextField updateBookType_label;
+
+    @FXML
+    private TextField updateAuthor_label;
+
+    @FXML
+    private TextField updateDate_label;
+
+
     Image image;
 
     private Connection connect;
@@ -853,40 +911,39 @@ public class DashboardController implements Initializable {
     }
 
 
-    public void findBookforUpdating(ActionEvent event) throws SQLException {
+    public void findBookByNumber(ActionEvent event) throws SQLException {
 
-        String bookID = updateBookID.getText(); // Get the BookID from the TextField
+        String bookNumber = updateBookNumber_label.getText(); // Get the book number from the TextField
 
-        // Construct the SQL query to retrieve book information by BookID
-        String sql = "SELECT * FROM book WHERE book_id = ?";
+        // Construct the SQL query to retrieve book information by book number
+        String sql = "SELECT * FROM book WHERE bookNumber = ?";
 
         connect = Database.connectDB();
 
         try {
             prepare = connect.prepareStatement(sql);
-            prepare.setString(1, bookID); // Set the BookID parameter in the query
+            prepare.setString(1, bookNumber); // Set the book number parameter in the query
             result = prepare.executeQuery();
             boolean check = false;
 
-            while (result.next()) {
-                updateBookTitle.setText(result.getString("bookTitle"));
-                updateAuthor.setText(result.getString("author"));
-                updateBookType.setText(result.getString("bookType"));
+            if (result.next()) {
+                // Set book details in the respective text fields
+                updateBookTitle_label.setText(result.getString("bookTitle"));
+                updateAuthor_label.setText(result.getString("author"));
+                updateBookType_label.setText(result.getString("bookType"));
+                updateDate_label.setText(result.getString("date").toString());
 
-                displayFormattedDate(result.getTimestamp("date"));
-
-                getData.path = result.getString("image");
-
-                String uri = "file:" + getData.path;
-
-                image = new Image(uri, 127, 162, false, true);
+                String imagePath = result.getString("image");
+                String uri = "file:" + imagePath;
+                Image image = new Image(uri, 127, 162, false, true);
                 updateBookImage_View.setImage(image);
 
                 check = true;
             }
 
             if (!check) {
-                updateBookTitle.setText("Book is not available!");
+                showAlert(AlertType.INFORMATION, "Program message", "No Book Found!");
+                clearUpdateBook();
             }
 
         } catch (Exception e) {
@@ -905,67 +962,103 @@ public class DashboardController implements Initializable {
     }
 
     public void updateBook() {
-        String sql = "UPDATE book SET bookTitle=?, author=?, bookType=?, image=?, date=? WHERE book_id=?";
+        String sql = "UPDATE book SET bookNumber=?, bookTitle=?, author=?, bookType=?, date=?, image=? WHERE bookNumber=?";
 
         connect = Database.connectDB();
 
         try {
-            if ( updateBookID.getText().isEmpty() || updateBookTitle.getText().isEmpty() || updateAuthor.getText().isEmpty() ||
-                    updateBookType.getText().isEmpty() || updateDate.getText().isEmpty()) {
+            if (updateBookNumber_label.getText().isEmpty()) {
+                showAlert(AlertType.ERROR, "Program message", "Please enter the book number!");
+                return;
+            }
+
+            if (updateBookNumber_label.getText().isEmpty() ||
+                    updateBookTitle_label.getText().isEmpty() ||
+                    updateAuthor_label.getText().isEmpty() ||
+                    updateBookType_label.getText().isEmpty() ||
+                    updateDate_label.getText().isEmpty() ||
+                    updateBookImage_View.getImage() == null) {
                 showAlert(AlertType.ERROR, "Program message", "Please insert all information!");
                 return;
             }
 
-            String bookID = updateBookID.getText();
-            if (!isBookIDValid(bookID)) {
-                showAlert(AlertType.ERROR, "Program message", "Book ID does not exist!");
-                return;
+            String imagePath = processBookImagePath(updateBookNumber_label.getText());
+            if (imagePath == null) {
+                return; // If imagePath is null, there was an error, and we should not proceed
             }
 
-            prepare = connect.prepareStatement(sql);
-            prepare.setString(6, bookID);
+            String bookNumber = updateBookNumber_label.getText();
 
-            prepare.setString(1, updateBookTitle.getText().isEmpty() ? result.getString("bookTitle") : updateBookTitle.getText());
-            prepare.setString(2, updateAuthor.getText().isEmpty() ? result.getString("author") : updateAuthor.getText());
-            prepare.setString(3, updateBookType.getText().isEmpty() ? result.getString("bookType") : updateBookType.getText());
+            // Retrieve existing book data
+            String fetchSql = "SELECT * FROM book WHERE bookNumber = ?";
+            prepare = connect.prepareStatement(fetchSql);
+            prepare.setString(1, bookNumber);
+            result = prepare.executeQuery();
 
-            String imagePath = "";
-            if (selectedFile != null) {
-                // If a new image is selected, set imagePath accordingly
-                imagePath = selectedFile.getAbsolutePath();
-            } else {
-                // If no new image is selected, or the result set is empty, retain the existing image path
-                if (result.next()) {
-                    imagePath = result.getString("image");
+            if (result.next()) {
+                // Prepare SQL statement
+                prepare = connect.prepareStatement(sql);
+                prepare.setString(7, result.getString("bookNumber"));
+
+                // Update book properties
+                prepare.setString(1, updateBookNumber_label.getText().isEmpty() ? result.getString("bookNumber") : updateBookNumber_label.getText());
+                prepare.setString(2, updateBookTitle_label.getText().isEmpty() ? result.getString("title") : updateBookTitle_label.getText());
+                prepare.setString(3, updateAuthor_label.getText().isEmpty() ? result.getString("author") : updateAuthor_label.getText());
+                prepare.setString(4, updateBookType_label.getText().isEmpty() ? result.getString("genre") : updateBookType_label.getText());
+
+                // Update publishDate
+                String publishDate = updateDate_label.getText().isEmpty() ? result.getString("publishDate") : updateDate_label.getText();
+                prepare.setString(5, publishDate);
+
+                prepare.setString(6, imagePath);
+
+                // Execute the SQL statement
+                int rowsAffected = prepare.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    showAlert(AlertType.INFORMATION, "Program message", "Book updated successfully!");
+                    clearUpdateBook();
                 } else {
-                    showAlert(AlertType.ERROR, "Program message", "Image not found!");
+                    showAlert(AlertType.ERROR, "Program message", "Failed to update book. Please try again.");
                 }
-            }
-
-            if (selectedFile != null) {
-                prepare.setString(4, imagePath);
-                // Additional code to update the database with the new image path
-                // prepare.executeUpdate(); // Assuming prepare is your PreparedStatement
-            }
-
-            // Set the image path for display purposes
-            updateBookImage_View.setImage(new Image(new File(imagePath).toURI().toString()));
-
-            Timestamp timestamp = validateAndConvertToTimestamp(updateDate.getText());
-            //Timestamp timestamp = (!updateDate.getText().isEmpty()) ? validateAndConvertToTimestamp(updateDate.getText()) : result.getTimestamp("date");
-            prepare.setTimestamp(5, timestamp);
-
-            int rowsAffected = prepare.executeUpdate();
-
-            if (rowsAffected > 0) {
-                showAlert(AlertType.INFORMATION, "Program message", "Book updated successfully!");
-                clearUpdateBook();
             } else {
-                showAlert(AlertType.ERROR, "Program message", "Failed to update book. Please try again.");
+                showAlert(AlertType.ERROR, "Program message", "No Book Found!");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String processBookImagePath(String bookNumber) {
+        String existingImagePath = "";
+        String imagePath = "";
+
+        // Fetch existing image path from the database
+        String fetchImageSql = "SELECT image FROM book WHERE bookNumber=?";
+        try (Connection connect = Database.connectDB();
+             PreparedStatement fetchImageStmt = connect.prepareStatement(fetchImageSql)) {
+            fetchImageStmt.setString(1, bookNumber);
+            try (ResultSet result = fetchImageStmt.executeQuery()) {
+                if (result.next()) {
+                    existingImagePath = result.getString("image");
+                } else {
+                    showAlert(AlertType.ERROR, "Program message", "Book not found!");
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Process image path
+        if (selectedFile != null) {
+            // If a new image is selected, set imagePath to the absolute path of the selected file
+            imagePath = selectedFile.getAbsolutePath();
+        } else {
+            // If no new image is selected, retain the existing image path
+            imagePath = existingImagePath;
+        }
+        return imagePath;
     }
 
 
@@ -1218,57 +1311,152 @@ public class DashboardController implements Initializable {
         updateGender_text.setItems(list);
     }
 
-    public void findBook(ActionEvent event) throws SQLException {
+    @FXML
+    public void findStudent(ActionEvent event) throws SQLException {
+        String searchQuery = searchStudent_field.getText().trim();
 
-        clearFindData();
-
-        String sql = "SELECT * FROM book WHERE bookTitle = '" + take_BookTitle.getText() + "'";
-
+        String sql = "SELECT * FROM student WHERE studentName LIKE ?";
         connect = Database.connectDB();
 
-        try{
+        ObservableList<userList> studentList = FXCollections.observableArrayList();
+
+        try {
             prepare = connect.prepareStatement(sql);
+            prepare.setString(1, "%" + searchQuery + "%");
             result = prepare.executeQuery();
-            boolean check = false;
 
-            Alert alert;
+            while (result.next()) {
+                int id = result.getInt("student_id");
+                String studentNumber = result.getString("studentNumber");
+                String studentName = result.getString("studentName");
+                Date dateOfBirth = result.getDate("dateOfBirth");
+                String gender = result.getString("gender");
+                String phone = result.getString("phone");
+                String email = result.getString("email");
+                String password = result.getString("password");
+                String imagePath = result.getString("image");
 
-            if(take_BookTitle.getText().isEmpty()){
-                alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please select the book!");
-                alert.showAndWait();
-            }else{
-                while (result.next()){
-                    take_titleLabel.setText(result.getString("bookTitle"));
-                    take_authorLabel.setText(result.getString("author"));
-                    take_genreLabel.setText(result.getString("bookType"));
-                    take_dateLabel.setText(result.getString("date"));
-
-                    getData.path = result.getString("image");
-
-                    String uri = "file:" + getData.path;
-
-                    image = new Image(uri, 127,162, false, true);
-                    take_imageView.setImage(image);
-
-                    check = true;
-                }
-
-                if(!check){
-                    take_titleLabel.setText("Book is not available!");
-                }
+                userList student = new userList(studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
+                studentList.add(student);
             }
-        }catch (Exception e){
+
+            if (studentList.isEmpty()) {
+                showAllStudents(studentList);
+            } else {
+                availableStudent_TableView.setItems(studentList);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if(result != null)
-                result.close();
-            if(prepare != null)
-                prepare.close();
-            if(connect != null)
-                connect.close();
+            if (result != null) result.close();
+            if (prepare != null) prepare.close();
+            if (connect != null) connect.close();
+        }
+    }
+
+    private void showAllStudents(ObservableList<userList> studentList) throws SQLException {
+        String sql = "SELECT * FROM student";
+        connect = Database.connectDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                int id = result.getInt("student_id");
+                String studentNumber = result.getString("studentNumber");
+                String studentName = result.getString("studentName");
+                Date dateOfBirth = result.getDate("dateOfBirth");
+                String gender = result.getString("gender");
+                String phone = result.getString("phone");
+                String email = result.getString("email");
+                String password = result.getString("password");
+                String imagePath = result.getString("image");
+
+                userList student = new userList(studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
+                studentList.add(student);
+            }
+
+            availableStudent_TableView.setItems(studentList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (result != null) result.close();
+            if (prepare != null) prepare.close();
+            if (connect != null) connect.close();
+        }
+    }
+
+    @FXML
+    public void findBook(ActionEvent event) throws SQLException {
+        String searchQuery = searchBook_field.getText().trim();
+
+
+        String sql = "SELECT * FROM book WHERE bookTitle LIKE ?";
+        connect = Database.connectDB();
+
+        ObservableList<availableBooks> bookList = FXCollections.observableArrayList();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(1, "%" + searchQuery + "%");
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                int id = result.getInt("book_id");
+                String bookTitle = result.getString("bookTitle");
+                String author = result.getString("author");
+                String bookType = result.getString("bookType");
+                String imagePath = result.getString("image");
+                Date publishedDate = result.getDate("date");
+                String status = result.getString("status");
+
+                availableBooks book = new availableBooks(id, bookTitle, author, bookType, imagePath, publishedDate, status);
+                bookList.add(book);
+            }
+
+            if (bookList.isEmpty()) {
+                showAllBooks(bookList);
+            } else {
+                availableBooks_tableView.setItems(bookList);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (result != null) result.close();
+            if (prepare != null) prepare.close();
+            if (connect != null) connect.close();
+        }
+    }
+
+    private void showAllBooks(ObservableList<availableBooks> bookList) throws SQLException {
+        String sql = "SELECT * FROM book";
+        connect = Database.connectDB();
+
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+
+            while (result.next()) {
+                int id = result.getInt("book_id");
+                String bookTitle = result.getString("bookTitle");
+                String author = result.getString("author");
+                String bookType = result.getString("bookType");
+                String imagePath = result.getString("image");
+                Date publishedDate = result.getDate("date");
+                String status = result.getString("status");
+
+                availableBooks book = new availableBooks(id, bookTitle, author, bookType, imagePath, publishedDate, status);
+                bookList.add(book);
+            }
+
+            availableBooks_tableView.setItems(bookList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (result != null) result.close();
+            if (prepare != null) prepare.close();
+            if (connect != null) connect.close();
         }
     }
 
@@ -1294,11 +1482,11 @@ public class DashboardController implements Initializable {
     }
 
     public void clearFindData(){
-        take_titleLabel.setText("");
-        take_authorLabel.setText("");
-        take_genreLabel.setText("");
-        take_dateLabel.setText("");
-        take_imageView.setImage(null);
+        col_ab_bookTitle.setText("");
+        col_ab_author.setText("");
+        col_ab_bookType.setText("");
+        col_ab_publishedDate.setText("");
+        availableBooks_imageView.setImage(null);
     }
 
 
@@ -1603,80 +1791,86 @@ public class DashboardController implements Initializable {
     public void sideNavButtonDesign(ActionEvent event){
         if (event.getSource() == halfNav_availableBtn){
 
-            issue_form.setVisible(false);
-            availableBooks_form.setVisible(true);
-            savedBook_form.setVisible(false);
+            student_list.setVisible(true);
+            availableBooks_form.setVisible(false);
             returnBook_form.setVisible(false);
 
-            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
-            currentForm_label.setText("Available Books");
+            currentForm_label.setText("List Students");
         }else if (event.getSource() == halfNav_takeBtn){
 
-            issue_form.setVisible(true);
-            availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(false);
+            student_list.setVisible(false);
+            availableBooks_form.setVisible(true);
             returnBook_form.setVisible(false);
 
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
+//            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+//            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
-            currentForm_label.setText("Issue Books");
+            currentForm_label.setText("List Books");
 
         }else if (event.getSource() == halfNav_returnBtn){
 
-            issue_form.setVisible(false);
+            student_list.setVisible(false);
             availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(false);
             returnBook_form.setVisible(true);
 
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             currentForm_label.setText("Return Books");
             showReturnBooks();
 
-        }else if (event.getSource() == halfNav_saveBtn){
+        }
+    }
 
-            issue_form.setVisible(false);
-            availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(true);
-            returnBook_form.setVisible(false);
 
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
+    public void buttonStudent(ActionEvent event) {
+        if (event.getSource() == addStudentBtn) {
+            addStudent_form.setVisible(true);
+            showStudent_form.setVisible(false);
+            updateStudent_form.setVisible(false);
+        }else if (event.getSource() == showStudentBtn){
+            addStudent_form.setVisible(false);
+            showStudent_form.setVisible(true);
+            updateStudent_form.setVisible(false);
+        }else if (event.getSource() == updateStudentBtn){
+            addStudent_form.setVisible(false);
+            showStudent_form.setVisible(false);
+            updateStudent_form.setVisible(true);
+        }
+    }
 
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
-            currentForm_label.setText("Saved Books");
-            showSaveBook();
+    public void buttonBook(ActionEvent event) {
+        if (event.getSource() == addBook_btn) {
+            addBook_form.setVisible(true);
+            showBooks_form.setVisible(false);
+            updateBooks_form.setVisible(false);
+        }else if (event.getSource() == showBook_btn){
+            addBook_form.setVisible(false);
+            showBooks_form.setVisible(true);
+            updateBooks_form.setVisible(false);
+        }else if (event.getSource() == updateBooks_btn){
+            addBook_form.setVisible(false);
+            showBooks_form.setVisible(false);
+            updateBooks_form.setVisible(true);
         }
     }
 
@@ -1684,83 +1878,54 @@ public class DashboardController implements Initializable {
 
         if (event.getSource() == availableBooks_btn){
 
-            issue_form.setVisible(false);
-            availableBooks_form.setVisible(true);
-            savedBook_form.setVisible(false);
+            student_list.setVisible(true);
+            availableBooks_form.setVisible(false);
             returnBook_form.setVisible(false);
 
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
-            currentForm_label.setText("Available Books");
+            currentForm_label.setText("Student List");
 
         }else if (event.getSource() == issueBooks_btn){
 
-            issue_form.setVisible(true);
-            availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(false);
+            student_list.setVisible(false);
+            availableBooks_form.setVisible(true);
             returnBook_form.setVisible(false);
 
             issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
-            currentForm_label.setText("Issue Books");
+            currentForm_label.setText("List Books");
 
         }else if (event.getSource() == returnBooks_btn){
 
-            issue_form.setVisible(false);
+            student_list.setVisible(false);
             availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(false);
             returnBook_form.setVisible(true);
 
             returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
             halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
             currentForm_label.setText("Return Books");
 
             showReturnBooks();
 
-        }else if (event.getSource() == savedBooks_btn){
-
-            issue_form.setVisible(false);
-            availableBooks_form.setVisible(false);
-            savedBook_form.setVisible(true);
-            returnBook_form.setVisible(false);
-
-            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-
-            currentForm_label.setText("Saved Books");
-
-            showSaveBook();
         }
     }
 
