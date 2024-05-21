@@ -473,7 +473,7 @@ public class DashboardController implements Initializable {
 
 
     public void addPerson() {
-        String sql = "INSERT INTO student(studentNumber, studentName, dateOfBirth, email, studentRoll, gender, phone, password, image) VALUES (?,?,?,?,?,?,?,?,?) ";
+        String sql = "INSERT INTO student(studentNumber, studentName, dateOfBirth, email, studentRole, gender, phone, password, image) VALUES (?,?,?,?,?,?,?,?,?) ";
 
         connect = Database.connectDB();
 
@@ -550,6 +550,9 @@ public class DashboardController implements Initializable {
 
                     // Clear input fields
                     clearAddPerson(); // Assuming you have a method to clear input fields
+
+                    // Refresh the student table view
+                    showAvailableStudents();
                 } else {
                     // Show error message if insertion fails
                     showAlert(AlertType.ERROR, "Program message", "Failed to add student. Please try again.");
@@ -743,13 +746,15 @@ public class DashboardController implements Initializable {
                 alert.setContentText("User deleted successfully!");
                 alert.showAndWait();
 
-                showAvailableBooks();
+                // Refresh the student table view
+                showAvailableStudents();
                 showStudentImage_View.setImage(null);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public void findPersonByNumber(ActionEvent event) throws SQLException {
         String studentNumber = updateStudentNumber_text.getText(); // Get the student number from the TextField
@@ -790,7 +795,7 @@ public class DashboardController implements Initializable {
                     setComboBoxValue(genderBox, gender);
 
 
-                    String roll = result.getString("studentRoll");
+                    String roll = result.getString("studentRole");
                     ComboBox rollbox = updateRoll_text;
                     setComboBoxValue(rollbox, roll);
 
@@ -816,7 +821,7 @@ public class DashboardController implements Initializable {
     }
 
     public void updatePerson() {
-        String sql = "UPDATE student SET studentRoll=?, studentNumber=?, studentName=?, dateOfBirth=?, gender=?, phone=?, email=?, password=?, image=? WHERE studentNumber=?";
+        String sql = "UPDATE student SET studentRole=?, studentNumber=?, studentName=?, dateOfBirth=?, gender=?, phone=?, email=?, password=?, image=? WHERE studentNumber=?";
 
         connect = Database.connectDB();
 
@@ -907,6 +912,9 @@ public class DashboardController implements Initializable {
 
                     // Clear input fields
                     clearUpdatePerson();
+
+                    // Refresh the student table view
+                    showAvailableStudents();
                 } else {
                     showAlert(AlertType.ERROR, "Program message", "Failed to update student. Please try again.");
                 }

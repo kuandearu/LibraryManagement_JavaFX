@@ -212,7 +212,7 @@
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="695.0" layoutY="57.0" prefHeight="21.0" prefWidth="134.0" text="Roll:">
+                              <Label layoutX="695.0" layoutY="57.0" prefHeight="21.0" prefWidth="134.0" text="Role:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
