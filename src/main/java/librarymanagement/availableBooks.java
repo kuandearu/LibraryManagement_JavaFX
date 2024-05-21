@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class availableBooks {
     private int id;
+    private final String number;
     private String title;
     private String author;
     private String genre;
@@ -11,19 +12,9 @@ public class availableBooks {
     private Date date;
     private String status;
 
-
-
-    public availableBooks(int id ,String title, String author, String genre, String image, Date date){
+    public availableBooks(int id, String number, String title, String author, String genre, String image, Date date, String status){
         this.id = id;
-        this.title = title;
-        this.author = author;
-        this.genre = genre;
-        this.image = image;
-        this.date = date;
-    }
-
-    public availableBooks(int id ,String title, String author, String genre, String image, Date date, String status){
-        this.id = id;
+        this.number = number;
         this.title = title;
         this.author = author;
         this.genre = genre;
@@ -32,11 +23,13 @@ public class availableBooks {
         this.status = status;
     }
 
-
     public int getId() {
         return id;
     }
 
+    public String getNumber() {
+        return number;
+    }
     public String getTitle() {
         return title;
     }

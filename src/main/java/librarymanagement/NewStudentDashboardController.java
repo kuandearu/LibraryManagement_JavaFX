@@ -253,7 +253,7 @@ public class NewStudentDashboardController implements Initializable {
 
     public void sendBook() {
         // SQL statement to insert book request
-        String insertBookRequestSQL = "INSERT INTO book_request (studentNumber, bookTitle, author, bookType, image, date) VALUES (?, ?, ?, ?, ?, ?)";
+        String insertBookRequestSQL = "INSERT INTO book_request (studentNumber, bookTitle, author, bookType, image, date, status) VALUES (?, ?, ?, ?, ?, ?,?)";
         String checkBookExistsSQL = "SELECT COUNT(*) FROM book_request WHERE studentNumber = ? AND bookTitle = ? AND author = ?";
 
         // Connect to the database
@@ -291,6 +291,8 @@ public class NewStudentDashboardController implements Initializable {
                     insertStatement.setString(4, sBook.getType());
                     insertStatement.setString(5, sBook.getImg());
                     insertStatement.setDate(6, sBook.getDate());
+                    String status_borrow = "Not returned";
+                    insertStatement.setString(7, status_borrow);
 
                     // Execute the insert statement
                     insertStatement.executeUpdate();
@@ -371,21 +373,6 @@ public class NewStudentDashboardController implements Initializable {
                 connect.close();
         }
     }
-
-//    public void studentNumberLabel(){
-//        take_StudentNumber.setText(getData.studentNumber);
-//    }
-
-    public void clearTakeData(){
-        issueBook_title.setText("");
-        take_BookTitle.setText("");
-        take_titleLabel.setText("");
-        take_authorLabel.setText("");
-        take_genreLabel.setText("");
-        take_dateLabel.setText("");
-        take_imageView.setImage(null);
-    }
-
     public void clearFindData(){
         take_titleLabel.setText("");
         take_authorLabel.setText("");
@@ -393,109 +380,6 @@ public class NewStudentDashboardController implements Initializable {
         take_dateLabel.setText("");
         take_imageView.setImage(null);
     }
-
-//    public void displayDate(){
-//        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-//        String date = format.format(new Date());
-//        take_IssuedDate.setText(date);
-//    }
-
-    //Return book
-
-    public ObservableList<returnBook> returnBookData(){
-        ObservableList<returnBook> listReturnBook = FXCollections.observableArrayList();
-        String checkReturn = "Not Return";
-        String sql = "SELECT * FROM take WHERE checkReturn = '"+ checkReturn +"' AND studentNumber = '"+ getData.studentNumber +"' ";
-        Alert alert;
-        connect = Database.connectDB();
-        try{
-            returnBook rBooks;
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-            while (result.next()){
-                rBooks = new returnBook(
-                        result.getString("bookTitle"),
-                        result.getString("author"),
-                        result.getString("bookType"),
-                        result.getDate("date"),
-                        result.getString("image")
-
-                );
-
-                listReturnBook.add(rBooks);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return listReturnBook;
-    }
-
-    public void returnBook(){
-        String sql = "UPDATE take SET checkReturn = 'Returned' WHERE bookTitle = '"+ getData.takeBookTitle +"' ";
-        connect = Database.connectDB();
-
-        try{
-
-            if(return_imageView.getImage() == null){
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please select the book you want to return!");
-                alert.showAndWait();
-            }else{
-                statement = connect.createStatement();
-                statement.executeUpdate(sql);
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Program message");
-                alert.setHeaderText(null);
-                alert.setContentText("Return successfully!");
-                alert.showAndWait();
-
-//                showReturnBooks();
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void selectReturnBook(){
-        returnBook rBooks = return_tableView.getSelectionModel().getSelectedItem();
-        int num = return_tableView.getSelectionModel().getFocusedIndex();
-
-        if ((num - 1) < -1) {
-//            Alert alert = new Alert(AlertType.INFORMATION);
-//            alert.setTitle("Program message");
-//            alert.setHeaderText(null);
-//            alert.setContentText(""+ num +"");
-//            alert.showAndWait();
-            return;
-        }
-
-        getData.takeBookTitle = rBooks.getTitle();
-
-        getData.path = rBooks.getImage();
-
-        String uri = "file:" + getData.path;
-
-        image = new Image(uri, 134,171, false, true);
-        return_imageView.setImage(image);
-
-    }
-
-    private ObservableList<returnBook> returnData;
-//    public void showReturnBooks(){
-//        returnData = returnBookData();
-//
-//        returnBook_title.setCellValueFactory(new PropertyValueFactory<>("title"));
-//        returnBook_author.setCellValueFactory(new PropertyValueFactory<>("author"));
-//        returnBook_type.setCellValueFactory(new PropertyValueFactory<>("type"));
-//        returnBook_date.setCellValueFactory(new PropertyValueFactory<>("date"));
-//
-//        return_tableView.setItems(returnData);
-//
-//    }
     //Save book
 
     public  ObservableList<saveBook> saveBookData(){
@@ -508,17 +392,17 @@ public class NewStudentDashboardController implements Initializable {
             prepare = connect.prepareStatement(sql);
             result = prepare.executeQuery();
             while(result.next()){
-                sBooks = new saveBook(result.getString("bookTitle"),result.getString("author"),
-                        result.getString("bookType"),result.getString("image"),
-                        result.getDate("date"));
+                sBooks = new saveBook(
+                        result.getString("studentNumber"),
+                        result.getString("bookTitle"),
+                        result.getString("author"),
+                        result.getString("bookType"),
+                        result.getString("image"),
+                        result.getDate("date")
+                        );
                 listSaveData.add(sBooks);
                 //count ++;
             }
-//        Alert alert = new Alert(AlertType.INFORMATION);
-//        alert.setTitle("Program message");
-//        alert.setHeaderText(null);
-//        alert.setContentText(""+ count +"");
-//        alert.showAndWait();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -601,18 +485,18 @@ public class NewStudentDashboardController implements Initializable {
         if ((num - 1) < -1) {
             return;
         }
+        else{
+            getData.takeBookTitle = sBook.getTitle();
 
+            getData.path = sBook.getImg();
 
-        getData.takeBookTitle = sBook.getTitle();
+            String uri = "file:" + getData.path;
 
-        getData.path = sBook.getImg();
-
-        String uri = "file:" + getData.path;
-
-        image = new Image(uri, 108,147, false, true);
-        save_imageView.setImage(image);
-        getData.saveImg = sBook.getImg();
-        getData.saveTitle = sBook.getTitle();
+            image = new Image(uri, 108,147, false, true);
+            save_imageView.setImage(image);
+            getData.saveImg = sBook.getImg();
+            getData.saveTitle = sBook.getTitle();
+        }
     }
 
     public void unsaveBook() {
@@ -697,11 +581,14 @@ public class NewStudentDashboardController implements Initializable {
             while (result.next()){
                 aBooks = new availableBooks(
                         result.getInt("book_id"),
+                        result.getString("bookNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getString("image"),
-                        result.getDate("date"));
+                        result.getDate("date"),
+                        result.getString("status")
+                        );
                 listBooks.add(aBooks);
             }
 

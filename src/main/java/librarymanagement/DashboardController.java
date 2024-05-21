@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -28,15 +29,13 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.File;
 import java.net.URL;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -209,6 +208,12 @@ public class DashboardController implements Initializable {
 
     @FXML
     private TableColumn<returnBook, String> returnBook_type;
+
+    @FXML
+    private TableColumn<returnBook, String> returnBook_number;
+
+    @FXML
+    private TableColumn<returnBook, String> returnBook_status;
 
     @FXML
     private Button return_button;
@@ -444,7 +449,17 @@ public class DashboardController implements Initializable {
     @FXML
     private TextField updateDate_label;
 
+    @FXML
+    private Button show_deleteButton;
 
+    @FXML
+    private Button show_updateButton;
+
+    @FXML
+    private Button student_deleteBtn;
+
+    @FXML
+    private Button student_updateBtn;
     Image image;
 
     private Connection connect;
@@ -573,6 +588,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 student = new userList(
+                        result.getString("studentRole"),
                         result.getString("studentNumber"),
                         result.getString("studentName"),
                         result.getDate("dateOfBirth"),
@@ -606,6 +622,9 @@ public class DashboardController implements Initializable {
         col_ab_Password.setCellValueFactory(new PropertyValueFactory<>("password"));
 
         availableStudent_TableView.setItems(listStudents);
+
+        student_deleteBtn.setDisable(true);
+        //student_updateBtn.setDisable(true);
     }
 
     userList getStudentData;
@@ -620,14 +639,112 @@ public class DashboardController implements Initializable {
             return;
         }
 
+        student_deleteBtn.setDisable(false);
+        //student_updateBtn.setDisable(false);
         getStudentData = studentData;
 
+        getData.userName = getStudentData.getName();
+        getData.userNumber = getStudentData.getNumber();
+        getData.userDoB = (java.sql.Date) getStudentData.getDate();
+        getData.userGender = getStudentData.getGender();
+        getData.userPhone = getStudentData.getPhone();
+        getData.userEmail = getStudentData.getEmail();
+        getData.userImg = getStudentData.getImage();
+        getData.userPass = getStudentData.getPassword();
+        getData.userRole = getStudentData.getRole();
+        System.out.println(getData.userNumber);
         // This is required to display the image
         // Note: Don't forget the "file:"
-        String uri = "file:" + studentData.getImage();
+        String uri = "file:" + getStudentData.getImage();
 
         Image image = new Image(uri, 134, 171, false, true);
         showStudentImage_View.setImage(image);
+    }
+
+//    public void studentUpdateBtn(ActionEvent e){
+//        if(e.getSource() == student_updateBtn){
+//            addStudent_form.setVisible(false);
+//            showStudent_form.setVisible(false);
+//            updateStudent_form.setVisible(true);
+//
+//            updateStudentNumber_text.setText(getData.userNumber);
+//            String studentName = getData.userName;
+//            String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
+//            if (nameParts.length == 2) {
+//                String firstName = nameParts[1]; // Rest as first name
+//                String lastName = nameParts[0]; // First word as last name
+//
+//                updateFirstName_text.setText(firstName);
+//                updateLastName_text.setText(lastName);
+//            } else {
+//                // If the name format is not as expected, set the whole name as first name
+//                updateFirstName_text.setText(studentName);
+//                updateLastName_text.setText(""); // Set last name as empty
+//            }
+//            updateEmail_text.setText(getData.userEmail);
+//            updatePhone_text.setText(getData.userPhone);
+//            updatePassword_text.setText(getData.userPass);
+//
+//            String gender = getData.userGender;
+//            ComboBox genderBox = updateGender_text;
+//            setComboBoxValue(genderBox, gender);
+//
+//
+//            String roll = getData.userRole;
+//            ComboBox rollbox = updateRoll_text;
+//            setComboBoxValue(rollbox, roll);
+//
+//            updateDate.setText(getData.userDoB.toString());
+//
+//            String imagePath = getData.userImg;
+//
+//            String uri = "file:" + imagePath;
+//            Image image = new Image(uri, 127, 162, false, true);
+//            updateStudentImage_View.setImage(image);
+//        }
+//    }
+
+    public void studentDeleteBtn(ActionEvent e){
+        if (e.getSource() == student_deleteBtn) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Do you want to remove this user");
+            if (alert.showAndWait().get().equals(javafx.scene.control.ButtonType.OK)) {
+                deleteUserData();
+            } else {
+
+            }
+        }
+    }
+
+    public void deleteUserData(){
+        String sql = "Delete from student where studentNumber = '" + getData.userNumber + "'";
+        System.out.println(getData.userNumber);
+        connect = Database.connectDB();
+        try {
+            Alert alert;
+
+            if (showStudentImage_View.getImage() == null) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select user you want to delete!");
+                alert.showAndWait();
+            } else {
+                statement = connect.createStatement();
+                statement.executeUpdate(sql);
+                alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("User deleted successfully!");
+                alert.showAndWait();
+
+                showAvailableBooks();
+                showStudentImage_View.setImage(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void findPersonByNumber(ActionEvent event) throws SQLException {
@@ -748,7 +865,7 @@ public class DashboardController implements Initializable {
                 prepare = connect.prepareStatement(sql);
                 prepare.setString(10, result.getString("studentNumber"));
                 // Update studentRoll
-                prepare.setString(1, updateRoll_text.getValue() != null ? updateRoll_text.getValue().toString() : result.getString("studentRoll"));
+                prepare.setString(1, updateRoll_text.getValue() != null ? updateRoll_text.getValue().toString() : result.getString("studentRole"));
 
                 // Update studentNumber
                 prepare.setString(2, updateStudentNumber_text.getText().isEmpty() ? result.getString("studentNumber") : updateStudentNumber_text.getText());
@@ -1222,6 +1339,7 @@ public class DashboardController implements Initializable {
             while (result.next()) {
                 aBooks = new availableBooks(
                         result.getInt("book_id"),
+                        result.getString("bookNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
@@ -1251,10 +1369,11 @@ public class DashboardController implements Initializable {
         col_ab_publishedDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         availableBooks_tableView.setItems(listBook);
+        show_updateButton.setDisable(true);
+        show_deleteButton.setDisable(true);
     }
 
     availableBooks getBookData;
-
     public void selectAvailableBooks() {
 
         availableBooks bookData = availableBooks_tableView.getSelectionModel().getSelectedItem();
@@ -1265,7 +1384,8 @@ public class DashboardController implements Initializable {
             return;
         }
         getBookData = bookData;
-
+        show_updateButton.setDisable(false);
+        show_deleteButton.setDisable(false);
         availableBooks_title.setText(bookData.getTitle());
 
 //        THIS IS REQUIRED TO DISPLAY THE IMAGE
@@ -1275,13 +1395,83 @@ public class DashboardController implements Initializable {
         image = new Image(uri, 134, 171, false, true);
         availableBooks_imageView.setImage(image);
 
-        getData.takeBookTitle = bookData.getTitle();
-        getData.saveTitle = bookData.getTitle();
-        getData.saveAuthor = bookData.getAuthor();
-        getData.saveType = bookData.getGenre();
-        getData.saveImg = bookData.getImage();
-        getData.saveDate = (java.sql.Date) bookData.getDate();
+        getData.takeBookTitle = getBookData.getTitle();
+        getData.saveTitle = getBookData.getTitle();
+        getData.saveAuthor = getBookData.getAuthor();
+        getData.saveType = getBookData.getGenre();
+        getData.saveImg = getBookData.getImage();
+        getData.saveDate = (java.sql.Date) getBookData.getDate();
+
+        getData.updateNumber = getBookData.getNumber();
+        getData.updateTitle = getBookData.getTitle();
+        getData.updateAuthor = getBookData.getAuthor();
+        getData.updateType = getBookData.getGenre();
+        getData.updateImg = getBookData.getImage();
+        getData.updateDate = (java.sql.Date) getBookData.getDate();
     }
+
+    //Update button in show book list
+    public void showUpdateButton(ActionEvent e){
+        if(e.getSource() == show_updateButton){
+            addBook_form.setVisible(false);
+            showBooks_form.setVisible(false);
+            updateBooks_form.setVisible(true);
+        }
+        updateBookNumber_label.setText(getData.updateNumber.toString());
+        updateBookTitle_label.setText(getData.updateTitle.toString());
+        updateAuthor_label.setText(getData.updateAuthor.toString());
+        updateBookType_label.setText(getData.updateType.toString());
+        updateDate_label.setText(getData.updateDate.toString());
+
+        String imagePath = getData.updateImg.toString();
+        String uri = "file:" + imagePath;
+        Image image = new Image(uri, 127, 162, false, true);
+        updateBookImage_View.setImage(image);
+    }
+
+    public void showDeleteButton(ActionEvent e) {
+        if (e.getSource() == show_deleteButton) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Do you want to remove this book");
+            if (alert.showAndWait().get().equals(javafx.scene.control.ButtonType.OK)) {
+                deleteBookData();
+            } else {
+
+            }
+        }
+    }
+
+    private void deleteBookData() {
+        String sql = "Delete from book where bookNumber = '" + getData.updateNumber + "'";
+
+        connect = Database.connectDB();
+        try {
+            Alert alert;
+
+            if (availableBooks_imageView.getImage() == null) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select the book you want to delete!");
+                alert.showAndWait();
+            } else {
+                statement = connect.createStatement();
+                statement.executeUpdate(sql);
+                alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Book deleted successfully!");
+                alert.showAndWait();
+
+                showAvailableBooks();
+                availableBooks_imageView.setImage(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void roll() {
         List<String> rollCombo = new ArrayList<>();
@@ -1327,6 +1517,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 int id = result.getInt("student_id");
+                String role = result.getString("studentRole");
                 String studentNumber = result.getString("studentNumber");
                 String studentName = result.getString("studentName");
                 Date dateOfBirth = result.getDate("dateOfBirth");
@@ -1336,7 +1527,7 @@ public class DashboardController implements Initializable {
                 String password = result.getString("password");
                 String imagePath = result.getString("image");
 
-                userList student = new userList(studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
+                userList student = new userList(role,studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
                 studentList.add(student);
             }
 
@@ -1364,6 +1555,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 int id = result.getInt("student_id");
+                String role = result.getString("studentRole");
                 String studentNumber = result.getString("studentNumber");
                 String studentName = result.getString("studentName");
                 Date dateOfBirth = result.getDate("dateOfBirth");
@@ -1373,7 +1565,7 @@ public class DashboardController implements Initializable {
                 String password = result.getString("password");
                 String imagePath = result.getString("image");
 
-                userList student = new userList(studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
+                userList student = new userList(role,studentNumber, studentName, dateOfBirth, gender, phone, email, password, imagePath);
                 studentList.add(student);
             }
 
@@ -1404,6 +1596,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 int id = result.getInt("book_id");
+                String number = result.getString("bookNumber");
                 String bookTitle = result.getString("bookTitle");
                 String author = result.getString("author");
                 String bookType = result.getString("bookType");
@@ -1411,7 +1604,7 @@ public class DashboardController implements Initializable {
                 Date publishedDate = result.getDate("date");
                 String status = result.getString("status");
 
-                availableBooks book = new availableBooks(id, bookTitle, author, bookType, imagePath, publishedDate, status);
+                availableBooks book = new availableBooks(id,number, bookTitle, author, bookType, imagePath, publishedDate, status);
                 bookList.add(book);
             }
 
@@ -1439,6 +1632,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 int id = result.getInt("book_id");
+                String number = result.getString("bookNumber");
                 String bookTitle = result.getString("bookTitle");
                 String author = result.getString("author");
                 String bookType = result.getString("bookType");
@@ -1446,7 +1640,7 @@ public class DashboardController implements Initializable {
                 Date publishedDate = result.getDate("date");
                 String status = result.getString("status");
 
-                availableBooks book = new availableBooks(id, bookTitle, author, bookType, imagePath, publishedDate, status);
+                availableBooks book = new availableBooks(id,number, bookTitle, author, bookType, imagePath, publishedDate, status);
                 bookList.add(book);
             }
 
@@ -1492,8 +1686,8 @@ public class DashboardController implements Initializable {
 
     public ObservableList<returnBook> returnBookData(){
         ObservableList<returnBook> listReturnBook = FXCollections.observableArrayList();
-        String checkReturn = "Not Return";
-        String sql = "SELECT * FROM take WHERE checkReturn = '"+ checkReturn +"' AND studentNumber = '"+ getData.studentNumber +"' ";
+        String get_status = "Not returned";
+        String sql = "SELECT * FROM book_request where status = '"+get_status+"' ";
         Alert alert;
         connect = Database.connectDB();
         try{
@@ -1502,12 +1696,13 @@ public class DashboardController implements Initializable {
             result = prepare.executeQuery();
             while (result.next()){
                 rBooks = new returnBook(
+                        result.getString("studentNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getDate("date"),
-                        result.getString("image")
-
+                        result.getString("image"),
+                        result.getString("status")
                 );
 
                 listReturnBook.add(rBooks);
@@ -1520,7 +1715,8 @@ public class DashboardController implements Initializable {
     }
 
     public void returnBook(){
-        String sql = "UPDATE take SET checkReturn = 'Returned' WHERE bookTitle = '"+ getData.takeBookTitle +"' ";
+        String update_status = "Returned";
+        String sql = "UPDATE book_request set status = '"+update_status+"' where bookTitle = '" + getData.takeBookTitle + "' and studentNumber = '"+getData.saveNumber+"' ";
         connect = Database.connectDB();
 
         try{
@@ -1553,22 +1749,20 @@ public class DashboardController implements Initializable {
         int num = return_tableView.getSelectionModel().getFocusedIndex();
 
         if ((num - 1) < -1) {
-//            Alert alert = new Alert(AlertType.INFORMATION);
-//            alert.setTitle("Program message");
-//            alert.setHeaderText(null);
-//            alert.setContentText(""+ num +"");
-//            alert.showAndWait();
             return;
         }
+        else{
+            getData.saveNumber = rBooks.getNumber();
+            getData.takeBookTitle = rBooks.getTitle();
 
-        getData.takeBookTitle = rBooks.getTitle();
+            getData.path = rBooks.getImage();
 
-        getData.path = rBooks.getImage();
+            String uri = "file:" + getData.path;
 
-        String uri = "file:" + getData.path;
+            image = new Image(uri, 134,171, false, true);
+            return_imageView.setImage(image);
+        }
 
-        image = new Image(uri, 134,171, false, true);
-        return_imageView.setImage(image);
 
     }
 
@@ -1576,10 +1770,12 @@ public class DashboardController implements Initializable {
     public void showReturnBooks(){
         returnData = returnBookData();
 
+        returnBook_number.setCellValueFactory(new PropertyValueFactory<>("number"));
         returnBook_title.setCellValueFactory(new PropertyValueFactory<>("title"));
         returnBook_author.setCellValueFactory(new PropertyValueFactory<>("author"));
         returnBook_type.setCellValueFactory(new PropertyValueFactory<>("type"));
         returnBook_date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        returnBook_status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         return_tableView.setItems(returnData);
 
@@ -1596,8 +1792,12 @@ public class DashboardController implements Initializable {
             prepare = connect.prepareStatement(sql);
             result = prepare.executeQuery();
             while(result.next()){
-                sBooks = new saveBook(result.getString("bookTitle"),result.getString("author"),
-                        result.getString("bookType"),result.getString("image"),
+                sBooks = new saveBook(
+                        result.getString("studentNumber"),
+                        result.getString("bookTitle"),
+                        result.getString("author"),
+                        result.getString("bookType"),
+                        result.getString("image"),
                         result.getDate("date"));
                 listSaveData.add(sBooks);
                 //count ++;
@@ -1725,6 +1925,11 @@ public class DashboardController implements Initializable {
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+
+
+    public void abTakeButton(ActionEvent event){
+
     }
 
     public void studentNumber(){
@@ -2002,6 +2207,7 @@ public class DashboardController implements Initializable {
         setUserImage();
         hideInsertImage();
         studentNumber();
+        showReturnBooks();
         gender();
         roll();
 //        uploadImage_View.setOnAction(event -> uploadImage());
@@ -2011,78 +2217,6 @@ public class DashboardController implements Initializable {
             e.printStackTrace();
         }
 
-        try{
-            showReturnBooks();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
-//    public void insertImage(){
-//
-//        FileChooser open = new FileChooser();
-//        open.setTitle("Image file");
-//        open.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image file", "*png", "*jpg"));
-//        Stage stage = (Stage) nav_form.getScene().getWindow();
-//
-//        File file = open.showOpenDialog(stage);
-//
-//        if(file != null){
-//
-//            image = new Image(file.toURI().toString(),130,87,false,true);
-//            circle_image.setFill(new ImagePattern(image));
-//            smallCircle_image.setFill(new ImagePattern(image));
-//
-//            getData.path = file.getAbsolutePath();
-//            System.out.println(getData.path);
-//
-//            changeProfile();
-//        }
-//    }
-//
-//    public void changeProfile(){
-//
-//        String uri = getData.path;
-//        //uri.replace("\\","\\\\");
-//        String uri_convert = uri.replace("\\","/");
-//        String sql = "Update student set image = '"+ uri_convert +"' where studentNumber = '"+ getData.studentNumber +"' ";
-//        connect = Database.connectDB();
-//        try {
-//
-//            statement = connect.createStatement();
-//            statement.executeUpdate(sql);
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void showProfile(){
-//        String uri = "file:" + getData.path;
-//        image = new Image(uri, 130, 87, false, true);
-//        circle_image.setFill(new ImagePattern(image));
-//        smallCircle_image.setFill(new ImagePattern(image));
-//    }
 
-//    public void DesignInsertImage(){
-//        circle_image.setOnMouseEntered((MouseEvent event)->{
-//            edit_btn.setVisible(true);
-//        });
-//        circle_image.setOnMouseExited((MouseEvent event)->{
-//            edit_btn.setVisible(false);
-//        });
-//
-//        edit_btn.setOnMouseEntered((MouseEvent event)->{
-//            edit_btn.setVisible(true);
-//            edit_icon.setFill(Color.valueOf("#fff"));
-//        });
-//        edit_btn.setOnMousePressed((MouseEvent event)->{
-//            edit_btn.setVisible(true);
-//            edit_icon.setFill(Color.RED);
-//        });
-//        edit_btn.setOnMouseExited((MouseEvent event)->{
-//            edit_btn.setVisible(false);
-//        });
-//
-//
-//    }
 }
