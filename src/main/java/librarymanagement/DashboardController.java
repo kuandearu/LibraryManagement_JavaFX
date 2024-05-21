@@ -460,6 +460,7 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Button student_updateBtn;
+
     Image image;
 
     private Connection connect;
@@ -624,7 +625,7 @@ public class DashboardController implements Initializable {
         availableStudent_TableView.setItems(listStudents);
 
         student_deleteBtn.setDisable(true);
-        //student_updateBtn.setDisable(true);
+        student_updateBtn.setDisable(true);
     }
 
     userList getStudentData;
@@ -640,7 +641,7 @@ public class DashboardController implements Initializable {
         }
 
         student_deleteBtn.setDisable(false);
-        //student_updateBtn.setDisable(false);
+        student_updateBtn.setDisable(false);
         getStudentData = studentData;
 
         getData.userName = getStudentData.getName();
@@ -661,48 +662,51 @@ public class DashboardController implements Initializable {
         showStudentImage_View.setImage(image);
     }
 
-//    public void studentUpdateBtn(ActionEvent e){
-//        if(e.getSource() == student_updateBtn){
-//            addStudent_form.setVisible(false);
-//            showStudent_form.setVisible(false);
-//            updateStudent_form.setVisible(true);
-//
-//            updateStudentNumber_text.setText(getData.userNumber);
-//            String studentName = getData.userName;
-//            String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
-//            if (nameParts.length == 2) {
-//                String firstName = nameParts[1]; // Rest as first name
-//                String lastName = nameParts[0]; // First word as last name
-//
-//                updateFirstName_text.setText(firstName);
-//                updateLastName_text.setText(lastName);
-//            } else {
-//                // If the name format is not as expected, set the whole name as first name
-//                updateFirstName_text.setText(studentName);
-//                updateLastName_text.setText(""); // Set last name as empty
-//            }
-//            updateEmail_text.setText(getData.userEmail);
-//            updatePhone_text.setText(getData.userPhone);
-//            updatePassword_text.setText(getData.userPass);
-//
-//            String gender = getData.userGender;
-//            ComboBox genderBox = updateGender_text;
-//            setComboBoxValue(genderBox, gender);
-//
-//
-//            String roll = getData.userRole;
-//            ComboBox rollbox = updateRoll_text;
-//            setComboBoxValue(rollbox, roll);
-//
-//            updateDate.setText(getData.userDoB.toString());
-//
-//            String imagePath = getData.userImg;
-//
-//            String uri = "file:" + imagePath;
-//            Image image = new Image(uri, 127, 162, false, true);
-//            updateStudentImage_View.setImage(image);
-//        }
-//    }
+    public void studentUpdateBtn(ActionEvent e) {
+        if(e.getSource() == student_updateBtn){
+            addStudent_form.setVisible(false);
+            showStudent_form.setVisible(false);
+            updateStudent_form.setVisible(true);
+
+            updateStudentNumber_text.setText(getData.userNumber);
+            String studentName = getData.userName;
+            String[] nameParts = studentName.split("\\s+", 2); // Split into two parts: last name and rest
+            if (nameParts.length == 2) {
+                String firstName = nameParts[1]; // Rest as first name
+                String lastName = nameParts[0]; // First word as last name
+
+                updateFirstName_text.setText(firstName);
+                updateLastName_text.setText(lastName);
+            } else {
+                // If the name format is not as expected, set the whole name as first name
+                updateFirstName_text.setText(studentName);
+                updateLastName_text.setText(""); // Set last name as empty
+            }
+
+            updateEmail_text.setText(getData.userEmail);
+            updatePhone_text.setText(getData.userPhone);
+            updatePassword_text.setText(getData.userPass);
+
+            String gender = getData.userGender;
+            ComboBox genderBox = updateGender_text;
+            setComboBoxValue(genderBox, gender);
+
+
+            String roll = getData.userRole;
+            ComboBox rollbox = updateRoll_text;
+            setComboBoxValue(rollbox, roll);
+
+            String dbDate = getData.userDoB.toString(); // Assuming userDoB is of type java.sql.Date
+            String formattedDate = convertDateFormat(dbDate);
+            updateDate.setText(formattedDate);
+
+            String imagePath = getData.userImg;
+
+            String uri = "file:" + imagePath;
+            Image image = new Image(uri, 127, 162, false, true);
+            updateStudentImage_View.setImage(image);
+        }
+    }
 
     public void studentDeleteBtn(ActionEvent e){
         if (e.getSource() == student_deleteBtn) {
@@ -1230,6 +1234,8 @@ public class DashboardController implements Initializable {
         }
     }
 
+
+
     public void uploadImage() {
         // Create a file chooser
         FileChooser fileChooser = new FileChooser();
@@ -1297,6 +1303,13 @@ public class DashboardController implements Initializable {
             Image image = new Image(selectedFile.toURI().toString(), 140, 162, false, true);
             studentImage_View.setImage(image);
         }
+    }
+
+    public String convertDateFormat(String dbDate) {
+        DateTimeFormatter dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter uiFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date = LocalDate.parse(dbDate, dbFormatter);
+        return date.format(uiFormatter);
     }
 
     public void uploadUpdatePersonImage() {
