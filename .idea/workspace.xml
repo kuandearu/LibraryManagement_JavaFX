@@ -7,9 +7,6 @@
     <list default="true" id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="test">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_11_2024_10_42_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_11_2024_10_42_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/librarymanagement/userList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/librarymanagement/userList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/librarymanagement/dashboard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +56,7 @@
     "Application.LibraryManagement.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Anh__Duc",
+    "git-widget-placeholder": "#2 on Anh__Duc",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/JavaFX/JavaFX-Phuc_Toan/LibraryManagement_JavaFX/src/main/resources/lib/fontawesomefx-8.2.jar",
