@@ -697,11 +697,14 @@ public class NewStudentDashboardController implements Initializable {
             while (result.next()){
                 aBooks = new availableBooks(
                         result.getInt("book_id"),
+                        result.getString("bookNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
                         result.getString("image"),
-                        result.getDate("date"));
+                        result.getDate("date"),
+                        result.getString("status")
+                        );
                 listBooks.add(aBooks);
             }
 

@@ -170,7 +170,7 @@
                                     <TableColumn fx:id="col_ab_publishedDate" prefWidth="105.0" text="Published Date" />
                                  </columns>
                               </TableView>
-                              <TextField fx:id="searchBook_field" layoutX="541.0" onAction="#findBook" prefHeight="25.0" prefWidth="206.0" promptText="Search" />
+                              <TextField fx:id="searchBook_field" layoutX="540.0" layoutY="1.0" onAction="#findBook" prefHeight="25.0" prefWidth="206.0" promptText="Search" />
                               <AnchorPane layoutX="10.0" layoutY="25.0" prefHeight="298.0" prefWidth="200.0">
                                  <children>
                                     <AnchorPane layoutY="12.0" prefHeight="416.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
@@ -185,13 +185,15 @@
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
+                                          <Button fx:id="show_updateButton" layoutX="48.0" layoutY="291.0" mnemonicParsing="false" onAction="#showUpdateButton" prefHeight="26.0" prefWidth="102.0" styleClass="save-btn" stylesheets="@../designDashboard.css" text="Update" />
+                                          <Button fx:id="show_deleteButton" layoutX="48.0" layoutY="339.0" mnemonicParsing="false" onAction="#showDeleteButton" prefHeight="26.0" prefWidth="102.0" styleClass="unsave_btn" stylesheets="@../designDashboard.css" text="Delete" />
                                        </children>
                                     </AnchorPane>
                                  </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="addBook_form" layoutX="279.0" layoutY="17.0" prefHeight="467.0" prefWidth="777.0" stylesheets="@../designDashboard.css">
+                        <AnchorPane fx:id="addBook_form" layoutX="279.0" layoutY="17.0" prefHeight="467.0" prefWidth="777.0" stylesheets="@../designDashboard.css" visible="false">
                            <children>
                               <AnchorPane layoutX="221.0" layoutY="5.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
@@ -262,7 +264,7 @@
                               <Button fx:id="updateBooks_btn" layoutX="46.0" layoutY="204.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Update Book" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="updateBooks_form" layoutX="279.0" layoutY="14.0" prefHeight="468.0" prefWidth="777.0">
+                        <AnchorPane fx:id="updateBooks_form" layoutX="279.0" layoutY="14.0" prefHeight="468.0" prefWidth="777.0" visible="false">
                            <children>
                               <AnchorPane layoutY="7.0" prefHeight="454.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>

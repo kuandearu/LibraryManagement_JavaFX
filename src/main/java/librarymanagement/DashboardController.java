@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -444,7 +445,11 @@ public class DashboardController implements Initializable {
     @FXML
     private TextField updateDate_label;
 
+    @FXML
+    private Button show_deleteButton;
 
+    @FXML
+    private Button show_updateButton;
     Image image;
 
     private Connection connect;
@@ -1222,6 +1227,7 @@ public class DashboardController implements Initializable {
             while (result.next()) {
                 aBooks = new availableBooks(
                         result.getInt("book_id"),
+                        result.getString("bookNumber"),
                         result.getString("bookTitle"),
                         result.getString("author"),
                         result.getString("bookType"),
@@ -1251,10 +1257,11 @@ public class DashboardController implements Initializable {
         col_ab_publishedDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         availableBooks_tableView.setItems(listBook);
+        show_updateButton.setDisable(true);
+        show_deleteButton.setDisable(true);
     }
 
     availableBooks getBookData;
-
     public void selectAvailableBooks() {
 
         availableBooks bookData = availableBooks_tableView.getSelectionModel().getSelectedItem();
@@ -1265,7 +1272,8 @@ public class DashboardController implements Initializable {
             return;
         }
         getBookData = bookData;
-
+        show_updateButton.setDisable(false);
+        show_deleteButton.setDisable(false);
         availableBooks_title.setText(bookData.getTitle());
 
 //        THIS IS REQUIRED TO DISPLAY THE IMAGE
@@ -1275,13 +1283,92 @@ public class DashboardController implements Initializable {
         image = new Image(uri, 134, 171, false, true);
         availableBooks_imageView.setImage(image);
 
-        getData.takeBookTitle = bookData.getTitle();
-        getData.saveTitle = bookData.getTitle();
-        getData.saveAuthor = bookData.getAuthor();
-        getData.saveType = bookData.getGenre();
-        getData.saveImg = bookData.getImage();
-        getData.saveDate = (java.sql.Date) bookData.getDate();
+        getData.takeBookTitle = getBookData.getTitle();
+        getData.saveTitle = getBookData.getTitle();
+        getData.saveAuthor = getBookData.getAuthor();
+        getData.saveType = getBookData.getGenre();
+        getData.saveImg = getBookData.getImage();
+        getData.saveDate = (java.sql.Date) getBookData.getDate();
+
+        getData.updateNumber = getBookData.getNumber();
+        getData.updateTitle = getBookData.getTitle();
+        getData.updateAuthor = getBookData.getAuthor();
+        getData.updateType = getBookData.getGenre();
+        getData.updateImg = getBookData.getImage();
+        getData.updateDate = (java.sql.Date) getBookData.getDate();
     }
+
+    //Update button in show book list
+    public void showUpdateButton(ActionEvent e){
+        if(e.getSource() == show_updateButton){
+            addBook_form.setVisible(false);
+            showBooks_form.setVisible(false);
+            updateBooks_form.setVisible(true);
+        }
+        updateBookNumber_label.setText(getData.updateNumber.toString());
+        updateBookTitle_label.setText(getData.updateTitle.toString());
+        updateAuthor_label.setText(getData.updateAuthor.toString());
+        updateBookType_label.setText(getData.updateType.toString());
+        updateDate_label.setText(getData.updateDate.toString());
+
+        String imagePath = getData.updateImg.toString();
+        String uri = "file:" + imagePath;
+        Image image = new Image(uri, 127, 162, false, true);
+        updateBookImage_View.setImage(image);
+    }
+
+    public void showDeleteButton(ActionEvent e) {
+        if (e.getSource() == show_deleteButton) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Do you want to remove this book");
+            if (alert.showAndWait().get().equals(javafx.scene.control.ButtonType.OK)) {
+                deleteBookData();
+            } else {
+
+            }
+        }
+    }
+//
+//    public void start(Stage primaryStage) {
+//        show_deleteButton.setOnAction(this::showDeleteButton);
+//        VBox root = new VBox(show_deleteButton);
+//        Scene scene = new Scene(root, 300, 200);
+//        primaryStage.setScene(scene);
+//        primaryStage.setTitle("Delete Data");
+//        primaryStage.show();
+//    }
+
+    private void deleteBookData() {
+        String sql = "Delete from book where bookNumber = '" + getData.updateNumber + "'";
+
+        connect = Database.connectDB();
+        try {
+            Alert alert;
+
+            if (availableBooks_imageView.getImage() == null) {
+                alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select the book you want to delete!");
+                alert.showAndWait();
+            } else {
+                statement = connect.createStatement();
+                statement.executeUpdate(sql);
+                alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Program message");
+                alert.setHeaderText(null);
+                alert.setContentText("Book deleted successfully!");
+                alert.showAndWait();
+
+                showAvailableBooks();
+                availableBooks_imageView.setImage(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void roll() {
         List<String> rollCombo = new ArrayList<>();
@@ -1404,6 +1491,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 int id = result.getInt("book_id");
+                String number = result.getString("bookNumber");
                 String bookTitle = result.getString("bookTitle");
                 String author = result.getString("author");
                 String bookType = result.getString("bookType");
@@ -1411,7 +1499,7 @@ public class DashboardController implements Initializable {
                 Date publishedDate = result.getDate("date");
                 String status = result.getString("status");
 
-                availableBooks book = new availableBooks(id, bookTitle, author, bookType, imagePath, publishedDate, status);
+                availableBooks book = new availableBooks(id,number, bookTitle, author, bookType, imagePath, publishedDate, status);
                 bookList.add(book);
             }
 
@@ -1439,6 +1527,7 @@ public class DashboardController implements Initializable {
 
             while (result.next()) {
                 int id = result.getInt("book_id");
+                String number = result.getString("bookNumber");
                 String bookTitle = result.getString("bookTitle");
                 String author = result.getString("author");
                 String bookType = result.getString("bookType");
@@ -1446,7 +1535,7 @@ public class DashboardController implements Initializable {
                 Date publishedDate = result.getDate("date");
                 String status = result.getString("status");
 
-                availableBooks book = new availableBooks(id, bookTitle, author, bookType, imagePath, publishedDate, status);
+                availableBooks book = new availableBooks(id,number, bookTitle, author, bookType, imagePath, publishedDate, status);
                 bookList.add(book);
             }
 
@@ -1729,43 +1818,6 @@ public class DashboardController implements Initializable {
 
 
     public void abTakeButton(ActionEvent event){
-
-//        if (event.getSource()== take_btn){
-//            issue_form.setVisible(true);
-//            availableBooks_form.setVisible(false);
-//            savedBook_form.setVisible(false);
-//            returnBook_form.setVisible(false);
-//
-//            issueBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-//            availableBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//            returnBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//            savedBooks_btn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//
-//            halfNav_takeBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #46589a, #4278a7);");
-//            halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//            halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//            halfNav_saveBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
-//
-//            currentForm_label.setText("Issue Books");
-//        }
-//
-//        issueBook_title.setText(" " +getBookData.getTitle());
-//        take_titleLabel.setText(getBookData.getTitle());
-//        take_authorLabel.setText(getBookData.getAuthor());
-//        take_genreLabel.setText(getBookData.getGenre());
-//        take_dateLabel.setText(getBookData.getDate().toString());
-//
-//        String uri = "file:" + getBookData.getImage();
-//        getData.pathImage = getBookData.getImage();
-//        image = new Image(uri, 134, 171, false, true);
-//        take_imageView.setImage(image);
-
-//        Alert alert;
-//        alert = new Alert(AlertType.INFORMATION);
-//        alert.setTitle("Program message");
-//        alert.setHeaderText(null);
-//        alert.setContentText(bookData.getTitle());
-//        alert.showAndWait();
 
     }
 
