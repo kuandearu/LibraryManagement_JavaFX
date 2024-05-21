@@ -157,7 +157,7 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="student_list" layoutX="-355.0" prefHeight="510.0" prefWidth="1264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-355.0" AnchorPane.rightAnchor="-213.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="student_list" layoutX="-355.0" prefHeight="510.0" prefWidth="1264.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-355.0" AnchorPane.rightAnchor="-213.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="510.0" prefWidth="250.0">
                            <children>
@@ -362,7 +362,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane fx:id="showBooks_form" layoutX="268.0" layoutY="16.0" prefHeight="468.0" prefWidth="777.0" stylesheets="@../designDashboard.css">
                            <children>
