@@ -69,6 +69,9 @@ public class DashboardController implements Initializable {
     private TableColumn<availableBooks, Integer> col_ab_BookId;
 
     @FXML
+    private TableColumn<availableBooks, Integer> col_ab_bookNumber;
+
+    @FXML
     private TableColumn<availableBooks, String> col_ab_author;
 
     @FXML
@@ -244,6 +247,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private ImageView addBookImage_View;
+
+    @FXML
+    private TextField addBookNumber_label;
 
     @FXML
     private TextField addBookTitle_label;
@@ -979,7 +985,7 @@ public class DashboardController implements Initializable {
 
     public void addBook() {
 
-        String sql = "INSERT INTO book(bookTitle, author, bookType, image, date) VALUES (?,?,?,?,?) ";
+        String sql = "INSERT INTO book(bookNumber, bookTitle, author, bookType, image, date) VALUES (?,?,?,?,?,?) ";
 
         connect = Database.connectDB();
 
@@ -987,6 +993,7 @@ public class DashboardController implements Initializable {
             Alert alert;
 
             if (addAuthor_label.getText().isEmpty() ||
+                    addBookNumber_label.getText().isEmpty() ||
                     addBookTitle_label.getText().isEmpty() ||
                     addBookType_label.getText().isEmpty() ||
                     addDate_label.getText().isEmpty() ||
@@ -1001,16 +1008,17 @@ public class DashboardController implements Initializable {
                 }
                 // Prepare SQL statement
                 prepare = connect.prepareStatement(sql);
-                prepare.setString(1, addBookTitle_label.getText()); // Assuming studentNumber is empty for book addition
-                prepare.setString(2, addAuthor_label.getText()); // Assuming firstname is empty for book addition
-                prepare.setString(3, addBookType_label.getText()); // Assuming lastname is empty for book addition
+                prepare.setString(1, addBookNumber_label.getText());
+                prepare.setString(2, addBookTitle_label.getText()); // Assuming studentNumber is empty for book addition
+                prepare.setString(3, addAuthor_label.getText()); // Assuming firstname is empty for book addition
+                prepare.setString(4, addBookType_label.getText()); // Assuming lastname is empty for book addition
 
                 //save the picture path
                 String imagePath = selectedFile.getAbsolutePath();
-                prepare.setString(4, imagePath);
+                prepare.setString(5, imagePath);
 
 
-                prepare.setTimestamp(5, timestamp); // Assuming gender is empty for book addition
+                prepare.setTimestamp(6, timestamp); // Assuming gender is empty for book addition
 
                 // Execute the SQL statement
                 int rowsAffected = prepare.executeUpdate();
@@ -1032,6 +1040,7 @@ public class DashboardController implements Initializable {
     }
 
     public void clearAddBook() {
+        addBookNumber_label.setText("");
         addBookTitle_label.setText("");
         addAuthor_label.setText("");
         addBookType_label.setText("");
@@ -1192,11 +1201,11 @@ public class DashboardController implements Initializable {
 
 
     public void clearUpdateBook() {
-        updateBookID.setText("");
-        updateBookTitle.setText("");
-        updateAuthor.setText("");
-        updateBookType.setText("");
-        updateDate.setText("");
+        updateBookNumber_label.setText("");
+        updateBookTitle_label.setText("");
+        updateAuthor_label.setText("");
+        updateBookType_label.setText("");
+        updateDate_label.setText("");
         updateBookImage_View.setImage(null);
     }
 
@@ -1384,6 +1393,7 @@ public class DashboardController implements Initializable {
         listBook = dataList();
 
         col_ab_BookId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_ab_bookNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
         col_ab_bookTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_ab_author.setCellValueFactory(new PropertyValueFactory<>("author"));
         col_ab_bookType.setCellValueFactory(new PropertyValueFactory<>("genre"));

@@ -172,7 +172,7 @@ public class Database {
                 prepare.setString(2, "Demo");
                 prepare.setString(3, "1");
                 prepare.setString(4, "2000-05-20");
-                prepare.setString(5, "Admin");
+                prepare.setString(5, "User");
                 prepare.setString(6, "Male");
                 prepare.setString(7, "0982789023"); // Example phone number
                 prepare.setString(8, "minh.nguyen@example.com");

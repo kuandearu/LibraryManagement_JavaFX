@@ -52,7 +52,7 @@ public class FXMLDocumentController implements Initializable {
         connect = Database.connectDB();
     }
     public void login(){
-        String sql = "SELECT * FROM student WHERE studentNumber = ? AND password = ?";
+        String sql = "SELECT * FROM student WHERE studentNumber = ? AND password = ? AND studentRole = 'admin'";
 
         try{
 
@@ -125,7 +125,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void loginStudent(){
-        String sql = "SELECT * FROM newstudent WHERE studentNumber = ? AND password = ?";
+        String sql = "SELECT * FROM student WHERE studentNumber = ? AND password = ? AND studentRole = 'user'";
         try{
 
             prepare = connect.prepareStatement(sql);
