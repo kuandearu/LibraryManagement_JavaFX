@@ -4,7 +4,62 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="test" />
+    <list default="true" id="65866399-2f4b-4b0e-a3c6-8c6ddcd632de" name="Changes" comment="test">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/dbnavigator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_11_2024_10_42_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/shelf/Uncommitted_changes_before_Checkout_at_5_11_2024_10_42_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/image/c#  tutorial book.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/image/java tutorial.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/image/javafx tutorial book.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/image/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/image/programming language book.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/image/python tutorial.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/DashboardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/Database.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/FXMLDocumentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/LibraryManagement.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/NewStudentDashboardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/availableBooks.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/getData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/returnBook.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/saveBook.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/librarymanagement/userList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx-swt.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx.base.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx.controls.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx.fxml.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx.graphics.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx.media.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx.swing.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/LibJavaFX_22/javafx.web.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/designDashboard.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/designLogin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/lib/fontawesomefx-8.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/lib/mysql-connector-j-8.3.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/librarymanagement/FXMLDocument.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/librarymanagement/UserDashBoardController.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/librarymanagement/dashboard.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/main/resources/librarymanagement/newStudentDashboard.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/out/production/LibraryManagement_JavaFX/librarymanagement/DashboardController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/out/production/LibraryManagement_JavaFX/librarymanagement/Database.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/out/production/LibraryManagement_JavaFX/librarymanagement/FXMLDocumentController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/out/production/LibraryManagement_JavaFX/librarymanagement/LibraryManagement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src/out/production/LibraryManagement_JavaFX/module-info.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,20 +103,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.LibraryManagement.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#2 on Anh__Duc&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Codes/Java/BTL/LibraryManagement_JavaFX/src/main/resources/lib&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.LibraryManagement.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Anh__Duc",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Codes/Java/BTL/LibraryManagement_JavaFX/src/main/resources/lib",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="LibraryManagement" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="librarymanagement.LibraryManagement" />
@@ -344,7 +399,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716283770585</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="test">
+      <option name="closed" value="true" />
+      <created>1716391237874</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1716391237874</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
