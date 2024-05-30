@@ -65,6 +65,18 @@ public class Database {
             prepare = connect.prepareStatement(createSaveBookTableQuery);
             prepare.executeUpdate();
 
+            String createNewStudentTableQuery = "CREATE TABLE IF NOT EXISTS newStudent ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "studentNumber VARCHAR(100), "
+                    + "studentName NVARCHAR(100),"
+                    + "password VARCHAR(100),"
+                    + "gender VARCHAR(10) DEFAULT NULL,"
+                    + "phone VARCHAR(10) DEFAULT NULL,"
+                    + "email VARCHAR(50) DEFAULT NULL)";
+
+            prepare = connect.prepareStatement(createNewStudentTableQuery);
+            prepare.executeUpdate();
+
 
             String createBookRequestTableQuery = "CREATE TABLE IF NOT EXISTS book_request (" +
                     "`id` int(100) NOT NULL AUTO_INCREMENT," +
