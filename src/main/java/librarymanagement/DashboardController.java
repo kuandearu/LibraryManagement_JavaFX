@@ -1156,6 +1156,7 @@ public class DashboardController implements Initializable {
                 if (rowsAffected > 0) {
                     showAlert(AlertType.INFORMATION, "Program message", "Book updated successfully!");
                     clearUpdateBook();
+                    showAvailableBooks();
                 } else {
                     showAlert(AlertType.ERROR, "Program message", "Failed to update book. Please try again.");
                 }
@@ -1201,11 +1202,11 @@ public class DashboardController implements Initializable {
 
 
     public void clearUpdateBook() {
-        updateBookID.setText("");
-        updateBookTitle.setText("");
-        updateAuthor.setText("");
-        updateBookType.setText("");
-        updateDate.setText("");
+        updateBookNumber_label.setText("");
+        updateBookTitle_label.setText("");
+        updateAuthor_label.setText("");
+        updateBookType_label.setText("");
+        updateDate_label.setText("");
         updateBookImage_View.setImage(null);
     }
 
