@@ -77,7 +77,6 @@ public class Database {
             prepare = connect.prepareStatement(createNewStudentTableQuery);
             prepare.executeUpdate();
 
-
             String createBookRequestTableQuery = "CREATE TABLE IF NOT EXISTS book_request (" +
                     "`id` int(100) NOT NULL AUTO_INCREMENT," +
                     "  `studentNumber` varchar(100) DEFAULT NULL," +
@@ -173,7 +172,7 @@ public class Database {
                 prepare.setString(2, "Demo");
                 prepare.setString(3, "1");
                 prepare.setString(4, "2000-05-20");
-                prepare.setString(5, "User");
+                prepare.setString(5, "Admin");
                 prepare.setString(6, "Male");
                 prepare.setString(7, "0982789023"); // Example phone number
                 prepare.setString(8, "minh.nguyen@example.com");
@@ -256,6 +255,8 @@ public class Database {
         }
     }
 
+
+
     public static void insertNewStudents() {
         String sql = "INSERT INTO newstudent (studentNumber, studentName, password, gender, phone, email) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -292,7 +293,6 @@ public class Database {
             e.printStackTrace();
         }
     }
-
 
     private static boolean studentExists(Connection connection, String studentNumber) throws SQLException {
         String sql = "SELECT COUNT(*) FROM student WHERE studentNumber = ?";
