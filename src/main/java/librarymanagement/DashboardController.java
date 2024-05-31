@@ -461,6 +461,9 @@ public class DashboardController implements Initializable {
     @FXML
     private Button student_updateBtn;
 
+    @FXML
+    private TextField addBookNumber_label;
+
     Image image;
 
     private Connection connect;
@@ -979,14 +982,15 @@ public class DashboardController implements Initializable {
 
     public void addBook() {
 
-        String sql = "INSERT INTO book(bookTitle, author, bookType, image, date) VALUES (?,?,?,?,?) ";
+        String sql = "INSERT INTO book(bookNumber, bookTitle, author, bookType, image, date) VALUES (?,?,?,?,?,?) ";
 
         connect = Database.connectDB();
 
         try {
             Alert alert;
 
-            if (addAuthor_label.getText().isEmpty() ||
+            if (addBookNumber_label.getText().isEmpty() ||
+                    addAuthor_label.getText().isEmpty() ||
                     addBookTitle_label.getText().isEmpty() ||
                     addBookType_label.getText().isEmpty() ||
                     addDate_label.getText().isEmpty() ||
@@ -1001,16 +1005,17 @@ public class DashboardController implements Initializable {
                 }
                 // Prepare SQL statement
                 prepare = connect.prepareStatement(sql);
-                prepare.setString(1, addBookTitle_label.getText()); // Assuming studentNumber is empty for book addition
-                prepare.setString(2, addAuthor_label.getText()); // Assuming firstname is empty for book addition
-                prepare.setString(3, addBookType_label.getText()); // Assuming lastname is empty for book addition
+                prepare.setString(1, addBookNumber_label.getText());
+                prepare.setString(2, addBookTitle_label.getText()); // Assuming studentNumber is empty for book addition
+                prepare.setString(3, addAuthor_label.getText()); // Assuming firstname is empty for book addition
+                prepare.setString(4, addBookType_label.getText()); // Assuming lastname is empty for book addition
 
                 //save the picture path
                 String imagePath = selectedFile.getAbsolutePath();
-                prepare.setString(4, imagePath);
+                prepare.setString(5, imagePath);
 
 
-                prepare.setTimestamp(5, timestamp); // Assuming gender is empty for book addition
+                prepare.setTimestamp(6, timestamp); // Assuming gender is empty for book addition
 
                 // Execute the SQL statement
                 int rowsAffected = prepare.executeUpdate();
@@ -1021,6 +1026,9 @@ public class DashboardController implements Initializable {
 
                     // Clear input fields
                     clearAddBook();
+
+                    //refresh showBook
+                    showAvailableBooks();
                 } else {
                     // Show error message if insertion fails
                     showAlert(AlertType.INFORMATION, "Program message", "Failed to add book. Please try again!");

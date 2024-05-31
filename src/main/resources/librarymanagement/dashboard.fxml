@@ -157,7 +157,7 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="student_list" layoutX="-355.0" prefHeight="510.0" prefWidth="1264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-355.0" AnchorPane.rightAnchor="-213.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="student_list" layoutX="-355.0" prefHeight="510.0" prefWidth="1264.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-355.0" AnchorPane.rightAnchor="-213.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="510.0" prefWidth="250.0">
                            <children>
@@ -363,7 +363,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane fx:id="showBooks_form" layoutX="268.0" layoutY="16.0" prefHeight="468.0" prefWidth="777.0" stylesheets="@../designDashboard.css">
                            <children>
@@ -403,35 +403,35 @@
                            <children>
                               <AnchorPane layoutX="221.0" layoutY="5.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <TextField fx:id="addBookTitle_label" layoutX="232.0" layoutY="89.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="70.0" layoutY="154.0" prefHeight="27.0" prefWidth="134.0" text="Author">
+                                    <TextField fx:id="addBookTitle_label" layoutX="232.0" layoutY="124.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <Label alignment="CENTER" layoutX="70.0" layoutY="188.0" prefHeight="27.0" prefWidth="134.0" text="Author">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="addAuthor_label" layoutX="232.0" layoutY="155.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="70.0" layoutY="215.0" prefHeight="27.0" prefWidth="134.0" text="Genre of Book">
+                                    <TextField fx:id="addAuthor_label" layoutX="232.0" layoutY="189.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <Label alignment="CENTER" layoutX="70.0" layoutY="251.0" prefHeight="27.0" prefWidth="134.0" text="Genre of Book">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="addBookType_label" layoutX="232.0" layoutY="216.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="23.0" layoutY="14.0" prefHeight="17.0" prefWidth="215.0" text="Add Book">
+                                    <TextField fx:id="addBookType_label" layoutX="232.0" layoutY="252.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <Label alignment="CENTER" layoutX="30.0" layoutY="14.0" prefHeight="17.0" prefWidth="215.0" text="Add Book">
                                        <font>
-                                          <Font size="36.0" />
+                                          <Font size="30.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" layoutX="70.0" layoutY="275.0" prefHeight="27.0" prefWidth="134.0" text="Date of Publish">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label alignment="CENTER" layoutX="70.0" layoutY="88.0" prefHeight="27.0" prefWidth="134.0" text="Book Title">
+                                    <Label alignment="CENTER" layoutX="70.0" layoutY="316.0" prefHeight="27.0" prefWidth="134.0" text="Date of Publish">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="addDate_label" layoutX="232.0" layoutY="276.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <Label alignment="CENTER" layoutX="70.0" layoutY="123.0" prefHeight="27.0" prefWidth="134.0" text="Book Title">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="addDate_label" layoutX="232.0" layoutY="317.0" prefHeight="8.0" prefWidth="232.0" />
                                     <Button fx:id="addBook_btn" layoutX="379.0" layoutY="379.0" mnemonicParsing="false" onAction="#addBook" prefHeight="47.0" prefWidth="85.0" styleClass="return-btn" stylesheets="@../designDashboard.css" text="Add">
                                        <font>
                                           <Font size="18.0" />
@@ -442,6 +442,12 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Button>
+                                    <Label alignment="CENTER" layoutX="70.0" layoutY="66.0" prefHeight="27.0" prefWidth="134.0" text="Book Number">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="addBookNumber_label" layoutX="232.0" layoutY="67.0" prefHeight="8.0" prefWidth="232.0" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
