@@ -1040,6 +1040,7 @@ public class DashboardController implements Initializable {
     }
 
     public void clearAddBook() {
+        addBookNumber_label.setText("");
         addBookTitle_label.setText("");
         addAuthor_label.setText("");
         addBookType_label.setText("");
