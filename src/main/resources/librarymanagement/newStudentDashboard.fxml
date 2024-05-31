@@ -168,11 +168,11 @@
                                     <children>
                                         <TableView fx:id="availableBooks_tableView" layoutX="293.0" onMouseClicked="#selectAvailableBooks" prefHeight="474.0" prefWidth="764.0">
                                             <columns>
-                                                <TableColumn fx:id="col_ab_Id" prefWidth="50.0" text="Id" />
-                                                <TableColumn fx:id="col_ab_bookTitle" prefWidth="137.0" text="Book Title" />
-                                                <TableColumn fx:id="col_ab_author" text="Author" />
-                                                <TableColumn fx:id="col_ab_bookType" prefWidth="93.0" text="Book Type" />
-                                                <TableColumn fx:id="col_ab_publishedDate" prefWidth="111.0" text="Published Date" />
+                                                <TableColumn fx:id="col_ab_Id" prefWidth="55.20001220703125" text="Id" />
+                                                <TableColumn fx:id="col_ab_bookTitle" prefWidth="209.60003662109375" text="Book Title" />
+                                                <TableColumn fx:id="col_ab_author" minWidth="3.20001220703125" prefWidth="97.5999755859375" text="Author" />
+                                                <TableColumn fx:id="col_ab_bookType" minWidth="0.0" prefWidth="111.199951171875" text="Book Type" />
+                                                <TableColumn fx:id="col_ab_publishedDate" minWidth="0.0" prefWidth="121.60009765625" text="Published Date" />
                                             </columns>
                                         </TableView>
                                         <AnchorPane layoutY="1.0" prefHeight="482.0" prefWidth="262.0" styleClass="card-form" stylesheets="@../designDashboard.css">
@@ -194,18 +194,16 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="savedBook_form" layoutX="248.0" layoutY="116.0" prefHeight="500.0" prefWidth="723.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="savedBook_form" layoutX="248.0" layoutY="116.0" prefHeight="500.0" prefWidth="723.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane layoutX="12.0" layoutY="9.0" prefHeight="484.0" prefWidth="1065.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                     <children>
                                         <TableView fx:id="saveBook_tableView" layoutX="205.0" layoutY="14.0" onMouseClicked="#selectSaveBook" prefHeight="450.0" prefWidth="837.0">
                                             <columns>
-                                                <TableColumn fx:id="saveBook_title" prefWidth="172.0" text="Book Title" />
-                                                <TableColumn fx:id="saveBook_author" minWidth="0.0" prefWidth="116.0" text="Author" />
-                                                <TableColumn fx:id="saveBook_type" maxWidth="4000.0" prefWidth="100.0" text="Book Type" />
-                                                <TableColumn fx:id="saveBook_date" prefWidth="91.0" text="Published Date" />
-                                                <TableColumn fx:id="saveBook_returnDate" prefWidth="99.0" text="Return Date" />
-                                                <TableColumn fx:id="saveBook_genre" text="Genre" />
+                                                <TableColumn fx:id="saveBook_title" prefWidth="220.7999725341797" text="Book Title" />
+                                                <TableColumn fx:id="saveBook_author" minWidth="0.0" prefWidth="116.79998779296875" text="Author" />
+                                                <TableColumn fx:id="saveBook_type" maxWidth="4000.0" prefWidth="182.39996337890625" text="Book Type" />
+                                                <TableColumn fx:id="saveBook_date" prefWidth="191.2000732421875" text="Published Date" />
                                             </columns>
                                         </TableView>
                                         <AnchorPane layoutX="48.0" layoutY="14.0" prefHeight="146.0" prefWidth="106.0" styleClass="image-card">

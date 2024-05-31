@@ -157,7 +157,7 @@
          <right>
             <AnchorPane fx:id="mainCenter_form" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="student_list" layoutX="-355.0" prefHeight="510.0" prefWidth="1264.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-355.0" AnchorPane.rightAnchor="-213.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="student_list" layoutX="-355.0" prefHeight="510.0" prefWidth="1264.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-355.0" AnchorPane.rightAnchor="-213.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane prefHeight="510.0" prefWidth="250.0">
                            <children>
@@ -168,63 +168,63 @@
                         </AnchorPane>
                         <AnchorPane fx:id="addStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css" visible="false">
                            <children>
-                              <Label layoutX="285.0" layoutY="14.0" prefHeight="36.0" prefWidth="248.0" text="Add Person" AnchorPane.leftAnchor="285.0">
+                              <Label layoutX="522.0" layoutY="14.0" prefHeight="66.0" prefWidth="180.0" text="Add Student" textAlignment="CENTER" AnchorPane.leftAnchor="522.0">
                                  <font>
-                                    <Font name="Berlin Sans FB" size="25.0" />
+                                    <Font name="Berlin Sans FB" size="32.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="290.0" layoutY="68.0" prefHeight="21.0" prefWidth="139.0" text="Person Number:">
-                                 <font>
-                                    <Font name="Microsoft Sans Serif" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="290.0" layoutY="116.0" prefHeight="21.0" prefWidth="134.0" text="First Name:">
+                              <Label layoutX="286.0" layoutY="109.0" prefHeight="21.0" prefWidth="139.0" text="Student Number:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="addFirstName_text" layoutX="454.0" layoutY="112.0" prefHeight="30.0" prefWidth="158.0" promptText="Example: Duc or Quan" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                              <Label layoutX="290.0" layoutY="167.0" prefHeight="21.0" prefWidth="134.0" text="Last Name:">
+                              <Label layoutX="286.0" layoutY="157.0" prefHeight="22.0" prefWidth="116.0" text="First Name:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="addLastName_text" layoutX="455.0" layoutY="163.0" prefHeight="30.0" prefWidth="159.0" promptText="Example: Nguyen Anh" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                              <Label layoutX="292.0" layoutY="283.0" prefHeight="21.0" prefWidth="134.0" text="Gender:" AnchorPane.leftAnchor="292.0">
+                              <TextField fx:id="addFirstName_text" layoutX="453.0" layoutY="153.0" prefHeight="30.0" prefWidth="158.0" promptText="Example: Duc or Quan" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <Label layoutX="286.0" layoutY="208.0" prefHeight="22.0" prefWidth="105.0" text="Last Name:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="addGender_text" layoutX="457.0" layoutY="278.0" prefHeight="30.0" prefWidth="152.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
-                              <Label layoutX="290.0" layoutY="225.0" prefHeight="21.0" prefWidth="134.0" text="Date of Birth:">
+                              <TextField fx:id="addLastName_text" layoutX="453.0" layoutY="204.0" prefHeight="30.0" prefWidth="158.0" promptText="Example: Nguyen Anh" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <Label layoutX="288.0" layoutY="324.0" prefHeight="21.0" prefWidth="134.0" text="Gender:" AnchorPane.leftAnchor="288.0">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="addDateofBirth_text" layoutX="456.0" layoutY="221.0" prefHeight="30.0" prefWidth="160.0" promptText="dd/mm/yyyy" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                              <Label layoutX="657.0" layoutY="112.0" prefHeight="21.0" prefWidth="134.0" text="Phone number:">
+                              <ComboBox fx:id="addGender_text" layoutX="452.0" layoutY="319.0" prefHeight="30.0" prefWidth="158.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
+                              <Label layoutX="286.0" layoutY="266.0" prefHeight="21.0" prefWidth="134.0" text="Date of Birth:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="689.0" layoutY="166.0" prefHeight="21.0" prefWidth="134.0" text="Email:">
+                              <TextField fx:id="addDateofBirth_text" layoutX="453.0" layoutY="261.0" prefHeight="30.0" prefWidth="158.0" promptText="dd/mm/yyyy" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <Label layoutX="641.0" layoutY="157.0" prefHeight="21.0" prefWidth="134.0" text="Phone number:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="695.0" layoutY="57.0" prefHeight="21.0" prefWidth="134.0" text="Role:">
+                              <Label layoutX="641.0" layoutY="207.0" prefHeight="22.0" prefWidth="60.0" text="Email:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="addRoll_text" layoutX="815.0" layoutY="53.0" prefHeight="30.0" prefWidth="120.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
-                              <Label layoutX="677.0" layoutY="225.0" prefHeight="21.0" prefWidth="134.0" text="Password:">
+                              <Label layoutX="641.0" layoutY="108.0" prefHeight="22.0" prefWidth="66.0" text="Role:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="18.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="addStudent_btn" layoutX="853.0" layoutY="368.0" mnemonicParsing="false" onAction="#addPerson" prefHeight="50.0" prefWidth="82.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Add" />
-                              <Button fx:id="clearAddStudent_btn" layoutX="732.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearAddPerson" prefHeight="51.0" prefWidth="86.0" styleClass="clear-btn" stylesheets="@../designDashboard.css" text="Clear">
+                              <ComboBox fx:id="addRoll_text" layoutX="781.0" layoutY="104.0" prefHeight="30.0" prefWidth="158.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
+                              <Label layoutX="641.0" layoutY="265.0" prefHeight="22.0" prefWidth="97.0" text="Password:">
+                                 <font>
+                                    <Font name="Microsoft Sans Serif" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="addStudent_btn" layoutX="800.0" layoutY="367.0" mnemonicParsing="false" onAction="#addPerson" prefHeight="50.0" prefWidth="120.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Add" />
+                              <Button fx:id="clearAddStudent_btn" layoutX="641.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearAddPerson" prefHeight="51.0" prefWidth="120.0" styleClass="clear-btn" stylesheets="@../designDashboard.css" text="Clear">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -240,10 +240,10 @@
                                  </children>
                               </AnchorPane>
                               <Separator layoutX="260.0" layoutY="11.0" orientation="VERTICAL" prefHeight="449.0" prefWidth="0.0" />
-                              <TextField fx:id="addStudentNumber_text" layoutX="454.0" layoutY="65.0" prefHeight="30.0" prefWidth="157.0" promptText="BK30" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                              <TextField fx:id="addPhone_text" layoutX="796.0" layoutY="108.0" prefHeight="27.0" prefWidth="158.0" promptText="10 digital number" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                              <TextField fx:id="addPassword_text" layoutX="796.0" layoutY="224.0" prefHeight="27.0" prefWidth="158.0" promptText="123456" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                              <TextField fx:id="addEmail_text" layoutX="796.0" layoutY="163.0" prefHeight="27.0" prefWidth="158.0" promptText="duc@gmail.com" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="addStudentNumber_text" layoutX="450.0" layoutY="104.0" prefHeight="30.0" prefWidth="158.0" promptText="BK30" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="addPhone_text" layoutX="781.0" layoutY="153.0" prefHeight="27.0" prefWidth="158.0" promptText="10 digital number" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="addPassword_text" layoutX="780.0" layoutY="261.0" prefHeight="30.0" prefWidth="158.0" promptText="123456" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                              <TextField fx:id="addEmail_text" layoutX="781.0" layoutY="204.0" prefHeight="27.0" prefWidth="158.0" promptText="duc@gmail.com" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="showStudent_form" layoutX="290.0" layoutY="15.0" prefHeight="475.0" prefWidth="995.0">
@@ -278,66 +278,66 @@
                         </AnchorPane>
                         <AnchorPane fx:id="updateStudent_form" layoutX="257.0" layoutY="13.0" prefHeight="475.0" prefWidth="990.0" visible="false">
                            <children>
-                              <AnchorPane prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css">
+                              <AnchorPane layoutX="14.0" prefHeight="478.0" prefWidth="983.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <Label layoutX="285.0" layoutY="14.0" prefHeight="36.0" prefWidth="248.0" text="Update Person" AnchorPane.leftAnchor="285.0">
+                                    <Label layoutX="500.0" layoutY="35.0" prefHeight="36.0" prefWidth="219.0" text="Update Student" textAlignment="CENTER" AnchorPane.leftAnchor="500.0">
                                        <font>
-                                          <Font name="Berlin Sans FB" size="25.0" />
+                                          <Font name="Berlin Sans FB" size="32.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="290.0" layoutY="68.0" prefHeight="21.0" prefWidth="139.0" text="Person Number:">
-                                       <font>
-                                          <Font name="Microsoft Sans Serif" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="290.0" layoutY="116.0" prefHeight="21.0" prefWidth="134.0" text="First Name:">
+                                    <Label layoutX="286.0" layoutY="124.0" prefHeight="21.0" prefWidth="139.0" text="Person Number:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateFirstName_text" layoutX="454.0" layoutY="112.0" prefHeight="30.0" prefWidth="158.0" promptText="Anh Đức" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <Label layoutX="290.0" layoutY="167.0" prefHeight="21.0" prefWidth="134.0" text="Last Name:">
+                                    <Label layoutX="286.0" layoutY="172.0" prefHeight="21.0" prefWidth="134.0" text="First Name:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateLastName_text" layoutX="455.0" layoutY="163.0" prefHeight="30.0" prefWidth="159.0" promptText="Nguyen" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <Label layoutX="292.0" layoutY="283.0" prefHeight="21.0" prefWidth="134.0" text="Gender:" AnchorPane.leftAnchor="292.0">
+                                    <TextField fx:id="updateFirstName_text" layoutX="455.0" layoutY="167.0" prefHeight="30.0" prefWidth="158.0" promptText="Anh Đức" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <Label layoutX="286.0" layoutY="223.0" prefHeight="21.0" prefWidth="134.0" text="Last Name:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="updateGender_text" layoutX="457.0" layoutY="278.0" prefHeight="30.0" prefWidth="152.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updateLastName_text" layoutX="455.0" layoutY="220.0" prefHeight="30.0" prefWidth="158.0" promptText="Nguyen" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <Label layoutX="288.0" layoutY="339.0" prefHeight="21.0" prefWidth="134.0" text="Gender:" AnchorPane.leftAnchor="288.0">
+                                       <font>
+                                          <Font name="Microsoft Sans Serif" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="updateGender_text" layoutX="455.0" layoutY="334.0" prefHeight="30.0" prefWidth="158.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
                                     <TextField fx:id="take_BookTitle1" layoutX="455.0" layoutY="393.0" onAction="#findBook" prefHeight="25.0" prefWidth="222.0" styleClass="textfield_take" stylesheets="@../designDashboard.css" visible="false" />
-                                    <Label layoutX="290.0" layoutY="225.0" prefHeight="21.0" prefWidth="134.0" text="Date of Birth:">
+                                    <Label layoutX="286.0" layoutY="281.0" prefHeight="21.0" prefWidth="134.0" text="Date of Birth:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateDate" layoutX="456.0" layoutY="221.0" prefHeight="30.0" prefWidth="158.0" promptText="dd/mm/yyyy" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <Label layoutX="657.0" layoutY="112.0" prefHeight="21.0" prefWidth="134.0" text="Phone number:">
+                                    <TextField fx:id="updateDate" layoutX="455.0" layoutY="276.0" prefHeight="30.0" prefWidth="158.0" promptText="dd/mm/yyyy" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <Label layoutX="651.0" layoutY="171.0" prefHeight="21.0" prefWidth="134.0" text="Phone number:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="689.0" layoutY="166.0" prefHeight="21.0" prefWidth="134.0" text="Email:">
+                                    <Label layoutX="651.0" layoutY="223.0" prefHeight="22.0" prefWidth="69.0" text="Email:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="695.0" layoutY="57.0" prefHeight="21.0" prefWidth="134.0" text="Roll:">
+                                    <Label layoutX="653.0" layoutY="124.0" prefHeight="22.0" prefWidth="73.0" text="Roll:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="updateRoll_text" layoutX="815.0" layoutY="53.0" prefHeight="30.0" prefWidth="120.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
-                                    <Label layoutX="677.0" layoutY="225.0" prefHeight="21.0" prefWidth="134.0" text="Password:">
+                                    <ComboBox fx:id="updateRoll_text" layoutX="785.0" layoutY="119.0" prefHeight="30.0" prefWidth="158.0" promptText="Choose.." styleClass="label_take" stylesheets="@../designDashboard.css" />
+                                    <Label layoutX="653.0" layoutY="283.0" prefHeight="22.0" prefWidth="95.0" text="Password:">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="updateStudent_btn" layoutX="853.0" layoutY="368.0" mnemonicParsing="false" onAction="#updatePerson" prefHeight="50.0" prefWidth="82.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Update" />
-                                    <Button fx:id="clearUpdateStudent_btn" layoutX="732.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearUpdatePerson" prefHeight="51.0" prefWidth="86.0" styleClass="clear-btn" stylesheets="@../designDashboard.css" text="Clear">
+                                    <Button fx:id="updateStudent_btn" layoutX="804.0" layoutY="367.0" mnemonicParsing="false" onAction="#updatePerson" prefHeight="50.0" prefWidth="120.0" styleClass="take-btn" stylesheets="@../designDashboard.css" text="Update" />
+                                    <Button fx:id="clearUpdateStudent_btn" layoutX="658.0" layoutY="367.0" mnemonicParsing="false" onAction="#clearUpdatePerson" prefHeight="51.0" prefWidth="120.0" styleClass="clear-btn" stylesheets="@../designDashboard.css" text="Clear">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -353,28 +353,35 @@
                                        </children>
                                     </AnchorPane>
                                     <Separator layoutX="260.0" layoutY="11.0" orientation="VERTICAL" prefHeight="449.0" prefWidth="0.0" />
-                                    <TextField fx:id="updateStudentNumber_text" layoutX="454.0" layoutY="65.0" onAction="#findPersonByNumber" prefHeight="30.0" prefWidth="157.0" promptText="BK30" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <TextField fx:id="updatePhone_text" layoutX="797.0" layoutY="108.0" prefHeight="27.0" prefWidth="158.0" promptText="10 digital numbers" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <TextField fx:id="updatePassword_text" layoutX="796.0" layoutY="224.0" prefHeight="27.0" prefWidth="158.0" promptText="12345678" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
-                                    <TextField fx:id="updateEmail_text" layoutX="796.0" layoutY="163.0" prefHeight="27.0" prefWidth="158.0" promptText="duc@gmail.com" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updateStudentNumber_text" layoutX="452.0" layoutY="119.0" onAction="#findPersonByNumber" prefHeight="30.0" prefWidth="158.0" promptText="BK30" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updatePhone_text" layoutX="785.0" layoutY="167.0" prefHeight="27.0" prefWidth="158.0" promptText="10 digital numbers" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updatePassword_text" layoutX="785.0" layoutY="277.0" prefHeight="27.0" prefWidth="158.0" promptText="12345678" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
+                                    <TextField fx:id="updateEmail_text" layoutX="785.0" layoutY="219.0" prefHeight="27.0" prefWidth="158.0" promptText="duc@gmail.com" styleClass="textfield_take" stylesheets="@../designDashboard.css" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableBooks_form" layoutX="-361.0" layoutY="97.0" prefHeight="500.0" prefWidth="1070.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-361.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
+                        <AnchorPane layoutX="-13.0" layoutY="16.0" prefHeight="491.0" prefWidth="278.0">
+                           <children>
+                              <Button fx:id="addBook_btn" layoutX="46.0" layoutY="49.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Add Book" textAlignment="CENTER" />
+                              <Button fx:id="showBook_btn" layoutX="46.0" layoutY="125.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Show Books" />
+                              <Button fx:id="updateBooks_btn" layoutX="46.0" layoutY="204.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Update Book" />
+                           </children>
+                        </AnchorPane>
                         <AnchorPane fx:id="showBooks_form" layoutX="268.0" layoutY="16.0" prefHeight="468.0" prefWidth="777.0" stylesheets="@../designDashboard.css">
                            <children>
-                              <TableView fx:id="availableBooks_tableView" layoutX="247.0" layoutY="37.0" onMouseClicked="#selectAvailableBooks" prefHeight="404.0" prefWidth="500.0">
+                              <TableView fx:id="availableBooks_tableView" layoutX="247.0" layoutY="37.0" onMouseClicked="#selectAvailableBooks" prefHeight="404.0" prefWidth="530.0">
                                  <columns>
-                                    <TableColumn fx:id="col_ab_BookId" prefWidth="30.0" text="Book ID" />
-                                    <TableColumn fx:id="col_ab_bookNumber" prefWidth="66.0" text="Book Number" />
-                                    <TableColumn fx:id="col_ab_bookTitle" prefWidth="140.0" text="Book Title" />
-                                    <TableColumn fx:id="col_ab_author" prefWidth="92.0" text="Author" />
-                                    <TableColumn fx:id="col_ab_bookType" prefWidth="95.0" text="Genre" />
-                                    <TableColumn fx:id="col_ab_publishedDate" prefWidth="105.0" text="Published Date" />
+                                    <TableColumn fx:id="col_ab_BookId" prefWidth="50.4000244140625" text="Book ID" />
+                                    <TableColumn fx:id="col_ab_bookNumber" prefWidth="88.0" text="Book Number" />
+                                    <TableColumn fx:id="col_ab_bookTitle" prefWidth="128.00006103515625" text="Book Title" />
+                                    <TableColumn fx:id="col_ab_author" prefWidth="88.800048828125" text="Author" />
+                                    <TableColumn fx:id="col_ab_bookType" prefWidth="74.39990234375" text="Genre" />
+                                    <TableColumn fx:id="col_ab_publishedDate" prefWidth="105.60003662109375" text="Published Date" />
                                  </columns>
                               </TableView>
                               <TextField fx:id="searchBook_field" layoutX="540.0" layoutY="1.0" onAction="#findBook" prefHeight="25.0" prefWidth="206.0" promptText="Search" />
@@ -400,7 +407,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="addBook_form" layoutX="279.0" layoutY="17.0" prefHeight="467.0" prefWidth="777.0" stylesheets="@../designDashboard.css">
+                        <AnchorPane fx:id="addBook_form" layoutX="279.0" layoutY="17.0" prefHeight="467.0" prefWidth="777.0" stylesheets="@../designDashboard.css" visible="false">
                            <children>
                               <AnchorPane layoutX="221.0" layoutY="5.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
@@ -417,7 +424,7 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="addBookType_label" layoutX="232.0" layoutY="266.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="23.0" layoutY="14.0" prefHeight="17.0" prefWidth="215.0" text="Add Book">
+                                    <Label alignment="CENTER" layoutX="157.0" layoutY="14.0" prefHeight="54.0" prefWidth="238.0" text="Add Book">
                                        <font>
                                           <Font size="36.0" />
                                        </font>
@@ -470,13 +477,6 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="-13.0" layoutY="16.0" prefHeight="491.0" prefWidth="378.0">
-                           <children>
-                              <Button fx:id="addBook_btn" layoutX="46.0" layoutY="49.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Add Book" textAlignment="CENTER" />
-                              <Button fx:id="showBook_btn" layoutX="46.0" layoutY="125.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Show Books" />
-                              <Button fx:id="updateBooks_btn" layoutX="46.0" layoutY="204.0" mnemonicParsing="false" onAction="#buttonBook" prefHeight="42.0" prefWidth="205.0" styleClass="nav-btn" stylesheets="@../designDashboard.css" text="Update Book" />
-                           </children>
-                        </AnchorPane>
                         <AnchorPane fx:id="updateBooks_form" layoutX="279.0" layoutY="14.0" prefHeight="468.0" prefWidth="777.0" visible="false">
                            <children>
                               <AnchorPane layoutY="7.0" prefHeight="454.0" prefWidth="200.0" styleClass="card-form" stylesheets="@../designDashboard.css">
@@ -494,20 +494,20 @@
                               </AnchorPane>
                               <AnchorPane layoutX="218.0" layoutY="6.0" prefHeight="456.0" prefWidth="551.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                                  <children>
-                                    <TextField fx:id="updateBookNumber_label" layoutX="238.0" layoutY="67.0" onAction="#findBookByNumber" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="64.0" layoutY="190.0" prefHeight="27.0" prefWidth="134.0" text="Author">
+                                    <TextField fx:id="updateBookNumber_label" layoutX="238.0" layoutY="77.0" onAction="#findBookByNumber" prefHeight="8.0" prefWidth="232.0" />
+                                    <Label alignment="CENTER" layoutX="64.0" layoutY="200.0" prefHeight="27.0" prefWidth="134.0" text="Author">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateAuthor_label" layoutX="238.0" layoutY="190.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="70.0" layoutY="255.0" prefHeight="27.0" prefWidth="134.0" text="Genre of Book">
+                                    <TextField fx:id="updateAuthor_label" layoutX="238.0" layoutY="200.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <Label alignment="CENTER" layoutX="70.0" layoutY="264.0" prefHeight="27.0" prefWidth="134.0" text="Genre of Book">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateBookType_label" layoutX="238.0" layoutY="255.0" prefHeight="8.0" prefWidth="232.0" />
-                                    <Label alignment="CENTER" layoutX="20.0" layoutY="7.0" prefHeight="53.0" prefWidth="235.0" text="Update Book">
+                                    <TextField fx:id="updateBookType_label" layoutX="238.0" layoutY="264.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <Label alignment="CENTER" layoutX="158.0" layoutY="12.0" prefHeight="53.0" prefWidth="235.0" text="Update Book">
                                        <font>
                                           <Font size="36.0" />
                                        </font>
@@ -517,7 +517,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label alignment="CENTER" layoutX="64.0" layoutY="66.0" prefHeight="27.0" prefWidth="134.0" text="Book Number">
+                                    <Label alignment="CENTER" layoutX="64.0" layoutY="76.0" prefHeight="27.0" prefWidth="134.0" text="Book Number">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -533,12 +533,12 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Button>
-                                    <Label alignment="CENTER" layoutX="64.0" layoutY="128.0" prefHeight="27.0" prefWidth="134.0" text="Book Title">
+                                    <Label alignment="CENTER" layoutX="64.0" layoutY="135.0" prefHeight="27.0" prefWidth="134.0" text="Book Title">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="updateBookTitle_label" layoutX="238.0" layoutY="128.0" prefHeight="8.0" prefWidth="232.0" />
+                                    <TextField fx:id="updateBookTitle_label" layoutX="238.0" layoutY="135.0" prefHeight="8.0" prefWidth="232.0" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -549,19 +549,19 @@
                      <children>
                         <AnchorPane layoutX="292.0" layoutY="12.0" onMouseClicked="#selectReturnBook" prefHeight="487.0" prefWidth="728.0" styleClass="card-form" stylesheets="@../designDashboard.css">
                            <children>
-                              <Label alignment="CENTER" layoutY="4.0" prefHeight="44.0" prefWidth="148.0" text="Return Books:">
+                              <Label alignment="CENTER" layoutX="260.0" layoutY="12.0" prefHeight="46.0" prefWidth="208.0" text="Return Books">
                                  <font>
-                                    <Font size="20.0" />
+                                    <Font size="30.0" />
                                  </font>
                               </Label>
-                              <TableView fx:id="return_tableView" layoutX="9.0" layoutY="48.0" onMouseClicked="#selectReturnBook" prefHeight="418.0" prefWidth="629.0">
+                              <TableView fx:id="return_tableView" layoutX="9.0" layoutY="59.0" onMouseClicked="#selectReturnBook" prefHeight="407.0" prefWidth="709.0">
                                 <columns>
-                                    <TableColumn fx:id="returnBook_number" minWidth="0.0" prefWidth="108.0" text="Student Number" />
-                                  <TableColumn fx:id="returnBook_title" prefWidth="155.19998168945312" text="Book Title" />
-                                    <TableColumn fx:id="returnBook_author" minWidth="0.0" prefWidth="96.7999267578125" text="Author" />
-                                    <TableColumn fx:id="returnBook_type" minWidth="0.0" prefWidth="88.7999267578125" text="Book Type" />
-                                    <TableColumn fx:id="returnBook_date" minWidth="0.0" prefWidth="89.60009765625" text="Date Issued" />
-                                    <TableColumn fx:id="returnBook_status" minWidth="0.0" prefWidth="89.60009765625" text="Status" />
+                                    <TableColumn fx:id="returnBook_number" minWidth="0.0" prefWidth="114.39990234375" text="Student Number" />
+                                  <TableColumn fx:id="returnBook_title" prefWidth="206.40005493164062" text="Book Title" />
+                                    <TableColumn fx:id="returnBook_author" minWidth="0.0" prefWidth="84.7999267578125" text="Author" />
+                                    <TableColumn fx:id="returnBook_type" minWidth="0.0" prefWidth="96.000244140625" text="Book Type" />
+                                    <TableColumn fx:id="returnBook_date" minWidth="0.0" prefWidth="106.4000244140625" text="Date Issued" />
+                                    <TableColumn fx:id="returnBook_status" minWidth="0.0" prefWidth="101.5999755859375" text="Status" />
                                 </columns>
                               </TableView>
                            </children>
@@ -580,29 +580,6 @@
                            </children>
                         </AnchorPane>
                         <Separator layoutX="280.0" layoutY="42.0" orientation="VERTICAL" prefHeight="444.0" prefWidth="12.0" />
-                     </children></AnchorPane>
-                  <AnchorPane fx:id="savedBook_form" layoutX="248.0" layoutY="116.0" prefHeight="500.0" prefWidth="723.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane layoutX="17.0" layoutY="14.0" prefHeight="228.0" prefWidth="675.0" styleClass="card-form" stylesheets="@../designDashboard.css">
-                           <children>
-                              <TableView fx:id="saveBook_tableView" layoutX="205.0" layoutY="14.0" onMouseClicked="#selectSaveBook" prefHeight="200.0" prefWidth="456.0">
-                                 <columns>
-                                    <TableColumn fx:id="saveBook_title" prefWidth="153.59996032714844" text="Book Title" />
-                                    <TableColumn fx:id="saveBook_author" prefWidth="102.400146484375" text="Author" />
-                                    <TableColumn fx:id="saveBook_type" prefWidth="96.7999267578125" text="Book Type" />
-                                    <TableColumn fx:id="saveBook_date" maxWidth="4000.0" prefWidth="109.60009765625" text="Published date" />
-                                 </columns>
-                              </TableView>
-                              <AnchorPane layoutX="48.0" layoutY="14.0" prefHeight="146.0" prefWidth="106.0" styleClass="image-card">
-                                 <children>
-                                    <ImageView fx:id="save_imageView" fitHeight="147.0" fitWidth="108.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
-                                 </children>
-                              </AnchorPane>
-                              <Button fx:id="unsave_btn" layoutX="52.0" layoutY="175.0" mnemonicParsing="false" onAction="#unsaveBook" prefHeight="38.0" prefWidth="97.0" styleClass="unsave_btn" text="Unsave" textFill="#101010" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="17.0" layoutY="274.0" prefHeight="200.0" prefWidth="675.0" styleClass="card-form" stylesheets="@../designDashboard.css" />
-                        <Separator layoutX="63.0" layoutY="250.0" prefHeight="15.0" prefWidth="584.0" />
                      </children></AnchorPane>
                </children>
             </AnchorPane>

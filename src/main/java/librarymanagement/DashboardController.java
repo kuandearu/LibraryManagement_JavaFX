@@ -2061,6 +2061,8 @@ public class DashboardController implements Initializable {
             addBook_form.setVisible(false);
             showBooks_form.setVisible(true);
             updateBooks_form.setVisible(false);
+
+            showAvailableBooks();
         }else if (event.getSource() == updateBooks_btn){
             addBook_form.setVisible(false);
             showBooks_form.setVisible(false);
@@ -2100,7 +2102,7 @@ public class DashboardController implements Initializable {
             halfNav_availableBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
             halfNav_returnBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #344275, #3a6389);");
 
-            currentForm_label.setText("List Books");
+            currentForm_label.setText("Book list");
 
         }else if (event.getSource() == returnBooks_btn){
 
