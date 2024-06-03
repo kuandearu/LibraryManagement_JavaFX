@@ -51,10 +51,19 @@ public class FXMLDocumentController implements Initializable {
 
         connect = Database.connectDB();
     }
-    public void login(){
+    public void login() {
         String sql = "SELECT * FROM student WHERE studentNumber = ? AND password = ?";
 
-        try{
+        try {
+            // Check if the input fields are empty first
+            if (studentNumber.getText().isEmpty() || password.getText().isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Admin Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields.");
+                alert.showAndWait();
+                return; // Exit the method early if fields are empty
+            }
 
             prepare = connect.prepareStatement(sql);
             prepare.setString(1, studentNumber.getText());
@@ -63,41 +72,29 @@ public class FXMLDocumentController implements Initializable {
 
             Alert alert;
 
-            if(studentNumber.getText().isEmpty() || password.getText().isEmpty()){
+            if (result.next()) {
+                String studentRole = result.getString("studentRole");
 
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Admin Message");
-                alert.setHeaderText(null);
-                alert.setContentText("Please fill all blank fields.");
-                alert.showAndWait();
-
-            }else{
-
-                if(result.next()){
-
+                if ("admin".equalsIgnoreCase(studentRole)) {
                     getData.studentNumber = studentNumber.getText();
-                    //getData.path = result.getString("image");
+                    // getData.path = result.getString("image");
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Admin Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Login Success");
                     alert.showAndWait();
 
-                    // to Hide LOGIN FORM
+                    // Hide LOGIN FORM
                     login_Btn.getScene().getWindow().hide();
 
-                    //For DashBoard
+                    // For DashBoard
                     Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
-
                     Stage stage = new Stage();
-
                     Scene scene = new Scene(root);
 
                     root.setOnMousePressed((MouseEvent e) -> {
-
                         x = e.getSceneX();
                         y = e.getSceneY();
-
                     });
 
                     root.setOnMouseDragged((MouseEvent e) -> {
@@ -106,28 +103,33 @@ public class FXMLDocumentController implements Initializable {
                     });
 
                     stage.initStyle(StageStyle.TRANSPARENT);
-
                     stage.setScene(scene);
                     stage.show();
-                }else{
+                } else if ("user".equalsIgnoreCase(studentRole)) {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Admin Message");
                     alert.setHeaderText(null);
-                    alert.setContentText("Your username or password is wrong.");
+                    alert.setContentText("User must log in again.");
                     alert.showAndWait();
-
                 }
+            } else {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Admin Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Your username or password is wrong.");
+                alert.showAndWait();
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void loginStudent(){
-        String sql = "SELECT * FROM newstudent WHERE studentNumber = ? AND password = ?";
-        try{
 
+    public void loginStudent() {
+        String sql = "SELECT * FROM student WHERE studentNumber = ? AND password = ?";
+        try {
+            // Check if the input fields are empty first
             prepare = connect.prepareStatement(sql);
             prepare.setString(1, studentNumber.getText());
             prepare.setString(2, password.getText());
@@ -190,11 +192,11 @@ public class FXMLDocumentController implements Initializable {
 
                 }
             }
-
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public void numbersOnly(KeyEvent event){
         if(event.getCharacter().matches("[^\\e\\t\\r\\d+$]")){

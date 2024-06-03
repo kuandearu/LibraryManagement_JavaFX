@@ -20,7 +20,7 @@
             <FontAwesomeIcon fill="#fffbfb" glyphName="USERS" layoutX="211.0" layoutY="76.0" selectionFill="#2acdc7" size="5em" text="" wrappingWidth="69.0" />
             <TextField fx:id="studentNumber" layoutX="131.0" layoutY="156.0" onKeyTyped="#numbersOnly" prefHeight="31.0" prefWidth="230.0" promptText="Student Number" styleClass="textfield" stylesheets="@../designLogin.css" />
             <PasswordField fx:id="password" layoutX="131.0" layoutY="199.0" prefHeight="31.0" prefWidth="230.0" promptText="Password" styleClass="textfield" stylesheets="@../designLogin.css" />
-            <Button fx:id="login_Btn" layoutX="131.0" layoutY="259.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="120.0" styleClass="login-btn" stylesheets="@../designLogin.css" text="Login" />
+            <Button fx:id="login_Btn" layoutX="131.0" layoutY="259.0" mnemonicParsing="false" onAction="#login" prefHeight="45.0" prefWidth="120.0" styleClass="login-btn" stylesheets="@../designLogin.css" text="Login Admin" />
             <Button fx:id="loginStudent_Btn" layoutX="260.0" layoutY="259.0" mnemonicParsing="false" onAction="#loginStudent" prefHeight="45.0" prefWidth="120.0" styleClass="login-btn" stylesheets="@../designLogin.css" text="Login Student" />
          </children>
       </AnchorPane>
