@@ -526,7 +526,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="clearUpdateBook_btn" layoutX="276.0" layoutY="387.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="83.0" styleClass="unsave_btn" stylesheets="@../designDashboard.css" text="Clear">
+                                    <Button fx:id="clearUpdateBook_btn" layoutX="276.0" layoutY="387.0" mnemonicParsing="false" onAction="#clearUpdateBook" prefHeight="45.0" prefWidth="83.0" styleClass="unsave_btn" stylesheets="@../designDashboard.css" text="Clear">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
