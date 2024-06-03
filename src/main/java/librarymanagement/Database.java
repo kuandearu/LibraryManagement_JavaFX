@@ -65,17 +65,7 @@ public class Database {
             prepare = connect.prepareStatement(createSaveBookTableQuery);
             prepare.executeUpdate();
 
-            String createNewStudentTableQuery = "CREATE TABLE IF NOT EXISTS newStudent ("
-                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
-                    + "studentNumber VARCHAR(100), "
-                    + "studentName NVARCHAR(100),"
-                    + "password VARCHAR(100),"
-                    + "gender VARCHAR(10) DEFAULT NULL,"
-                    + "phone VARCHAR(10) DEFAULT NULL,"
-                    + "email VARCHAR(50) DEFAULT NULL)";
 
-            prepare = connect.prepareStatement(createNewStudentTableQuery);
-            prepare.executeUpdate();
 
             String createBookRequestTableQuery = "CREATE TABLE IF NOT EXISTS book_request (" +
                     "`id` int(100) NOT NULL AUTO_INCREMENT," +
@@ -257,42 +247,7 @@ public class Database {
 
 
 
-    public static void insertNewStudents() {
-        String sql = "INSERT INTO newstudent (studentNumber, studentName, password, gender, phone, email) VALUES (?, ?, ?, ?, ?, ?)";
 
-
-
-        try {
-            prepare = connect.prepareStatement(sql);
-
-            // Insert values for each student only if they don't already exist
-            if (!newStudentExists(Database.connect, "0969571699")) {
-                prepare.setString(1, "0969571699");
-                prepare.setString(2, "Giang Khanh Quan");
-                prepare.setString(3, "123456");
-                prepare.setString(4, "Male");
-                prepare.setString(5, "0982789023"); // Example phone number
-                prepare.setString(6, "minh.nguyen@example.com");
-                prepare.addBatch();
-            }
-
-            if (!newStudentExists(Database.connect, "1")) {
-                prepare.setString(1, "1");
-                prepare.setString(2, "1asdasd");
-                prepare.setString(3, "1");
-                prepare.setString(4, "Male");
-                prepare.setString(5, "0987123456"); // Example phone number
-                prepare.setString(6, "long.nguyen@example.com");
-                prepare.addBatch();
-            }
-
-            // Execute the batch insert
-            prepare.executeBatch();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private static boolean studentExists(Connection connection, String studentNumber) throws SQLException {
         String sql = "SELECT COUNT(*) FROM student WHERE studentNumber = ?";
@@ -303,14 +258,7 @@ public class Database {
         return resultSet.getInt(1) > 0;
     }
 
-    private static boolean newStudentExists(Connection connection, String studentNumber) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM newstudent WHERE studentNumber = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, studentNumber);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        return resultSet.getInt(1) > 0;
-    }
+
 
     private static boolean bookExists(Connection connection, String bookTitle) throws SQLException {
         String sql = "SELECT COUNT(*) FROM book WHERE bookTitle = ?";
